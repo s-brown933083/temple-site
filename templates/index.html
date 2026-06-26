@@ -175,11 +175,33 @@
                         </label>
                     </div>
 
+                    <!-- 邮箱字段 -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span class="label-icon">✉</span>
+                            <span data-i18n="label_email">邮箱</span>
+                        </label>
+                        <input type="email" name="email" id="emailField" class="form-input"
+                               data-i18n-placeholder="placeholder_email"
+                               placeholder="选填（用于接收祈愿结果通知）" />
+                    </div>
+
                     <!-- 提交按钮 -->
                     <button type="submit" class="submit-btn pulse-glow" id="submitBtn">
                         <span class="btn-text" data-i18n="submit_text">提交祈愿</span>
                         <span class="btn-glow"></span>
                     </button>
+
+                    <!-- 自愿随喜（收款码） -->
+                    <div class="donation-section" id="donationSection" style="display:none;">
+                        <div class="donation-divider">☸ ☸ ☸</div>
+                        <p class="donation-title" data-i18n="donation_title">随喜供灯 · 功德自在</p>
+                        <p class="donation-desc" data-i18n="donation_desc">您的善念是最好的供养 · 随心随力 · 量力而行</p>
+                        <div class="qr-container">
+                            <img src="{{ url_for('static', filename='images/qrcode.jpg') }}" alt="收款码" class="qr-image" id="qrImage" />
+                            <p class="qr-hint" data-i18n="qr_hint">长按识别 · 保存图片 · 转账随喜</p>
+                        </div>
+                    </div>
                 </form>
             </div>
         </main>
@@ -223,7 +245,12 @@
             placeholder_name: '请输入您的姓名',
             label_birthday: '生日',
             label_gender: '性别',
+            label_email: '邮箱',
+            placeholder_email: '选填（用于接收祈愿结果通知）',
             gender_male: '男', gender_female: '女', gender_other: '其他',
+            donation_title: '随喜供灯 · 功德自在',
+            donation_desc: '您的善念是最好的供养 · 随心随力 · 量力而行',
+            qr_hint: '长按识别 · 保存图片 · 转账随喜',
             disclaimer_title: '⚖️ 重要声明与隐私条款',
             disc_1_title: '📜 免责声明',
             disc_1_body: '本网站提供的所有内容仅供娱乐参考，不构成任何形式的承诺或保证。提交信息后，我们不对任何基于本网站信息做出的决定或行为承担责任。用户应独立判断并承担相应风险。',
@@ -243,6 +270,11 @@
             submit_error: '提交失败，请重试',
         },
         en: {
+            label_email: 'Email (optional)',
+            placeholder_email: 'Optional - for notification',
+            donation_title: 'Support This Project',
+            donation_desc: 'Your kindness is appreciated',
+            qr_hint: 'Scan to donate',
             page_title: 'Temple of Serenity - Zen Garden',
             char1: 'Zen', char2: 'Tao', char3: 'Chan', char4: 'Bless', char5: 'Wisdom', char6: 'Peace',
             title1: '', title2: '', title3: '', title4: 'Temple of Serenity',
@@ -273,6 +305,11 @@
             submit_error: 'Submission failed, please try again',
         },
         ja: {
+            label_email: 'Email (optional)',
+            placeholder_email: 'Optional - for notification',
+            donation_title: 'Support This Project',
+            donation_desc: 'Your kindness is appreciated',
+            qr_hint: 'Scan to donate',
             page_title: '禅の浄土 - Temple of Serenity',
             char1: '仏', char2: '道', char3: '禅', char4: '福', char5: '慧', char6: '静',
             title1: '禅', title2: 'の', title3: '浄', title4: '土',
@@ -303,6 +340,11 @@
             submit_error: '送信失敗、もう一度お試しください',
         },
         ko: {
+            label_email: 'Email (optional)',
+            placeholder_email: 'Optional - for notification',
+            donation_title: 'Support This Project',
+            donation_desc: 'Your kindness is appreciated',
+            qr_hint: 'Scan to donate',
             page_title: '선의 정토 - Temple of Serenity',
             char1: '불', char2: '도', char3: '선', char4: '복', char5: '혜', char6: '정',
             title1: '선', title2: '의', title3: '정', title4: '토',

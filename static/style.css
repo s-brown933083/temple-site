@@ -1219,3 +1219,97 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--gold-primary);
 }
+
+/* ===== 邮箱字段样式 ===== */
+.form-group input[type="email"].form-input {
+    background: rgba(20, 12, 5, 0.8);
+    border: 1px solid rgba(201, 168, 76, 0.4);
+    color: #f5e6c8;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Noto Sans SC', sans-serif;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group input[type="email"].form-input:focus {
+    outline: none;
+    border-color: #c9a84c;
+    box-shadow: 0 0 12px rgba(201, 168, 76, 0.3);
+}
+
+.form-group input[type="email"].form-input::placeholder {
+    color: rgba(245, 230, 200, 0.4);
+}
+
+/* ===== 自愿随喜收款码区域 ===== */
+.donation-section {
+    margin-top: 24px;
+    padding: 20px 16px;
+    background: rgba(20, 12, 5, 0.7);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: 12px;
+    text-align: center;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.donation-divider {
+    color: #c9a84c;
+    font-size: 16px;
+    letter-spacing: 8px;
+    margin-bottom: 12px;
+    opacity: 0.7;
+}
+
+.donation-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 18px;
+    color: #c9a84c;
+    margin: 8px 0;
+    text-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
+}
+
+.donation-desc {
+    font-size: 13px;
+    color: rgba(245, 230, 200, 0.6);
+    margin: 8px 0 16px;
+    line-height: 1.6;
+}
+
+.qr-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.qr-image {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    border: 2px solid rgba(201, 168, 76, 0.5);
+    border-radius: 12px;
+    background: white;
+    padding: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.qr-hint {
+    font-size: 12px;
+    color: rgba(245, 230, 200, 0.5);
+    letter-spacing: 2px;
+}
+
+/* Fade in animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
