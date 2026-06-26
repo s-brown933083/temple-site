@@ -1,0 +1,907 @@
+/* ============================================
+   TEMPLE AESTHETIC - CSS STYLES
+   Chinese Buddhist/Daoist Temple Design
+   ============================================ */
+
+/* Import Google Fonts is handled in HTML */
+
+/* CSS Variables */
+:root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --bg-card: #0f0f0f;
+    --gold-primary: #c9a84c;
+    --gold-light: #e0c068;
+    --gold-dark: #8a6914;
+    --red-primary: #8b1a1a;
+    --red-light: #a52a2a;
+    --parchment: #d4c5a0;
+    --text-primary: #e8e0d0;
+    --text-secondary: #b8a890;
+    --border-dark: #2a2a2a;
+}
+
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Serif SC', 'ZCOOL XiaoWei', 'SimSun', serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Background Texture */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse at 20% 50%, rgba(139, 26, 26, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(201, 168, 76, 0.05) 0%, transparent 50%),
+        repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(201, 168, 76, 0.01) 50px, rgba(201, 168, 76, 0.01) 51px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ============================================
+   INCENSE SMOKE ANIMATION
+   ============================================ */
+.incense-smoke {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 300px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.15;
+}
+
+.smoke-particle {
+    position: absolute;
+    width: 4px;
+    height: 40px;
+    background: linear-gradient(to top, transparent, var(--gold-primary), transparent);
+    border-radius: 50%;
+    animation: smokeRise 8s infinite ease-in-out;
+    opacity: 0;
+}
+
+.smoke-particle:nth-child(1) {
+    left: 50%;
+    animation-delay: 0s;
+    animation-duration: 10s;
+}
+
+.smoke-particle:nth-child(2) {
+    left: 45%;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.smoke-particle:nth-child(3) {
+    left: 55%;
+    animation-delay: 4s;
+    animation-duration: 9s;
+}
+
+.smoke-particle:nth-child(4) {
+    left: 48%;
+    animation-delay: 6s;
+    animation-duration: 11s;
+}
+
+.smoke-particle:nth-child(5) {
+    left: 52%;
+    animation-delay: 8s;
+    animation-duration: 10s;
+}
+
+@keyframes smokeRise {
+    0% {
+        transform: translateY(100px) scaleX(1);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateY(-100px) scaleX(2);
+        opacity: 0.2;
+    }
+    80% {
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateY(-300px) scaleX(3);
+        opacity: 0;
+    }
+}
+
+/* ============================================
+   FLOATING CHINESE CHARACTERS
+   ============================================ */
+.floating-chars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.float-char {
+    position: absolute;
+    font-size: 60px;
+    color: var(--gold-primary);
+    opacity: 0.04;
+    font-family: 'ZCOOL XiaoWei', serif;
+    animation: floatChar 20s infinite ease-in-out;
+}
+
+.char-1 { top: 10%; left: 5%; animation-delay: 0s; }
+.char-2 { top: 30%; right: 8%; animation-delay: 3s; }
+.char-3 { top: 60%; left: 10%; animation-delay: 6s; }
+.char-4 { top: 80%; right: 15%; animation-delay: 9s; }
+.char-5 { top: 45%; left: 50%; animation-delay: 12s; }
+.char-6 { top: 20%; left: 70%; animation-delay: 15s; }
+
+@keyframes floatChar {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.04;
+    }
+    50% {
+        transform: translateY(-30px) rotate(5deg);
+        opacity: 0.08;
+    }
+}
+
+/* ============================================
+   CONTAINER
+   ============================================ */
+.container {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ============================================
+   TEMPLE HEADER
+   ============================================ */
+.temple-header {
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+}
+
+.lotus-divider {
+    margin: 20px auto;
+    width: 200px;
+    opacity: 0.6;
+}
+
+.lotus-svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.3));
+}
+
+.main-title {
+    font-size: 64px;
+    font-weight: 400;
+    color: var(--gold-primary);
+    letter-spacing: 20px;
+    margin: 30px 0;
+    text-shadow: 
+        0 0 20px rgba(201, 168, 76, 0.5),
+        0 0 40px rgba(201, 168, 76, 0.3),
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+    animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 
+            0 0 20px rgba(201, 168, 76, 0.5),
+            0 0 40px rgba(201, 168, 76, 0.3),
+            2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    50% {
+        text-shadow: 
+            0 0 30px rgba(201, 168, 76, 0.8),
+            0 0 60px rgba(201, 168, 76, 0.5),
+            0 0 80px rgba(201, 168, 76, 0.3),
+            2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+}
+
+.title-char {
+    display: inline-block;
+    animation: charFloat 3s ease-in-out infinite;
+}
+
+.title-char:nth-child(1) { animation-delay: 0s; }
+.title-char:nth-child(2) { animation-delay: 0.2s; }
+.title-char:nth-child(3) { animation-delay: 0.4s; }
+.title-char:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes charFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    letter-spacing: 5px;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* ============================================
+   FORM CONTAINER
+   ============================================ */
+.form-container {
+    margin: 40px 0;
+}
+
+.form-frame {
+    position: relative;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+    border: 2px solid var(--gold-dark);
+    border-radius: 5px;
+    padding: 50px 40px;
+    box-shadow: 
+        0 0 30px rgba(0, 0, 0, 0.5),
+        inset 0 0 50px rgba(0, 0, 0, 0.3),
+        0 0 80px rgba(201, 168, 76, 0.1);
+}
+
+/* Corner Decorations */
+.corner-decoration {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-color: var(--gold-primary);
+    border-style: solid;
+}
+
+.top-left {
+    top: -2px;
+    left: -2px;
+    border-width: 4px 0 0 4px;
+}
+
+.top-right {
+    top: -2px;
+    right: -2px;
+    border-width: 4px 4px 0 0;
+}
+
+.bottom-left {
+    bottom: -2px;
+    left: -2px;
+    border-width: 0 0 4px 4px;
+}
+
+.bottom-right {
+    bottom: -2px;
+    right: -2px;
+    border-width: 0 4px 4px 0;
+}
+
+/* ============================================
+   FORM STYLES
+   ============================================ */
+.form-group {
+    margin-bottom: 35px;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    color: var(--gold-primary);
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+}
+
+.label-icon {
+    font-size: 24px;
+    filter: drop-shadow(0 0 5px rgba(201, 168, 76, 0.5));
+}
+
+/* Photo Upload */
+.photo-upload-area {
+    width: 100%;
+    min-height: 200px;
+    border: 2px dashed var(--gold-dark);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(201, 168, 76, 0.02);
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-upload-area:hover {
+    border-color: var(--gold-primary);
+    background: rgba(201, 168, 76, 0.05);
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.1);
+}
+
+.photo-upload-area.dragover {
+    border-color: var(--gold-primary);
+    background: rgba(201, 168, 76, 0.1);
+    transform: scale(1.01);
+}
+
+.upload-placeholder {
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.upload-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.upload-placeholder p {
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+.photo-preview {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+}
+
+.photo-preview img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+}
+
+.remove-photo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--red-primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.remove-photo:hover {
+    background: var(--red-light);
+    transform: scale(1.1);
+}
+
+/* Form Inputs */
+.form-input {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 18px;
+    font-family: 'Noto Serif SC', serif;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--border-dark);
+    border-radius: 5px;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    letter-spacing: 2px;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--gold-primary);
+    box-shadow: 
+        0 0 10px rgba(201, 168, 76, 0.3),
+        inset 0 0 10px rgba(201, 168, 76, 0.05);
+}
+
+.form-input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+/* Date Input Styling */
+input[type="date"] {
+    color: var(--text-primary);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.7) sepia(1) saturate(5) hue-rotate(10deg);
+    cursor: pointer;
+}
+
+/* Gender Options */
+.gender-options {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.gender-option {
+    position: relative;
+    cursor: pointer;
+}
+
+.gender-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.gender-label {
+    display: inline-block;
+    padding: 12px 40px;
+    font-size: 18px;
+    color: var(--text-secondary);
+    border: 2px solid var(--border-dark);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    letter-spacing: 3px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.gender-option input[type="radio"]:checked + .gender-label {
+    color: var(--gold-primary);
+    border-color: var(--gold-primary);
+    background: rgba(201, 168, 76, 0.1);
+    box-shadow: 0 0 15px rgba(201, 168, 76, 0.2);
+}
+
+.gender-label:hover {
+    border-color: var(--gold-dark);
+    background: rgba(201, 168, 76, 0.05);
+}
+
+/* ============================================
+   SUBMIT BUTTON
+   ============================================ */
+.submit-btn {
+    position: relative;
+    width: 100%;
+    padding: 18px 40px;
+    font-size: 24px;
+    font-family: 'ZCOOL XiaoWei', serif;
+    color: var(--gold-primary);
+    background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-light) 100%);
+    border: 2px solid var(--gold-primary);
+    border-radius: 5px;
+    cursor: pointer;
+    letter-spacing: 5px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 5px 20px rgba(139, 26, 26, 0.4),
+        0 0 30px rgba(201, 168, 76, 0.3);
+    text-shadow: 0 0 10px rgba(201, 168, 76, 0.8);
+}
+
+.submit-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(201, 168, 76, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.submit-btn:hover:not(:disabled) .btn-glow {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.temple-footer {
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+    margin-top: 60px;
+}
+
+.zen-pattern {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.zen-pattern::before,
+.zen-pattern::after {
+    content: '☯';
+    position: absolute;
+    top: -10px;
+    color: var(--gold-primary);
+    font-size: 20px;
+}
+
+.zen-pattern::before {
+    left: 30%;
+}
+
+.zen-pattern::after {
+    right: 30%;
+}
+
+.footer-text {
+    font-size: 16px;
+    color: var(--text-secondary);
+    letter-spacing: 5px;
+    opacity: 0.6;
+}
+
+/* ============================================
+   SUCCESS MODAL
+   ============================================ */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+    border: 3px solid var(--gold-primary);
+    border-radius: 10px;
+    padding: 50px 40px;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 
+        0 0 50px rgba(201, 168, 76, 0.3),
+        0 0 100px rgba(201, 168, 76, 0.1);
+    animation: modalSlideIn 0.5s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-lotus {
+    font-size: 80px;
+    color: var(--gold-primary);
+    margin-bottom: 20px;
+    animation: lotusSpin 3s ease-in-out infinite;
+}
+
+@keyframes lotusSpin {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+}
+
+.modal-title {
+    font-size: 36px;
+    color: var(--gold-primary);
+    margin-bottom: 15px;
+    letter-spacing: 5px;
+    font-weight: 400;
+}
+
+.modal-message {
+    font-size: 20px;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+}
+
+.modal-submessage {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    opacity: 0.7;
+}
+
+.modal-close {
+    padding: 12px 40px;
+    font-size: 18px;
+    font-family: 'ZCOOL XiaoWei', serif;
+    color: var(--gold-primary);
+    background: transparent;
+    border: 2px solid var(--gold-primary);
+    border-radius: 5px;
+    cursor: pointer;
+    letter-spacing: 3px;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    background: rgba(201, 168, 76, 0.1);
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 42px;
+        letter-spacing: 10px;
+    }
+
+    .form-frame {
+        padding: 30px 20px;
+    }
+
+    .form-label {
+        font-size: 18px;
+    }
+
+    .gender-options {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .gender-label {
+        display: block;
+        text-align: center;
+    }
+
+    .submit-btn {
+        font-size: 20px;
+    }
+
+    .float-char {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 32px;
+        letter-spacing: 5px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+        letter-spacing: 2px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .form-frame {
+        padding: 20px 15px;
+    }
+}
+
+/* ============================================
+   ADMIN LOGIN PAGE
+   ============================================ */
+.admin-login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.admin-login-box {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+    border: 2px solid var(--gold-primary);
+    border-radius: 10px;
+    padding: 50px 40px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 0 50px rgba(201, 168, 76, 0.2);
+}
+
+.admin-login-title {
+    font-size: 32px;
+    color: var(--gold-primary);
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 5px;
+    font-weight: 400;
+}
+
+.admin-login-box .form-input {
+    margin-bottom: 20px;
+}
+
+.admin-login-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    font-family: 'ZCOOL XiaoWei', serif;
+    color: var(--gold-primary);
+    background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-light) 100%);
+    border: 2px solid var(--gold-primary);
+    border-radius: 5px;
+    cursor: pointer;
+    letter-spacing: 3px;
+    transition: all 0.3s ease;
+}
+
+.admin-login-btn:hover {
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
+}
+
+.error-message {
+    color: var(--red-light);
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+/* ============================================
+   ADMIN PAGE
+   ============================================ */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 0;
+    border-bottom: 2px solid var(--gold-dark);
+    margin-bottom: 30px;
+}
+
+.admin-title {
+    font-size: 36px;
+    color: var(--gold-primary);
+    letter-spacing: 5px;
+    font-weight: 400;
+}
+
+.logout-btn {
+    padding: 10px 30px;
+    font-size: 16px;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid var(--border-dark);
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-family: 'Noto Serif SC', serif;
+}
+
+.logout-btn:hover {
+    border-color: var(--gold-primary);
+    color: var(--gold-primary);
+}
+
+.submissions-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+.submissions-table th {
+    background: rgba(201, 168, 76, 0.1);
+    color: var(--gold-primary);
+    padding: 15px;
+    text-align: left;
+    font-weight: 400;
+    letter-spacing: 2px;
+    border-bottom: 2px solid var(--gold-dark);
+}
+
+.submissions-table td {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-dark);
+    color: var(--text-secondary);
+}
+
+.submissions-table tr:hover {
+    background: rgba(201, 168, 76, 0.02);
+}
+
+.submission-photo {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid var(--gold-dark);
+}
+
+.download-link {
+    color: var(--gold-primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.download-link:hover {
+    text-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
+}
+
+.no-submissions {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+    font-size: 18px;
+    letter-spacing: 3px;
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold-dark);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-primary);
+}

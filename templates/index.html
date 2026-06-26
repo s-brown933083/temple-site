@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>禅意净土 - Temple of Serenity</title>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Incense Smoke Animation -->
+    <div class="incense-smoke">
+        <div class="smoke-particle"></div>
+        <div class="smoke-particle"></div>
+        <div class="smoke-particle"></div>
+        <div class="smoke-particle"></div>
+        <div class="smoke-particle"></div>
+    </div>
+
+    <!-- Floating Chinese Characters -->
+    <div class="floating-chars">
+        <span class="float-char char-1">佛</span>
+        <span class="float-char char-2">道</span>
+        <span class="float-char char-3">禅</span>
+        <span class="float-char char-4">福</span>
+        <span class="float-char char-5">慧</span>
+        <span class="float-char char-6">静</span>
+    </div>
+
+    <div class="container">
+        <!-- Header with Temple Design -->
+        <header class="temple-header">
+            <div class="lotus-divider top-lotus">
+                <svg viewBox="0 0 200 50" class="lotus-svg">
+                    <path d="M100 45 Q85 25 80 10 Q90 20 100 15 Q110 20 120 10 Q115 25 100 45Z" fill="#c9a84c" opacity="0.6"/>
+                    <path d="M100 45 Q70 30 60 15 Q80 25 100 20 Q95 35 100 45Z" fill="#c9a84c" opacity="0.5"/>
+                    <path d="M100 45 Q130 30 140 15 Q120 25 100 20 Q105 35 100 45Z" fill="#c9a84c" opacity="0.5"/>
+                </svg>
+            </div>
+            
+            <h1 class="main-title">
+                <span class="title-char">禅</span>
+                <span class="title-char">意</span>
+                <span class="title-char">净</span>
+                <span class="title-char">土</span>
+            </h1>
+            
+            <p class="subtitle">愿以此功德，庄严佛净土</p>
+            
+            <div class="lotus-divider bottom-lotus">
+                <svg viewBox="0 0 200 50" class="lotus-svg">
+                    <path d="M100 5 Q85 25 80 40 Q90 30 100 35 Q110 30 120 40 Q115 25 100 5Z" fill="#c9a84c" opacity="0.6"/>
+                    <path d="M100 5 Q70 20 60 35 Q80 25 100 30 Q95 15 100 5Z" fill="#c9a84c" opacity="0.5"/>
+                    <path d="M100 5 Q130 20 140 35 Q120 25 100 30 Q105 15 100 5Z" fill="#c9a84c" opacity="0.5"/>
+                </svg>
+            </div>
+        </header>
+
+        <!-- Main Form -->
+        <main class="form-container">
+            <div class="form-frame">
+                <div class="corner-decoration top-left"></div>
+                <div class="corner-decoration top-right"></div>
+                <div class="corner-decoration bottom-left"></div>
+                <div class="corner-decoration bottom-right"></div>
+
+                <form id="templeForm" enctype="multipart/form-data">
+                    <!-- Photo Upload -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span class="label-icon">📿</span>
+                            <span>上传照片</span>
+                        </label>
+                        <div class="photo-upload-area" id="photoUploadArea">
+                            <input type="file" id="photo" name="photo" accept="image/*" hidden>
+                            <div class="upload-placeholder" id="uploadPlaceholder">
+                                <svg viewBox="0 0 60 60" class="upload-icon">
+                                    <circle cx="30" cy="30" r="28" fill="none" stroke="#c9a84c" stroke-width="2"/>
+                                    <path d="M30 20 V40 M20 30 H40" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <p>点击或拖拽上传</p>
+                            </div>
+                            <div class="photo-preview" id="photoPreview" style="display: none;">
+                                <img id="previewImage" src="" alt="预览">
+                                <button type="button" class="remove-photo" id="removePhoto">✕</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label class="form-label" for="name">
+                            <span class="label-icon">🪷</span>
+                            <span>姓名</span>
+                        </label>
+                        <input type="text" id="name" name="name" class="form-input" placeholder="请输入您的姓名" required>
+                    </div>
+
+                    <!-- Birthday -->
+                    <div class="form-group">
+                        <label class="form-label" for="birthday">
+                            <span class="label-icon">🏮</span>
+                            <span>生日</span>
+                        </label>
+                        <input type="date" id="birthday" name="birthday" class="form-input" required>
+                    </div>
+
+                    <!-- Gender -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span class="label-icon">☯</span>
+                            <span>性别</span>
+                        </label>
+                        <div class="gender-options">
+                            <label class="gender-option">
+                                <input type="radio" name="gender" value="男" required>
+                                <span class="gender-label">男</span>
+                            </label>
+                            <label class="gender-option">
+                                <input type="radio" name="gender" value="女">
+                                <span class="gender-label">女</span>
+                            </label>
+                            <label class="gender-option">
+                                <input type="radio" name="gender" value="其他">
+                                <span class="gender-label">其他</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">提交祈愿</span>
+                        <span class="btn-glow"></span>
+                    </button>
+                </form>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="temple-footer">
+            <div class="zen-pattern"></div>
+            <p class="footer-text">心净则国土净 · 一切唯心造</p>
+            <div class="bamboo-decoration left-bamboo"></div>
+            <div class="bamboo-decoration right-bamboo"></div>
+        </footer>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-lotus">☸</div>
+            <h2 class="modal-title">感恩提交</h2>
+            <p class="modal-message">愿福慧增长，吉祥如意</p>
+            <p class="modal-submessage">功德无量 · 阿弥陀佛</p>
+            <button class="modal-close" id="closeModal">阿弥陀佛</button>
+        </div>
+    </div>
+
+    <script>
+        // Photo Upload Preview
+        const photoInput = document.getElementById('photo');
+        const photoUploadArea = document.getElementById('photoUploadArea');
+        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+        const photoPreview = document.getElementById('photoPreview');
+        const previewImage = document.getElementById('previewImage');
+        const removePhoto = document.getElementById('removePhoto');
+
+        photoUploadArea.addEventListener('click', () => photoInput.click());
+
+        photoUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            photoUploadArea.classList.add('dragover');
+        });
+
+        photoUploadArea.addEventListener('dragleave', () => {
+            photoUploadArea.classList.remove('dragover');
+        });
+
+        photoUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            photoUploadArea.classList.remove('dragover');
+            if (e.dataTransfer.files.length) {
+                photoInput.files = e.dataTransfer.files;
+                showPreview(e.dataTransfer.files[0]);
+            }
+        });
+
+        photoInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                showPreview(e.target.files[0]);
+            }
+        });
+
+        function showPreview(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                uploadPlaceholder.style.display = 'none';
+                photoPreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        removePhoto.addEventListener('click', (e) => {
+            e.stopPropagation();
+            photoInput.value = '';
+            uploadPlaceholder.style.display = 'block';
+            photoPreview.style.display = 'none';
+        });
+
+        // Form Submission
+        document.getElementById('templeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const submitBtn = e.target.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.querySelector('.btn-text').textContent = '提交中...';
+
+            try {
+                const response = await fetch('/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('successModal').style.display = 'flex';
+                    e.target.reset();
+                    uploadPlaceholder.style.display = 'block';
+                    photoPreview.style.display = 'none';
+                } else {
+                    alert(result.message);
+                }
+            } catch (error) {
+                alert('提交失败，请重试');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.querySelector('.btn-text').textContent = '提交祈愿';
+            }
+        });
+
+        // Modal Close
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('successModal').style.display = 'none';
+        });
+    </script>
+</body>
+</html>

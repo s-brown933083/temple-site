@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - 禅意净土</title>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Admin-specific styles */
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .stats-bar {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            flex: 1;
+            min-width: 200px;
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+            border: 1px solid var(--gold-dark);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            color: var(--gold-primary);
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 30px;
+        }
+        
+        .submissions-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .submissions-table thead {
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.15) 0%, rgba(139, 26, 26, 0.15) 100%);
+        }
+        
+        .submissions-table th {
+            padding: 18px 15px;
+            text-align: left;
+            color: var(--gold-primary);
+            font-weight: 400;
+            letter-spacing: 2px;
+            font-size: 16px;
+            border-bottom: 2px solid var(--gold-dark);
+            white-space: nowrap;
+        }
+        
+        .submissions-table td {
+            padding: 15px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-dark);
+            vertical-align: middle;
+        }
+        
+        .submissions-table tbody tr {
+            transition: all 0.3s ease;
+        }
+        
+        .submissions-table tbody tr:hover {
+            background: rgba(201, 168, 76, 0.03);
+            box-shadow: inset 0 0 30px rgba(201, 168, 76, 0.02);
+        }
+        
+        .submission-photo {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 2px solid var(--gold-dark);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .no-photo {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(201, 168, 76, 0.05);
+            border-radius: 5px;
+            border: 1px dashed var(--gold-dark);
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        .download-link {
+            color: var(--gold-primary);
+            text-decoration: none;
+            padding: 5px 15px;
+            border: 1px solid var(--gold-dark);
+            border-radius: 3px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .download-link:hover {
+            background: rgba(201, 168, 76, 0.1);
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 10px rgba(201, 168, 76, 0.2);
+        }
+        
+        .timestamp {
+            font-size: 13px;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .empty-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.2;
+        }
+        
+        .empty-text {
+            font-size: 20px;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-title {
+                font-size: 28px;
+            }
+            
+            .stat-card {
+                min-width: 150px;
+            }
+            
+            .stat-number {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <h1 class="admin-title">管理后台</h1>
+            <a href="{{ url_for('admin_logout') }}" class="logout-btn">退出登录</a>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-number">{{ submissions|length }}</div>
+                <div class="stat-label">总提交数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ submissions|selectattr('3')|list|length }}</div>
+                <div class="stat-label">有照片</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ submissions|map(attribute=3)|select('defined')|list|length }}</div>
+                <div class="stat-label">今日新增</div>
+            </div>
+        </div>
+        
+        <!-- Table -->
+        {% if submissions %}
+            <div class="table-responsive">
+                <table class="submissions-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>照片</th>
+                            <th>姓名</th>
+                            <th>生日</th>
+                            <th>性别</th>
+                            <th>提交时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for submission in submissions %}
+                            <tr>
+                                <td>{{ submission[0] }}</td>
+                                <td>
+                                    {% if submission[4] %}
+                                        <img 
+                                            src="{{ url_for('static', filename='uploads/' + submission[4]) }}" 
+                                            alt="照片" 
+                                            class="submission-photo"
+                                        >
+                                    {% else %}
+                                        <div class="no-photo">无</div>
+                                    {% endif %}
+                                </td>
+                                <td>{{ submission[1] }}</td>
+                                <td>{{ submission[2] }}</td>
+                                <td>{{ submission[3] }}</td>
+                                <td class="timestamp">{{ submission[5] }}</td>
+                                <td>
+                                    {% if submission[4] %}
+                                        <a 
+                                            href="{{ url_for('static', filename='uploads/' + submission[4]) }}" 
+                                            download
+                                            class="download-link"
+                                        >
+                                            下载
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">☸</div>
+                <p class="empty-text">暂无提交记录</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
