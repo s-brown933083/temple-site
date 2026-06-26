@@ -3,12 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>禅意净土 - Temple of Serenity</title>
-    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <title data-i18n="page_title">禅意净土 - Temple of Serenity</title>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <!-- Incense Smoke Animation -->
+    <!-- ===== 多语言切换条 ===== -->
+    <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="ja">日本語</button>
+        <button class="lang-btn" data-lang="ko">한국어</button>
+    </div>
+
+    <!-- ===== 粒子背景 ===== -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- ===== 飘落莲花瓣 ===== -->
+    <div class="petal-container" id="petalContainer"></div>
+
+    <!-- ===== 香火烟雾 ===== -->
     <div class="incense-smoke">
         <div class="smoke-particle"></div>
         <div class="smoke-particle"></div>
@@ -17,18 +31,18 @@
         <div class="smoke-particle"></div>
     </div>
 
-    <!-- Floating Chinese Characters -->
+    <!-- ===== 浮动文字 ===== -->
     <div class="floating-chars">
-        <span class="float-char char-1">佛</span>
-        <span class="float-char char-2">道</span>
-        <span class="float-char char-3">禅</span>
-        <span class="float-char char-4">福</span>
-        <span class="float-char char-5">慧</span>
-        <span class="float-char char-6">静</span>
+        <span class="float-char char-1" data-i18n="char1">佛</span>
+        <span class="float-char char-2" data-i18n="char2">道</span>
+        <span class="float-char char-3" data-i18n="char3">禅</span>
+        <span class="float-char char-4" data-i18n="char4">福</span>
+        <span class="float-char char-5" data-i18n="char5">慧</span>
+        <span class="float-char char-6" data-i18n="char6">静</span>
     </div>
 
     <div class="container">
-        <!-- Header with Temple Design -->
+        <!-- ===== 顶部 ===== -->
         <header class="temple-header">
             <div class="lotus-divider top-lotus">
                 <svg viewBox="0 0 200 50" class="lotus-svg">
@@ -39,13 +53,13 @@
             </div>
             
             <h1 class="main-title">
-                <span class="title-char">禅</span>
-                <span class="title-char">意</span>
-                <span class="title-char">净</span>
-                <span class="title-char">土</span>
+                <span class="title-char" data-i18n="title1">禅</span>
+                <span class="title-char" data-i18n="title2">意</span>
+                <span class="title-char" data-i18n="title3">净</span>
+                <span class="title-char" data-i18n="title4">土</span>
             </h1>
             
-            <p class="subtitle">愿以此功德，庄严佛净土</p>
+            <p class="subtitle typewriter-text" data-i18n="subtitle">愿以此功德，庄严佛净土</p>
             
             <div class="lotus-divider bottom-lotus">
                 <svg viewBox="0 0 200 50" class="lotus-svg">
@@ -56,20 +70,20 @@
             </div>
         </header>
 
-        <!-- Main Form -->
+        <!-- ===== 主表单 ===== -->
         <main class="form-container">
-            <div class="form-frame">
+            <div class="form-frame shimmer-border">
                 <div class="corner-decoration top-left"></div>
                 <div class="corner-decoration top-right"></div>
                 <div class="corner-decoration bottom-left"></div>
                 <div class="corner-decoration bottom-right"></div>
 
                 <form id="templeForm" enctype="multipart/form-data">
-                    <!-- Photo Upload -->
+                    <!-- 照片上传 -->
                     <div class="form-group">
                         <label class="form-label">
                             <span class="label-icon">📿</span>
-                            <span>上传照片</span>
+                            <span data-i18n="label_photo">上传照片</span>
                         </label>
                         <div class="photo-upload-area" id="photoUploadArea">
                             <input type="file" id="photo" name="photo" accept="image/*" hidden>
@@ -78,173 +92,568 @@
                                     <circle cx="30" cy="30" r="28" fill="none" stroke="#c9a84c" stroke-width="2"/>
                                     <path d="M30 20 V40 M20 30 H40" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
-                                <p>点击或拖拽上传</p>
+                                <p data-i18n="upload_hint">点击或拖拽上传</p>
                             </div>
                             <div class="photo-preview" id="photoPreview" style="display: none;">
-                                <img id="previewImage" src="" alt="预览">
+                                <img id="previewImage" src="" alt="preview">
                                 <button type="button" class="remove-photo" id="removePhoto">✕</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Name -->
+                    <!-- 姓名 -->
                     <div class="form-group">
                         <label class="form-label" for="name">
                             <span class="label-icon">🪷</span>
-                            <span>姓名</span>
+                            <span data-i18n="label_name">姓名</span>
                         </label>
-                        <input type="text" id="name" name="name" class="form-input" placeholder="请输入您的姓名" required>
+                        <input type="text" id="name" name="name" class="form-input" data-i18n-placeholder="placeholder_name" placeholder="请输入您的姓名" required>
                     </div>
 
-                    <!-- Birthday -->
+                    <!-- 生日 -->
                     <div class="form-group">
                         <label class="form-label" for="birthday">
                             <span class="label-icon">🏮</span>
-                            <span>生日</span>
+                            <span data-i18n="label_birthday">生日</span>
                         </label>
                         <input type="date" id="birthday" name="birthday" class="form-input" required>
                     </div>
 
-                    <!-- Gender -->
+                    <!-- 性别 -->
                     <div class="form-group">
                         <label class="form-label">
                             <span class="label-icon">☯</span>
-                            <span>性别</span>
+                            <span data-i18n="label_gender">性别</span>
                         </label>
                         <div class="gender-options">
                             <label class="gender-option">
                                 <input type="radio" name="gender" value="男" required>
-                                <span class="gender-label">男</span>
+                                <span class="gender-label" data-i18n="gender_male">男</span>
                             </label>
                             <label class="gender-option">
                                 <input type="radio" name="gender" value="女">
-                                <span class="gender-label">女</span>
+                                <span class="gender-label" data-i18n="gender_female">女</span>
                             </label>
                             <label class="gender-option">
                                 <input type="radio" name="gender" value="其他">
-                                <span class="gender-label">其他</span>
+                                <span class="gender-label" data-i18n="gender_other">其他</span>
                             </label>
                         </div>
                     </div>
 
-                    <!-- Submit Button -->
-                    <button type="submit" class="submit-btn">
-                        <span class="btn-text">提交祈愿</span>
+                    <!-- ===== 免责声明 & 隐私条款 ===== -->
+                    <div class="disclaimer-section">
+                        <div class="disclaimer-toggle" id="disclaimerToggle">
+                            <span class="disclaimer-icon">⚖️</span>
+                            <span data-i18n="disclaimer_title">重要声明与隐私条款</span>
+                            <span class="toggle-arrow">▼</span>
+                        </div>
+                        <div class="disclaimer-content" id="disclaimerContent">
+                            <div class="disclaimer-item">
+                                <h4 data-i18n="disc_1_title">📜 免责声明</h4>
+                                <p data-i18n="disc_1_body">本网站提供的所有内容仅供娱乐参考，不构成任何形式的承诺或保证。提交信息后，我们不对任何基于本网站信息做出的决定或行为承担责任。用户应独立判断并承担相应风险。</p>
+                            </div>
+                            <div class="disclaimer-item">
+                                <h4 data-i18n="disc_2_title">🔒 隐私保护声明</h4>
+                                <p data-i18n="disc_2_body">您提交的个人信息（姓名、生日、性别、照片）仅用于本次祈愿活动。我们承诺不会将您的个人信息出售、分享或用于任何未经授权的商业用途。您的数据将在30天后自动销毁。</p>
+                            </div>
+                            <div class="disclaimer-item">
+                                <h4 data-i18n="disc_3_title">📋 信息获取告知</h4>
+                                <p data-i18n="disc_3_body">当您点击"提交祈愿"按钮时，即表示您已阅读并同意上述条款。您提交的信息将被安全存储，仅管理员可查看。如需删除数据，请通过管理员邮箱联系我们：admin@temple-serenity.org</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 用户确认 -->
+                    <div class="consent-checkbox">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="consent" required>
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-text" data-i18n="consent_text">
+                                我已阅读并同意以上声明与隐私条款
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- 提交按钮 -->
+                    <button type="submit" class="submit-btn pulse-glow" id="submitBtn">
+                        <span class="btn-text" data-i18n="submit_text">提交祈愿</span>
                         <span class="btn-glow"></span>
                     </button>
                 </form>
             </div>
         </main>
 
-        <!-- Footer -->
+        <!-- ===== 底部 ===== -->
         <footer class="temple-footer">
             <div class="zen-pattern"></div>
-            <p class="footer-text">心净则国土净 · 一切唯心造</p>
+            <p class="footer-text" data-i18n="footer">心净则国土净 · 一切唯心造</p>
+            <p class="footer-sub" data-i18n="footer_sub">© 2026 Temple of Serenity · 保留所有权利</p>
             <div class="bamboo-decoration left-bamboo"></div>
             <div class="bamboo-decoration right-bamboo"></div>
         </footer>
     </div>
 
-    <!-- Success Modal -->
+    <!-- ===== 成功弹窗 ===== -->
     <div class="modal-overlay" id="successModal" style="display: none;">
         <div class="modal-content">
             <div class="modal-lotus">☸</div>
-            <h2 class="modal-title">感恩提交</h2>
-            <p class="modal-message">愿福慧增长，吉祥如意</p>
-            <p class="modal-submessage">功德无量 · 阿弥陀佛</p>
-            <button class="modal-close" id="closeModal">阿弥陀佛</button>
+            <h2 class="modal-title" data-i18n="modal_title">感恩提交</h2>
+            <p class="modal-message" data-i18n="modal_msg">
+                感谢您的支持，您的私人信息我们会保管好，12小时内，您将会收到结果
+            </p>
+            <p class="modal-submessage" data-i18n="modal_sub">功德无量 · 福慧增长</p>
+            <button class="modal-close" id="closeModal" data-i18n="modal_btn">确认</button>
         </div>
     </div>
 
     <script>
-        // Photo Upload Preview
-        const photoInput = document.getElementById('photo');
-        const photoUploadArea = document.getElementById('photoUploadArea');
-        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
-        const photoPreview = document.getElementById('photoPreview');
-        const previewImage = document.getElementById('previewImage');
-        const removePhoto = document.getElementById('removePhoto');
+    // ============================================================
+    // 多语言系统
+    // ============================================================
+    const translations = {
+        zh: {
+            page_title: '禅意净土 - Temple of Serenity',
+            char1: '佛', char2: '道', char3: '禅', char4: '福', char5: '慧', char6: '静',
+            title1: '禅', title2: '意', title3: '净', title4: '土',
+            subtitle: '愿以此功德，庄严佛净土',
+            label_photo: '上传照片',
+            upload_hint: '点击或拖拽上传',
+            label_name: '姓名',
+            placeholder_name: '请输入您的姓名',
+            label_birthday: '生日',
+            label_gender: '性别',
+            gender_male: '男', gender_female: '女', gender_other: '其他',
+            disclaimer_title: '⚖️ 重要声明与隐私条款',
+            disc_1_title: '📜 免责声明',
+            disc_1_body: '本网站提供的所有内容仅供娱乐参考，不构成任何形式的承诺或保证。提交信息后，我们不对任何基于本网站信息做出的决定或行为承担责任。用户应独立判断并承担相应风险。',
+            disc_2_title: '🔒 隐私保护声明',
+            disc_2_body: '您提交的个人信息（姓名、生日、性别、照片）仅用于本次祈愿活动。我们承诺不会将您的个人信息出售、分享或用于任何未经授权的商业用途。您的数据将在30天后自动销毁。',
+            disc_3_title: '📋 信息获取告知',
+            disc_3_body: '当您点击"提交祈愿"按钮时，即表示您已阅读并同意上述条款。您提交的信息将被安全存储，仅管理员可查看。如需删除数据，请通过管理员邮箱联系我们：admin@temple-serenity.org',
+            consent_text: '我已阅读并同意以上声明与隐私条款',
+            submit_text: '提交祈愿',
+            footer: '心净则国土净 · 一切唯心造',
+            footer_sub: '© 2026 Temple of Serenity · 保留所有权利',
+            modal_title: '感恩提交',
+            modal_msg: '感谢您的支持，您的私人信息我们会保管好，12小时内，您将会收到结果',
+            modal_sub: '功德无量 · 福慧增长',
+            modal_btn: '确认',
+            submitting: '提交中...',
+            submit_error: '提交失败，请重试',
+        },
+        en: {
+            page_title: 'Temple of Serenity - Zen Garden',
+            char1: 'Zen', char2: 'Tao', char3: 'Chan', char4: 'Bless', char5: 'Wisdom', char6: 'Peace',
+            title1: '', title2: '', title3: '', title4: 'Temple of Serenity',
+            subtitle: 'May this merit adorn the pure land',
+            label_photo: 'Upload Photo',
+            upload_hint: 'Click or drag to upload',
+            label_name: 'Full Name',
+            placeholder_name: 'Enter your name',
+            label_birthday: 'Date of Birth',
+            label_gender: 'Gender',
+            gender_male: 'Male', gender_female: 'Female', gender_other: 'Other',
+            disclaimer_title: '⚖️ Important Notice & Privacy Terms',
+            disc_1_title: '📜 Disclaimer',
+            disc_1_body: 'All content on this website is for entertainment reference only and does not constitute any form of promise or guarantee. After submitting information, we assume no responsibility for any decisions or actions based on this website. Users should make independent judgments and bear corresponding risks.',
+            disc_2_title: '🔒 Privacy Protection',
+            disc_2_body: 'The personal information you submit (name, date of birth, gender, photo) is used solely for this prayer activity. We promise not to sell, share, or use your personal information for any unauthorized commercial purposes. Your data will be automatically destroyed after 30 days.',
+            disc_3_title: '📋 Information Consent',
+            disc_3_body: 'By clicking the "Submit Prayer" button, you confirm that you have read and agree to the above terms. Your submitted information will be securely stored and only accessible to administrators. To request data deletion, contact us at: admin@temple-serenity.org',
+            consent_text: 'I have read and agree to the above terms & privacy policy',
+            submit_text: 'Submit Prayer',
+            footer: 'Pure mind, pure land · All is mind-made',
+            footer_sub: '© 2026 Temple of Serenity · All rights reserved',
+            modal_title: 'Gratitude',
+            modal_msg: 'Thank you for your support. Your personal information will be kept safe. You will receive the result within 12 hours.',
+            modal_sub: 'Boundless merit · May wisdom grow',
+            modal_btn: 'OK',
+            submitting: 'Submitting...',
+            submit_error: 'Submission failed, please try again',
+        },
+        ja: {
+            page_title: '禅の浄土 - Temple of Serenity',
+            char1: '仏', char2: '道', char3: '禅', char4: '福', char5: '慧', char6: '静',
+            title1: '禅', title2: 'の', title3: '浄', title4: '土',
+            subtitle: 'この功徳をもって仏の浄土を荘厳せん',
+            label_photo: '写真をアップロード',
+            upload_hint: 'クリックまたはドラッグ',
+            label_name: 'お名前',
+            placeholder_name: 'お名前を入力',
+            label_birthday: '生年月日',
+            label_gender: '性別',
+            gender_male: '男性', gender_female: '女性', gender_other: 'その他',
+            disclaimer_title: '⚖️ 重要事項とプライバシー',
+            disc_1_title: '📜 免責事項',
+            disc_1_body: '本ウェブサイトの内容は娯楽目的の参考情報であり、いかなる約束や保証を構成するものではありません。情報提出後、本サイトに基づく判断や行動について一切責任を負いません。',
+            disc_2_title: '🔒 プライバシー保護',
+            disc_2_body: '提出いただいた個人情報（氏名、生年月日、性別、写真）は本祈願活動のみに使用します。第三者への提供や商業目的での使用は一切いたしません。データは30日後に自動削除されます。',
+            disc_3_title: '📋 情報取得について',
+            disc_3_body: '「祈願を送信」ボタンをクリックすることで、上記条件に同意したものとみなします。お問い合わせは admin@temple-serenity.org まで。',
+            consent_text: '上記の声明とプライバシー条項に同意します',
+            submit_text: '祈願を送信',
+            footer: '心浄ければ国土浄し · 一切は心の造るところ',
+            footer_sub: '© 2026 Temple of Serenity · 全著作権所有',
+            modal_title: '感謝',
+            modal_msg: 'ご支援ありがとうございます。個人情報は厳重に保管され、12時間以内に結果をお知らせいたします。',
+            modal_sub: '功德無量 · 福慧増長',
+            modal_btn: '確認',
+            submitting: '送信中...',
+            submit_error: '送信失敗、もう一度お試しください',
+        },
+        ko: {
+            page_title: '선의 정토 - Temple of Serenity',
+            char1: '불', char2: '도', char3: '선', char4: '복', char5: '혜', char6: '정',
+            title1: '선', title2: '의', title3: '정', title4: '토',
+            subtitle: '이 공덕으로 부처님 정토를 장엄하나이다',
+            label_photo: '사진 업로드',
+            upload_hint: '클릭 또는 드래그하여 업로드',
+            label_name: '성함',
+            placeholder_name: '성함을 입력하세요',
+            label_birthday: '생년월일',
+            label_gender: '성별',
+            gender_male: '남성', gender_female: '여성', gender_other: '기타',
+            disclaimer_title: '⚖️ 중요 고지 및 개인정보 약관',
+            disc_1_title: '📜 면책 조항',
+            disc_1_body: '본 웹사이트의 모든 내용은 오락적 참고용으로만 제공되며, 어떠한 형태의 약속이나 보증도 구성하지 않습니다. 정보 제출 후 본 사이트 정보에 기반한 결정이나 행동에 대해 책임을 지지 않습니다.',
+            disc_2_title: '🔒 개인정보 보호',
+            disc_2_body: '귀하가 제출한 개인정보(성명, 생년월일, 성별, 사진)는 본 기원 활동에만 사용됩니다. 개인정보를 판매, 공유 또는 무단 상업적 목적으로 사용하지 않을 것을 약속합니다. 데이터는 30일 후 자동 폐기됩니다.',
+            disc_3_title: '📋 정보 수집 동의',
+            disc_3_body: '"기원 제출" 버튼을 클릭하면 위 약관을 읽고 동의한 것으로 간주됩니다. 데이터 삭제를 원하시면 admin@temple-serenity.org로 연락주십시오.',
+            consent_text: '위 고지 및 개인정보 약관에 동의합니다',
+            submit_text: '기원 제출',
+            footer: '마음이 정화되면 국토도 정화되나니 · 모든 것은 마음이 만든다',
+            footer_sub: '© 2026 Temple of Serenity · 모든 권리 보유',
+            modal_title: '감사합니다',
+            modal_msg: '지원해 주셔서 감사합니다. 귀하의 개인 정보는 안전하게 보관되며, 12시간 이내에 결과를 받으실 수 있습니다.',
+            modal_sub: '공덕 무량 · 복혜 증장',
+            modal_btn: '확인',
+            submitting: '제출 중...',
+            submit_error: '제출 실패, 다시 시도해 주세요',
+        }
+    };
 
-        photoUploadArea.addEventListener('click', () => photoInput.click());
+    // 当前语言
+    let currentLang = 'zh';
 
-        photoUploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            photoUploadArea.classList.add('dragover');
-        });
+    function switchLang(lang) {
+        currentLang = lang;
+        const t = translations[lang];
 
-        photoUploadArea.addEventListener('dragleave', () => {
-            photoUploadArea.classList.remove('dragover');
-        });
-
-        photoUploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            photoUploadArea.classList.remove('dragover');
-            if (e.dataTransfer.files.length) {
-                photoInput.files = e.dataTransfer.files;
-                showPreview(e.dataTransfer.files[0]);
+        // 更新所有 data-i18n 元素
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key] !== undefined) {
+                el.textContent = t[key];
             }
         });
 
-        photoInput.addEventListener('change', (e) => {
-            if (e.target.files.length) {
-                showPreview(e.target.files[0]);
+        // 更新 data-i18n-placeholder 元素
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (t[key] !== undefined) {
+                el.placeholder = t[key];
             }
         });
 
-        function showPreview(file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                previewImage.src = e.target.result;
-                uploadPlaceholder.style.display = 'none';
-                photoPreview.style.display = 'block';
-            };
-            reader.readAsDataURL(file);
+        // 更新页面标题
+        if (t.page_title) {
+            document.title = t.page_title;
         }
 
-        removePhoto.addEventListener('click', (e) => {
-            e.stopPropagation();
-            photoInput.value = '';
-            uploadPlaceholder.style.display = 'block';
-            photoPreview.style.display = 'none';
+        // 更新语言按钮状态
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
         });
 
-        // Form Submission
-        document.getElementById('templeForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const formData = new FormData(e.target);
-            const submitBtn = e.target.querySelector('.submit-btn');
-            submitBtn.disabled = true;
-            submitBtn.querySelector('.btn-text').textContent = '提交中...';
+        // 如果弹窗可见，更新提交按钮文本
+        const submitBtn = document.querySelector('#submitBtn .btn-text');
+        if (submitBtn) submitBtn.textContent = t.submit_text;
 
-            try {
-                const response = await fetch('/submit', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    document.getElementById('successModal').style.display = 'flex';
-                    e.target.reset();
-                    uploadPlaceholder.style.display = 'block';
-                    photoPreview.style.display = 'none';
-                } else {
-                    alert(result.message);
-                }
-            } catch (error) {
-                alert('提交失败，请重试');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.querySelector('.btn-text').textContent = '提交祈愿';
+        // 保存语言偏好
+        try {
+            localStorage.setItem('temple_lang', lang);
+        } catch(e) {}
+    }
+
+    // ===== 语言切换事件 =====
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            switchLang(btn.dataset.lang);
+        });
+    });
+
+    // ===== 恢复保存的语言偏好 =====
+    (function initLang() {
+        try {
+            const saved = localStorage.getItem('temple_lang');
+            if (saved && translations[saved]) {
+                switchLang(saved);
             }
+        } catch(e) {}
+    })();
+
+    // ============================================================
+    // 粒子背景 Canvas
+    // ============================================================
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouseX = -1000, mouseY = -1000;
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 3 + 0.5;
+            this.speedX = (Math.random() - 0.5) * 0.3;
+            this.speedY = (Math.random() - 0.5) * 0.3;
+            this.opacity = Math.random() * 0.5 + 0.1;
+            this.golden = Math.random() > 0.5;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            // 鼠标吸引效果
+            const dx = mouseX - this.x;
+            const dy = mouseY - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 200) {
+                const force = (200 - dist) / 200 * 0.02;
+                this.x += dx * force;
+                this.y += dy * force;
+            }
+
+            if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                this.reset();
+            }
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = this.golden
+                ? `rgba(201, 168, 76, ${this.opacity})`
+                : `rgba(255, 255, 255, ${this.opacity * 0.5})`;
+            ctx.fill();
+        }
+    }
+
+    // 创建粒子
+    const particleCount = Math.min(Math.floor(window.innerWidth * 0.08), 100);
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+    // 鼠标追踪
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+    document.addEventListener('touchmove', (e) => {
+        if (e.touches.length) {
+            mouseX = e.touches[0].clientX;
+            mouseY = e.touches[0].clientY;
+        }
+    });
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // 粒子间连线
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 150) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(201, 168, 76, ${0.1 * (1 - dist / 150)})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            }
+        }
+
+        particles.forEach(p => {
+            p.update();
+            p.draw();
         });
 
-        // Modal Close
-        document.getElementById('closeModal').addEventListener('click', () => {
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // ============================================================
+    // 飘落莲花瓣
+    // ============================================================
+    const petalContainer = document.getElementById('petalContainer');
+    const petalCount = 8;
+    const petalSymbols = ['🌸', '🪷', '✿', '❀', '𓆸'];
+
+    for (let i = 0; i < petalCount; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'falling-petal';
+        petal.textContent = petalSymbols[i % petalSymbols.length];
+        petal.style.left = Math.random() * 100 + '%';
+        petal.style.fontSize = (Math.random() * 12 + 10) + 'px';
+        petal.style.animationDuration = (Math.random() * 8 + 10) + 's';
+        petal.style.animationDelay = (Math.random() * 15) + 's';
+        petal.style.opacity = Math.random() * 0.2 + 0.05;
+        petalContainer.appendChild(petal);
+    }
+
+    // ============================================================
+    // 免责声明展开/收起
+    // ============================================================
+    document.getElementById('disclaimerToggle').addEventListener('click', function() {
+        const content = document.getElementById('disclaimerContent');
+        const arrow = this.querySelector('.toggle-arrow');
+        if (content.style.display === 'block') {
+            content.style.display = 'none';
+            arrow.textContent = '▶';
+        } else {
+            content.style.display = 'block';
+            arrow.textContent = '▼';
+        }
+    });
+
+    // ============================================================
+    // 照片上传预览
+    // ============================================================
+    const photoInput = document.getElementById('photo');
+    const photoUploadArea = document.getElementById('photoUploadArea');
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+    const photoPreview = document.getElementById('photoPreview');
+    const previewImage = document.getElementById('previewImage');
+    const removePhoto = document.getElementById('removePhoto');
+
+    photoUploadArea.addEventListener('click', () => photoInput.click());
+
+    photoUploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        photoUploadArea.classList.add('dragover');
+    });
+
+    photoUploadArea.addEventListener('dragleave', () => {
+        photoUploadArea.classList.remove('dragover');
+    });
+
+    photoUploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        photoUploadArea.classList.remove('dragover');
+        if (e.dataTransfer.files.length) {
+            photoInput.files = e.dataTransfer.files;
+            showPreview(e.dataTransfer.files[0]);
+        }
+    });
+
+    photoInput.addEventListener('change', (e) => {
+        if (e.target.files.length) {
+            showPreview(e.target.files[0]);
+        }
+    });
+
+    function showPreview(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            previewImage.src = e.target.result;
+            uploadPlaceholder.style.display = 'none';
+            photoPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    removePhoto.addEventListener('click', (e) => {
+        e.stopPropagation();
+        photoInput.value = '';
+        uploadPlaceholder.style.display = 'block';
+        photoPreview.style.display = 'none';
+    });
+
+    // ============================================================
+    // 表单提交
+    // ============================================================
+    document.getElementById('templeForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        const submitBtn = e.target.querySelector('.submit-btn');
+        const t = translations[currentLang];
+        
+        submitBtn.disabled = true;
+        submitBtn.querySelector('.btn-text').textContent = t.submitting || '提交中...';
+
+        try {
+            const response = await fetch('/submit', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                document.getElementById('successModal').style.display = 'flex';
+                e.target.reset();
+                uploadPlaceholder.style.display = 'block';
+                photoPreview.style.display = 'none';
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            alert(t.submit_error || '提交失败，请重试');
+        } finally {
+            submitBtn.disabled = false;
+            // 按钮文字可能会被语言切换更新
+            submitBtn.querySelector('.btn-text').textContent = t.submit_text;
+        }
+    });
+
+    // ===== 弹窗关闭 =====
+    document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('successModal').style.display = 'none';
+    });
+
+    // 点击弹窗背景关闭
+    document.getElementById('successModal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
             document.getElementById('successModal').style.display = 'none';
-        });
+        }
+    });
+
+    // ============================================================
+    // 打字机效果
+    // ============================================================
+    (function typewriter() {
+        const el = document.querySelector('.typewriter-text');
+        if (!el) return;
+        const text = el.textContent;
+        el.textContent = '';
+        el.style.visibility = 'visible';
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                el.textContent += text.charAt(i);
+                i++;
+                const delay = text.charAt(i - 1).match(/[\u4e00-\u9fff]/) ? 120 : 60;
+                setTimeout(type, delay);
+            }
+        }
+        setTimeout(type, 500);
+    })();
     </script>
 </body>
 </html>

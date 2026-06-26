@@ -17,3 +17,5 @@ build/
 *.egg-info/
 .environ
 .flaskenv
+static/uploads/
+cookies.txt

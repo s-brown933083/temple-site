@@ -5,31 +5,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录 - 禅意净土管理</title>
     <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #0a0a0a;
+            --gold-primary: #c9a84c;
+            --gold-dark: rgba(201,168,76,0.3);
+            --gold-light: rgba(201,168,76,0.08);
+            --text-primary: #e8e0d0;
+            --text-secondary: #a09880;
+        }
+        body {
+            font-family: 'Noto Serif SC', 'ZCOOL XiaoWei', serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: 
+                radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.05) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(139,26,26,0.03) 0%, transparent 50%);
+        }
+        .login-wrapper {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+        .login-box {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(20,15,5,0.9));
+            border: 1px solid var(--gold-dark);
+            border-radius: 12px;
+            padding: 50px 40px 40px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .login-icon { font-size: 48px; margin-bottom: 10px; }
+        .login-title {
+            font-size: 24px;
+            color: var(--gold-primary);
+            font-weight: 400;
+            letter-spacing: 4px;
+            margin-bottom: 5px;
+        }
+        .login-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+            margin-bottom: 35px;
+            opacity: 0.6;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--gold-dark);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 16px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        .form-input:focus { border-color: var(--gold-primary); box-shadow: 0 0 20px rgba(201,168,76,0.1); }
+        .form-input::placeholder { color: var(--text-secondary); opacity: 0.4; }
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
+            font-size: 16px;
+            font-family: inherit;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 4px;
+        }
+        .login-btn:hover {
+            background: var(--gold-primary);
+            color: #000;
+            box-shadow: 0 0 30px rgba(201,168,76,0.2);
+        }
+        .error-message {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 15px;
+            letter-spacing: 1px;
+        }
+        .line-decoration {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 25px 0;
+            opacity: 0.3;
+        }
+        .line-decoration span { flex: 1; height: 1px; background: var(--gold-dark); }
+        .line-decoration i { color: var(--gold-primary); font-size: 12px; }
+        .hint {
+            font-size: 11px;
+            color: var(--text-secondary);
+            opacity: 0.3;
+            margin-top: 20px;
+        }
+        @media (max-width: 480px) {
+            .login-box { padding: 40px 25px 30px; }
+        }
+    </style>
 </head>
 <body>
-    <div class="admin-login-container">
-        <div class="admin-login-box">
-            <h1 class="admin-login-title">管理登录</h1>
+    <div class="login-wrapper">
+        <div class="login-box">
+            <div class="login-icon">☸</div>
+            <h1 class="login-title">管理登录</h1>
+            <p class="login-subtitle">ADMINISTRATOR</p>
             
             <form method="POST" action="{{ url_for('admin_login') }}">
                 <div class="form-group">
-                    <input 
-                        type="password" 
-                        name="password" 
-                        class="form-input" 
-                        placeholder="请输入管理密码" 
-                        required
-                        autofocus
-                    >
+                    <input type="password" name="password" class="form-input" placeholder="输入管理密码" required autofocus>
                 </div>
-                
-                <button type="submit" class="admin-login-btn">进入</button>
+                <button type="submit" class="login-btn">进 入</button>
                 
                 {% if error %}
                     <p class="error-message">{{ error }}</p>
                 {% endif %}
             </form>
+            
+            <div class="line-decoration"><span></span><i>◈</i><span></span></div>
+            <p class="hint">仅限管理员使用</p>
         </div>
     </div>
 </body>
