@@ -7,6 +7,7 @@ import io
 from datetime import datetime, timedelta
 import hashlib
 import smtplib
+import threading
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -14,16 +15,16 @@ app = Flask(__name__)
 app.secret_key = 'temple_secret_key_2026'
 
 # Configuration
-UPLOAD_FOLDER = 'static/uploads'
+UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', os.path.join(os.path.dirname(__file__), 'static', 'uploads'))
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 ADMIN_PASSWORD = 'temple2026'
 
-# Email Configuration (配置你的邮箱)
-SMTP_SERVER = 'smtp.gmail.com'  # 或 'smtp.qq.com' 等
-SMTP_PORT = 587
-SMTP_USER = 'your-email@gmail.com'  # 替换为你的邮箱
-SMTP_PASSWORD = 'your-app-password'  # 替换为应用专用密码
-ADMIN_EMAIL = 'admin@temple-serenity.org'
+# Email Configuration (环境变量优先，支持 Gmail / QQ / QQ企业邮箱 / SendGrid 等)
+SMTP_SERVER = os.environ.get('SMTP_SERVER', 'smtp.gmail.com')
+SMTP_PORT = int(os.environ.get('SMTP_PORT', '587'))
+SMTP_USER = os.environ.get('SMTP_USER', 'your-email@gmail.com')
+SMTP_PASSWORD = os.environ.get('SMTP_PASSWORD', 'your-app-password')
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@temple-serenity.org')
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max
@@ -34,7 +35,8 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db():
-    conn = sqlite3.connect('submissions.db')
+    db_path = os.environ.get('DATABASE_PATH', os.path.join(os.path.dirname(__file__), 'submissions.db'))
+    conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -69,6 +71,10 @@ init_db()
 def index():
     return render_template('index.html')
 
+@app.route('/health')
+def health():
+    return {'status': 'ok', 'service': 'temple-site'}
+
 @app.route('/submit', methods=['POST'])
 def submit():
     try:
@@ -100,8 +106,12 @@ def submit():
         conn.commit()
         conn.close()
         
-        # 发送通知邮件给管理员
-        send_admin_notification(name, birthday, gender, email, photo_filename, message)
+        # 后台异步发送通知邮件（不阻塞提交响应）
+        threading.Thread(
+            target=send_admin_notification,
+            args=(name, birthday, gender, email, photo_filename, message),
+            daemon=True
+        ).start()
         
         return jsonify({'success': True, 'message': '感恩您的提交。愿福慧增长，吉祥如意。'})
     
@@ -372,7 +382,7 @@ def send_notification_email(to_email, subject, body):
         
         msg.attach(MIMEText(html_body, 'html', 'utf-8'))
         
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=10)
         server.starttls()
         server.login(SMTP_USER, SMTP_PASSWORD)
         server.sendmail(SMTP_USER, to_email, msg.as_string())
@@ -439,7 +449,7 @@ def send_result_email(to_email, name, result_text):
         
         msg.attach(MIMEText(html_content, 'html', 'utf-8'))
         
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=10) as server:
             server.starttls()
             server.login(SMTP_USER, SMTP_PASSWORD)
             server.send_message(msg)
