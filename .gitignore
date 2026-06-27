@@ -11,3 +11,4 @@ venv/
 .venv/
 .env
 .DS_Store
+_test.js

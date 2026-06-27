@@ -6,6 +6,9 @@ import csv
 import io
 from datetime import datetime, timedelta
 import hashlib
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
 app.secret_key = 'temple_secret_key_2026'
@@ -14,6 +17,13 @@ app.secret_key = 'temple_secret_key_2026'
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 ADMIN_PASSWORD = 'temple2026'
+
+# Email Configuration (配置你的邮箱)
+SMTP_SERVER = 'smtp.gmail.com'  # 或 'smtp.qq.com' 等
+SMTP_PORT = 587
+SMTP_USER = 'your-email@gmail.com'  # 替换为你的邮箱
+SMTP_PASSWORD = 'your-app-password'  # 替换为应用专用密码
+ADMIN_EMAIL = 'admin@temple-serenity.org'
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max
@@ -38,12 +48,18 @@ def init_db():
                   gender TEXT NOT NULL,
                   photo_filename TEXT,
                   email TEXT,
+                  message TEXT,
                   submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
     # Add email column if missing (for existing DB)
     try:
         c.execute('ALTER TABLE submissions ADD COLUMN email TEXT')
     except sqlite3.OperationalError:
-        pass  # Column already exists
+        pass
+    # Add message column if missing
+    try:
+        c.execute('ALTER TABLE submissions ADD COLUMN message TEXT')
+    except sqlite3.OperationalError:
+        pass
     conn.commit()
     conn.close()
 
@@ -60,6 +76,7 @@ def submit():
         birthday = request.form.get('birthday', '').strip()
         gender = request.form.get('gender', '').strip()
         email = request.form.get('email', '').strip() or None
+        message = request.form.get('message', '').strip() or None
         
         if not all([name, birthday, gender]):
             return jsonify({'success': False, 'message': '请填写所有必填字段'})
@@ -77,10 +94,14 @@ def submit():
         
         conn = get_db()
         c = conn.cursor()
-        c.execute('''INSERT INTO submissions (name, birthday, gender, photo_filename, email)
-                     VALUES (?, ?, ?, ?, ?)''', (name, birthday, gender, photo_filename, email))
+        c.execute('''INSERT INTO submissions (name, birthday, gender, photo_filename, email, message)
+                     VALUES (?, ?, ?, ?, ?, ?)''', (name, birthday, gender, photo_filename, email, message))
+        submission_id = c.lastrowid
         conn.commit()
         conn.close()
+        
+        # 发送通知邮件给管理员
+        send_admin_notification(name, birthday, gender, email, photo_filename, message)
         
         return jsonify({'success': True, 'message': '感恩您的提交。愿福慧增长，吉祥如意。'})
     
@@ -295,12 +316,13 @@ def admin_api_export():
     
     output = io.StringIO()
     writer = csv.writer(output)
-    writer.writerow(['ID', '姓名', '生日', '性别', '邮箱', '照片文件', '提交时间'])
+    writer.writerow(['ID', '姓名', '生日', '性别', '邮箱', '留言', '照片文件', '提交时间'])
     
     for row in rows:
         writer.writerow([
             row['id'], row['name'], row['birthday'],
             row['gender'], row['email'] or '',
+            row['message'] or '',
             row['photo_filename'] or '', row['submitted_at']
         ])
     
@@ -320,7 +342,141 @@ def admin_photo(filename):
     return redirect(url_for('static', filename=f'uploads/{filename}'))
 
 
+# ─── Email Notification ─────────────────────────────────────
+
+def send_notification_email(to_email, subject, body):
+    """发送通知邮件"""
+    if not to_email:
+        return False
+    
+    try:
+        msg = MIMEMultipart('alternative')
+        msg['From'] = SMTP_USER
+        msg['To'] = to_email
+        msg['Subject'] = subject
+        
+        html_body = f'''
+        <html>
+        <body style="font-family: 'Noto Serif SC', serif; background: #0a0a0a; color: #e8e0d0; padding: 20px;">
+        <div style="max-width: 600px; margin: 0 auto; background: #1a1a1a; border: 2px solid #c9a84c; border-radius: 10px; padding: 30px;">
+        <h2 style="color: #c9a84c; text-align: center; letter-spacing: 3px;">☸ 禅意净土</h2>
+        <p style="text-align: center; color: #b8a890;">{body}</p>
+        <hr style="border-color: #c9a84c; margin: 20px 0;">
+        <p style="text-align: center; font-size: 12px; color: #888;">
+        © 2026 Temple of Serenity · 愿以此功德，庄严佛净土
+        </p>
+        </div>
+        </body>
+        </html>
+        '''
+        
+        msg.attach(MIMEText(html_body, 'html', 'utf-8'))
+        
+        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+        server.starttls()
+        server.login(SMTP_USER, SMTP_PASSWORD)
+        server.sendmail(SMTP_USER, to_email, msg.as_string())
+        server.quit()
+        
+        return True
+    except Exception as e:
+        print(f'Email error: {e}')
+        return False
+
+
+def send_admin_notification(name, birthday, gender, email, photo_filename, message=None):
+    """通知管理员有新提交"""
+    subject = f'【新祈愿提交】{name}'
+    body = f'''
+    新的祈愿已提交：<br><br>
+    姓名：{name}<br>
+    生日：{birthday}<br>
+    性别：{gender}<br>
+    邮箱：{email or "未提供"}<br>
+    照片：{'已上传' if photo_filename else '未上传'}<br>
+    留言：{message or "无"}<br><br>
+    请登录管理后台查看详情。<br>
+    <a href="https://your-domain.com/admin" style="color: #c9a84c;">点击进入管理后台</a>
+    '''
+    return send_notification_email(ADMIN_EMAIL, subject, body)
+
+
 if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
+
+
+# ─── Email Functions ─────────────────────────────────────────
+
+def send_result_email(to_email, name, result_text):
+    """发送算命结果到用户邮箱"""
+    if not to_email:
+        return False
+    
+    try:
+        msg = MIMEMultipart('alternative')
+        msg['From'] = f'禅意净土 <{SMTP_USER}>'
+        msg['To'] = to_email
+        msg['Subject'] = '您的祈愿结果已出炉 - 禅意净土'
+        
+        html_content = f'''
+        <html>
+        <body style="font-family: 'Microsoft YaHei', sans-serif; background: #0a0a0a; color: #e8e0d0; padding: 20px;">
+        <div style="max-width: 600px; margin: 0 auto; background: #1a1a1a; border: 2px solid #c9a84c; border-radius: 10px; padding: 30px;">
+            <h1 style="color: #c9a84c; text-align: center; letter-spacing: 5px;">☸ 感恩祈愿 ☸</h1>
+            <p style="text-align: center; color: #b8a890;">{name}，愿福慧增长，吉祥如意</p>
+            <div style="background: rgba(201, 168, 76, 0.1); padding: 20px; border-radius: 5px; margin: 20px 0;">
+                {result_text}
+            </div>
+            <p style="font-size: 12px; color: #888; text-align: center; margin-top: 30px;">
+                © 2026 Temple of Serenity · 本服务仅供娱乐参考
+            </p>
+        </div>
+        </body>
+        </html>
+        '''
+        
+        msg.attach(MIMEText(html_content, 'html', 'utf-8'))
+        
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(SMTP_USER, SMTP_PASSWORD)
+            server.send_message(msg)
+        
+        return True
+    except Exception as e:
+        print(f"Email send error: {e}")
+        return False
+
+
+@app.route('/admin/api/submissions/<int:submission_id>/send-result', methods=['POST'])
+def admin_api_send_result(submission_id):
+    """管理员发送结果到用户邮箱"""
+    if not session.get('admin_logged_in'):
+        return jsonify({'error': '未登录'}), 401
+    
+    result_text = request.form.get('result_text', '').strip()
+    if not result_text:
+        return jsonify({'error': '请填写结果内容'}), 400
+    
+    conn = get_db()
+    c = conn.cursor()
+    c.execute('SELECT * FROM submissions WHERE id = ?', (submission_id,))
+    row = c.fetchone()
+    
+    if not row:
+        conn.close()
+        return jsonify({'error': '记录不存在'}), 404
+    
+    if not row['email']:
+        conn.close()
+        return jsonify({'error': '该用户未填写邮箱'}), 400
+    
+    success = send_result_email(row['email'], row['name'], result_text)
+    conn.close()
+    
+    if success:
+        return jsonify({'success': True, 'message': '结果已发送至用户邮箱'})
+    else:
+        return jsonify({'error': '邮件发送失败，请检查邮箱配置'}), 500

@@ -1,54 +1,133 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title data-i18n="page_title">禅意净土 - Temple of Serenity</title>
     <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <!-- ===== 法律声明门（多语言） ===== -->
+    <div class="legal-gate-overlay" id="legalGate">
+        <div class="legal-gate-modal">
+            <!-- 语言选择器 -->
+            <div class="gate-lang-selector">
+                <button class="gate-lang-btn active" data-lang="zh">中文</button>
+                <button class="gate-lang-btn" data-lang="en">English</button>
+                <button class="gate-lang-btn" data-lang="ja">日本語</button>
+                <button class="gate-lang-btn" data-lang="ko">한국어</button>
+                <button class="gate-lang-btn" data-lang="es">Español</button>
+                <button class="gate-lang-btn" data-lang="pt">Português</button>
+            </div>
+            
+            <h2 class="legal-gate-title">⚖ <span data-i18n="legal_title">重要声明</span></h2>
+            <div class="legal-gate-content">
+                <h3>📜 <span data-i18n="legal_service_title">服务说明</span></h3>
+                <p data-i18n="legal_service_body">本网站提供的是基于传统文化和玄学的命理咨询服务，仅供娱乐参考，不构成任何形式的预测或保证。</p>
+                
+                <h3>🔒 <span data-i18n="legal_privacy_title">隐私保护</span></h3>
+                <ul>
+                    <li data-i18n="legal_privacy_1">您提交的照片、姓名、生日等信息仅用于本次咨询</li>
+                    <li data-i18n="legal_privacy_2">我们承诺不会将您的信息出售或分享给第三方</li>
+                    <li data-i18n="legal_privacy_3">所有数据将在30天后自动删除</li>
+                    <li data-i18n="legal_privacy_4">结果将通过您提供的邮箱发送（如未填写邮箱，请在12小时内主动联系客服）</li>
+                </ul>
+                
+                <h3>📋 <span data-i18n="legal_disclaimer_title">免责条款</span></h3>
+                <ul>
+                    <li data-i18n="legal_disclaimer_1">本服务仅供娱乐，不构成任何形式的承诺或保证</li>
+                    <li data-i18n="legal_disclaimer_2">用户应独立判断并承担相应风险</li>
+                    <li data-i18n="legal_disclaimer_3">我们不承担任何基于本服务做出的决定或行为的责任</li>
+                </ul>
+                
+                <h3>✉ <span data-i18n="legal_contact_title">联系方式</span></h3>
+                <p data-i18n="legal_contact_body">如需删除数据或有疑问，请联系：admin@temple-serenity.org</p>
+            </div>
+            
+            <label class="legal-gate-checkbox">
+                <input type="checkbox" id="legalAgree">
+                <span class="checkbox-custom"></span>
+                <span data-i18n="legal_agree_text">我已阅读并同意以上条款，且已满18岁</span>
+            </label>
+            
+            <button class="legal-gate-btn" id="legalGateBtn" disabled onclick="enterSite()">
+                <span data-i18n="legal_enter_btn">我已理解，进入网站</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== 视频背景 ===== -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline id="bgVideo">
+            <source src="{{ url_for('static', filename='videos/temple_smoke.mp4') }}" type="video/mp4">
+        </video>
+    </div>
+    <div class="video-overlay"></div>
+
+    <!-- ===== 浮动寺庙图片装饰 ===== -->
+    <div class="floating-images">
+        <img src="{{ url_for('static', filename='images/temples/temple_0.jpg') }}" alt="Temple" class="float-img float-img-1">
+        <img src="{{ url_for('static', filename='images/temples/temple_1.jpg') }}" alt="Temple" class="float-img float-img-2">
+        <img src="{{ url_for('static', filename='images/temples/temple_3.jpg') }}" alt="Temple" class="float-img float-img-3">
+        <img src="{{ url_for('static', filename='images/temples/temple_4.jpg') }}" alt="Temple" class="float-img float-img-4">
+    </div>
+
+    
+        <!-- ===== 社区信任 ===== -->
+        <div class="trust-section">
+            <div class="trust-stats">
+                <div class="trust-stat">
+                    <span class="stat-number">1,200+</span>
+                    <span class="stat-label" data-i18n="stat_prayers">Prayers Answered</span>
+                </div>
+                <div class="trust-stat">
+                    <span class="stat-number">98%</span>
+                    <span class="stat-label" data-i18n="stat_satisfaction">Satisfaction Rate</span>
+                </div>
+                <div class="trust-stat">
+                    <span class="stat-number">30+</span>
+                    <span class="stat-label" data-i18n="stat_countries">Countries Reached</span>
+                </div>
+            </div>
+        </div>
+
     <!-- ===== 多语言切换条 ===== -->
-    <div class="lang-switcher">
+    <div class="lang-switcher" id="mainLangSwitcher">
         <button class="lang-btn active" data-lang="zh">中文</button>
         <button class="lang-btn" data-lang="en">English</button>
         <button class="lang-btn" data-lang="ja">日本語</button>
         <button class="lang-btn" data-lang="ko">한국어</button>
+        <button class="lang-btn" data-lang="es">Español</button>
+        <button class="lang-btn" data-lang="pt">Português</button>
     </div>
 
-    <!-- ===== 粒子背景 ===== -->
+    <!-- ===== 粒子背景 Canvas ===== -->
     <canvas id="particleCanvas"></canvas>
 
-    <!-- ===== 飘落莲花瓣 ===== -->
+    <!-- ===== 飘落莲花瓣容器 ===== -->
     <div class="petal-container" id="petalContainer"></div>
 
-    <!-- ===== 香火烟雾 ===== -->
-    <div class="incense-smoke">
-        <div class="smoke-particle"></div>
-        <div class="smoke-particle"></div>
-        <div class="smoke-particle"></div>
-        <div class="smoke-particle"></div>
-        <div class="smoke-particle"></div>
-    </div>
-
-    <!-- ===== 浮动文字 ===== -->
+    <!-- ===== 浮动汉字装饰 ===== -->
     <div class="floating-chars">
-        <span class="float-char char-1" data-i18n="char1">佛</span>
-        <span class="float-char char-2" data-i18n="char2">道</span>
-        <span class="float-char char-3" data-i18n="char3">禅</span>
-        <span class="float-char char-4" data-i18n="char4">福</span>
-        <span class="float-char char-5" data-i18n="char5">慧</span>
-        <span class="float-char char-6" data-i18n="char6">静</span>
+        <div class="float-char char-1">佛</div>
+        <div class="float-char char-2">道</div>
+        <div class="float-char char-3">禅</div>
+        <div class="float-char char-4">福</div>
+        <div class="float-char char-5">慧</div>
+        <div class="float-char char-6">静</div>
     </div>
 
+    <!-- ===== 主容器 ===== -->
     <div class="container">
-        <!-- ===== 顶部 ===== -->
+        <!-- ===== 头部 ===== -->
         <header class="temple-header">
-            <div class="lotus-divider top-lotus">
-                <svg viewBox="0 0 200 50" class="lotus-svg">
-                    <path d="M100 45 Q85 25 80 10 Q90 20 100 15 Q110 20 120 10 Q115 25 100 45Z" fill="#c9a84c" opacity="0.6"/>
-                    <path d="M100 45 Q70 30 60 15 Q80 25 100 20 Q95 35 100 45Z" fill="#c9a84c" opacity="0.5"/>
-                    <path d="M100 45 Q130 30 140 15 Q120 25 100 20 Q105 35 100 45Z" fill="#c9a84c" opacity="0.5"/>
+            <div class="lotus-divider">
+                <svg class="lotus-svg" viewBox="0 0 100 60" fill="none" stroke="#c9a84c" stroke-width="1.5">
+                    <path d="M50 5 Q30 25 50 45 Q70 25 50 5" opacity="0.7"/>
+                    <path d="M30 20 Q10 35 30 50" opacity="0.5"/>
+                    <path d="M70 20 Q90 35 70 50" opacity="0.5"/>
+                    <circle cx="50" cy="25" r="3" fill="#c9a84c"/>
                 </svg>
             </div>
             
@@ -59,16 +138,143 @@
                 <span class="title-char" data-i18n="title4">土</span>
             </h1>
             
-            <p class="subtitle typewriter-text" data-i18n="subtitle">愿以此功德，庄严佛净土</p>
-            
-            <div class="lotus-divider bottom-lotus">
-                <svg viewBox="0 0 200 50" class="lotus-svg">
-                    <path d="M100 5 Q85 25 80 40 Q90 30 100 35 Q110 30 120 40 Q115 25 100 5Z" fill="#c9a84c" opacity="0.6"/>
-                    <path d="M100 5 Q70 20 60 35 Q80 25 100 30 Q95 15 100 5Z" fill="#c9a84c" opacity="0.5"/>
-                    <path d="M100 5 Q130 20 140 35 Q120 25 100 30 Q105 15 100 5Z" fill="#c9a84c" opacity="0.5"/>
-                </svg>
-            </div>
+            <p class="subtitle" id="subtitle"></p>
         </header>
+
+        <!-- ===== 三段佛门名言（轮播） ===== -->
+        <div class="wisdom-quotes">
+            <div class="quote-container" id="quoteContainer">
+                <p class="quote-text" data-i18n="quote_1">一花一世界，一叶一如来</p>
+                <p class="quote-text" data-i18n="quote_2">应无所住而生其心</p>
+                <p class="quote-text" data-i18n="quote_3">菩提本无树，明镜亦非台</p>
+            </div>
+            <div class="quote-dots"></div>
+        </div>
+
+        <!-- ===== 网站作用说明（外国人斯文版） ===== -->
+        <div class="mission-section">
+            <div class="mission-badge">✦ <span data-i18n="mission_badge">About This Service</span></div>
+            <div class="mission-content">
+                <p data-i18n="mission_desc">This is a sacred space where ancient wisdom meets modern guidance. Rooted in Buddhist philosophical traditions, our service offers personal insight through the compassionate lens of Zen contemplation. Whether you seek clarity, inner peace, or a gentle nudge on your spiritual journey, we are here to walk beside you with respect and humility.</p>
+            </div>
+        </div>
+
+        <!-- ===== 服务流程说明 ===== -->
+        <div class="service-flow">
+            <div class="service-flow-title" data-i18n="service_flow_title">☸ 服务流程</div>
+            <div class="service-flow-steps">
+                <div class="service-step">
+                    <div class="service-step-icon">📷</div>
+                    <div class="service-step-text" data-i18n="step1">上传照片</div>
+                </div>
+                <div class="service-step">
+                    <div class="service-step-icon">📝</div>
+                    <div class="service-step-text" data-i18n="step2">填写信息</div>
+                </div>
+                <div class="service-step">
+                    <div class="service-step-icon">🔮</div>
+                    <div class="service-step-text" data-i18n="step3">专业解读</div>
+                </div>
+                <div class="service-step">
+                    <div class="service-step-icon">✉️</div>
+                    <div class="service-step-text" data-i18n="step4">邮箱接收</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Support Section（简约西方风格） ===== -->
+        <div class="support-section">
+            <div class="support-container">
+                <!-- 标题 -->
+                <div class="support-header">
+                    <h2 class="support-title" data-i18n="support_title">Support Our Work</h2>
+                    <p class="support-subtitle" data-i18n="support_subtitle">Your contribution helps us continue providing spiritual guidance</p>
+                </div>
+
+                <!-- 简化金额选择 -->
+                <div class="support-amounts">
+                    <button class="support-btn" data-amount="5">$5</button>
+                    <button class="support-btn" data-amount="10">$10</button>
+                    <button class="support-btn popular" data-amount="20">
+                        $20
+                        <span class="popular-tag">Popular</span>
+                    </button>
+                    <button class="support-btn" data-amount="50">$50</button>
+                    <button class="support-btn" data-amount="100">$100</button>
+                    <button class="support-btn" data-amount="200">$200</button>
+                    <button class="support-btn" data-amount="custom">
+                        <span data-i18n="custom_amount">Custom</span>
+                    </button>
+                </div>
+
+                <!-- 自定义金额输入（默认隐藏） -->
+                <div class="custom-input-section" id="customInputSection" style="display:none;">
+                    <div class="input-group">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="customAmountInput" min="5" step="1" placeholder="Enter amount" class="custom-input">
+                    </div>
+                </div>
+
+                <!-- 支付方式（简化为3个图标按钮） -->
+                <div class="payment-options">
+                    <button class="payment-option active" data-method="crypto" title="Cryptocurrency">
+                        <svg class="payment-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.39-2.1 1.39-1.6 0-2.23-.72-2.32-1.64H8.04c.1 1.7 1.36 2.66 2.86 2.97V19h2.34v-1.67c1.52-.29 2.72-1.16 2.73-2.77-.01-2.2-1.9-2.96-3.66-3.42z"/>
+                        </svg>
+                        <span>Crypto</span>
+                    </button>
+                    <button class="payment-option" data-method="paypal" title="PayPal">
+                        <svg class="payment-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.77.77 0 0 1 .76-.65h6.523c2.165 0 3.9.534 5.029 1.544 1.174 1.051 1.597 2.586 1.22 4.438-.009.047-.02.094-.031.14-.537 2.47-2.201 4.13-4.95 4.65-.507.096-1.036.144-1.574.144H9.56a.77.77 0 0 0-.76.65l-.724 4.5z"/>
+                        </svg>
+                        <span>PayPal</span>
+                    </button>
+                    <button class="payment-option" data-method="wise" title="Wise">
+                        <svg class="payment-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        <span>Wise</span>
+                    </button>
+                </div>
+
+                <!-- 支持按钮 -->
+                <button class="support-submit-btn" id="supportSubmitBtn" disabled>
+                    <span data-i18n="support_now">Support Now</span>
+                    <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+
+                <!-- 支付信息显示 -->
+                <div class="payment-details" id="paymentDetails" style="display:none;">
+                    <div class="payment-qr">
+                        <div class="qr-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="7" height="7" rx="1"/>
+                                <rect x="14" y="3" width="7" height="7" rx="1"/>
+                                <rect x="3" y="14" width="7" height="7" rx="1"/>
+                                <rect x="14" y="14" width="3" height="3"/>
+                                <rect x="18" y="14" width="3" height="3"/>
+                                <rect x="14" y="18" width="3" height="3"/>
+                                <rect x="18" y="18" width="3" height="3"/>
+                            </svg>
+                            <p data-i18n="qr_available">QR Code Available Soon</p>
+                        </div>
+                    </div>
+                    <div class="payment-info-text">
+                        <p class="amount-display">$<span id="displayAmount">0</span></p>
+                        <p class="method-display" id="displayMethod">Cryptocurrency</p>
+                    </div>
+                </div>
+
+                <!-- 信任徽章 -->
+                <div class="trust-badges">
+                    <span class="badge">🔒 Secure</span>
+                    <span class="badge">✓ No fees</span>
+                    <span class="badge">💝 100% to mission</span>
+                </div>
+            </div>
+        </div>
 
         <!-- ===== 主表单 ===== -->
         <main class="form-container">
@@ -78,45 +284,48 @@
                 <div class="corner-decoration bottom-left"></div>
                 <div class="corner-decoration bottom-right"></div>
 
-                <form id="templeForm" enctype="multipart/form-data">
+                <form id="prayerForm" enctype="multipart/form-data">
                     <!-- 照片上传 -->
                     <div class="form-group">
                         <label class="form-label">
-                            <span class="label-icon">📿</span>
-                            <span data-i18n="label_photo">上传照片</span>
+                            <span class="label-icon">📷</span>
+                            <span data-i18n="label_photo">照片</span>
                         </label>
                         <div class="photo-upload-area" id="photoUploadArea">
-                            <input type="file" id="photo" name="photo" accept="image/*" hidden>
+                            <input type="file" name="photo" id="photoInput" accept="image/*" style="display:none">
                             <div class="upload-placeholder" id="uploadPlaceholder">
-                                <svg viewBox="0 0 60 60" class="upload-icon">
-                                    <circle cx="30" cy="30" r="28" fill="none" stroke="#c9a84c" stroke-width="2"/>
-                                    <path d="M30 20 V40 M20 30 H40" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+                                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="17 8 12 3 7 8"/>
+                                    <line x1="12" y1="3" x2="12" y2="15"/>
                                 </svg>
-                                <p data-i18n="upload_hint">点击或拖拽上传</p>
+                                <p data-i18n="upload_hint">点击或拖拽上传照片</p>
                             </div>
-                            <div class="photo-preview" id="photoPreview" style="display: none;">
-                                <img id="previewImage" src="" alt="preview">
-                                <button type="button" class="remove-photo" id="removePhoto">✕</button>
+                            <div class="photo-preview" id="photoPreview" style="display:none">
+                                <img id="previewImg" src="" alt="Preview">
+                                <button type="button" class="remove-photo" onclick="removePhoto()">✕</button>
                             </div>
                         </div>
                     </div>
 
                     <!-- 姓名 -->
                     <div class="form-group">
-                        <label class="form-label" for="name">
-                            <span class="label-icon">🪷</span>
+                        <label class="form-label">
+                            <span class="label-icon">👤</span>
                             <span data-i18n="label_name">姓名</span>
                         </label>
-                        <input type="text" id="name" name="name" class="form-input" data-i18n-placeholder="placeholder_name" placeholder="请输入您的姓名" required>
+                        <input type="text" name="name" class="form-input" required
+                               data-i18n-placeholder="placeholder_name"
+                               placeholder="请输入您的姓名">
                     </div>
 
                     <!-- 生日 -->
                     <div class="form-group">
-                        <label class="form-label" for="birthday">
-                            <span class="label-icon">🏮</span>
+                        <label class="form-label">
+                            <span class="label-icon">🎂</span>
                             <span data-i18n="label_birthday">生日</span>
                         </label>
-                        <input type="date" id="birthday" name="birthday" class="form-input" required>
+                        <input type="date" name="birthday" class="form-input" required>
                     </div>
 
                     <!-- 性别 -->
@@ -127,39 +336,47 @@
                         </label>
                         <div class="gender-options">
                             <label class="gender-option">
-                                <input type="radio" name="gender" value="男" required>
+                                <input type="radio" name="gender" value="male" required>
                                 <span class="gender-label" data-i18n="gender_male">男</span>
                             </label>
                             <label class="gender-option">
-                                <input type="radio" name="gender" value="女">
+                                <input type="radio" name="gender" value="female">
                                 <span class="gender-label" data-i18n="gender_female">女</span>
-                            </label>
-                            <label class="gender-option">
-                                <input type="radio" name="gender" value="其他">
-                                <span class="gender-label" data-i18n="gender_other">其他</span>
                             </label>
                         </div>
                     </div>
 
-                    <!-- ===== 免责声明 & 隐私条款 ===== -->
+                    <!-- 用户留言气泡 -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span class="label-icon">💬</span>
+                            <span data-i18n="label_message">留言</span>
+                        </label>
+                        <textarea name="message" class="form-input form-textarea" rows="3"
+                                  data-i18n-placeholder="placeholder_message"
+                                  placeholder="在此留下您想对师傅说的话（平台管理者可见）"></textarea>
+                        <p class="message-hint">💡 <span data-i18n="message_hint">此留言将被平台管理者看到</span></p>
+                    </div>
+
+                    <!-- 免责声明 -->
                     <div class="disclaimer-section">
-                        <div class="disclaimer-toggle" id="disclaimerToggle">
-                            <span class="disclaimer-icon">⚖️</span>
-                            <span data-i18n="disclaimer_title">重要声明与隐私条款</span>
-                            <span class="toggle-arrow">▼</span>
+                        <div class="disclaimer-toggle" onclick="toggleDisclaimer()">
+                            <span class="disclaimer-icon">📜</span>
+                            <span data-i18n="disclaimer_title">免责声明与隐私条款</span>
+                            <span class="toggle-arrow" id="disclaimerArrow">▼</span>
                         </div>
                         <div class="disclaimer-content" id="disclaimerContent">
                             <div class="disclaimer-item">
-                                <h4 data-i18n="disc_1_title">📜 免责声明</h4>
-                                <p data-i18n="disc_1_body">本网站提供的所有内容仅供娱乐参考，不构成任何形式的承诺或保证。提交信息后，我们不对任何基于本网站信息做出的决定或行为承担责任。用户应独立判断并承担相应风险。</p>
+                                <h4 data-i18n="disc_1_title">• 服务性质</h4>
+                                <p data-i18n="disc_1_body">本服务基于传统玄学文化，仅供娱乐参考，不构成任何预测或保证。请理性看待结果。</p>
                             </div>
                             <div class="disclaimer-item">
-                                <h4 data-i18n="disc_2_title">🔒 隐私保护声明</h4>
-                                <p data-i18n="disc_2_body">您提交的个人信息（姓名、生日、性别、照片）仅用于本次祈愿活动。我们承诺不会将您的个人信息出售、分享或用于任何未经授权的商业用途。您的数据将在30天后自动销毁。</p>
+                                <h4 data-i18n="disc_2_title">• 隐私保护</h4>
+                                <p data-i18n="disc_2_body">您的个人信息（姓名、生日、照片）仅用于本次服务，绝不外泄。所有数据将在30天后自动删除。</p>
                             </div>
                             <div class="disclaimer-item">
-                                <h4 data-i18n="disc_3_title">📋 信息获取告知</h4>
-                                <p data-i18n="disc_3_body">当您点击"提交祈愿"按钮时，即表示您已阅读并同意上述条款。您提交的信息将被安全存储，仅管理员可查看。如需删除数据，请通过管理员邮箱联系我们：admin@temple-serenity.org</p>
+                                <h4 data-i18n="disc_3_title">• 用户责任</h4>
+                                <p data-i18n="disc_3_body">点击"提交"即表示您已阅读并同意上述条款。如需删除数据，请联系：admin@temple-serenity.org</p>
                             </div>
                         </div>
                     </div>
@@ -169,9 +386,7 @@
                         <label class="checkbox-label">
                             <input type="checkbox" id="consent" required>
                             <span class="checkbox-custom"></span>
-                            <span class="checkbox-text" data-i18n="consent_text">
-                                我已阅读并同意以上声明与隐私条款
-                            </span>
+                            <span class="checkbox-text" data-i18n="consent_text">我已阅读并同意以上声明与隐私条款</span>
                         </label>
                     </div>
 
@@ -181,9 +396,9 @@
                             <span class="label-icon">✉</span>
                             <span data-i18n="label_email">邮箱</span>
                         </label>
-                        <input type="email" name="email" id="emailField" class="form-input"
+                        <input type="email" name="email" id="emailField" class="form-input" required
                                data-i18n-placeholder="placeholder_email"
-                               placeholder="选填（用于接收祈愿结果通知）" />
+                               placeholder="必填（用于接收结果通知）">
                     </div>
 
                     <!-- 提交按钮 -->
@@ -192,7 +407,7 @@
                         <span class="btn-glow"></span>
                     </button>
 
-                    <!-- 自愿随喜（收款码） -->
+                    <!-- 自愿随喜 -->
                     <div class="donation-section" id="donationSection" style="display:none;">
                         <div class="donation-divider">☸ ☸ ☸</div>
                         <p class="donation-title" data-i18n="donation_title">随喜供灯 · 功德自在</p>
@@ -211,8 +426,6 @@
             <div class="zen-pattern"></div>
             <p class="footer-text" data-i18n="footer">心净则国土净 · 一切唯心造</p>
             <p class="footer-sub" data-i18n="footer_sub">© 2026 Temple of Serenity · 保留所有权利</p>
-            <div class="bamboo-decoration left-bamboo"></div>
-            <div class="bamboo-decoration right-bamboo"></div>
         </footer>
     </div>
 
@@ -221,9 +434,7 @@
         <div class="modal-content">
             <div class="modal-lotus">☸</div>
             <h2 class="modal-title" data-i18n="modal_title">感恩提交</h2>
-            <p class="modal-message" data-i18n="modal_msg">
-                感谢您的支持，您的私人信息我们会保管好，12小时内，您将会收到结果
-            </p>
+            <p class="modal-message" data-i18n="modal_msg">感谢您的支持，您的私人信息我们会保管好，12小时内，您将会收到结果</p>
             <p class="modal-submessage" data-i18n="modal_sub">功德无量 · 福慧增长</p>
             <button class="modal-close" id="closeModal" data-i18n="modal_btn">确认</button>
         </div>
@@ -231,219 +442,773 @@
 
     <script>
     // ============================================================
-    // 多语言系统
+    // 多语言翻译系统（支持6种语言）
     // ============================================================
     const translations = {
         zh: {
+            // 页面标题
             page_title: '禅意净土 - Temple of Serenity',
-            char1: '佛', char2: '道', char3: '禅', char4: '福', char5: '慧', char6: '静',
             title1: '禅', title2: '意', title3: '净', title4: '土',
             subtitle: '愿以此功德，庄严佛净土',
-            label_photo: '上传照片',
-            upload_hint: '点击或拖拽上传',
-            label_name: '姓名',
+            
+            // 法律声明门
+            legal_title: '重要声明',
+            legal_service_title: '服务说明',
+            legal_service_body: '本网站提供的是基于传统文化和玄学的命理咨询服务，仅供娱乐参考，不构成任何形式的预测或保证。',
+            legal_privacy_title: '隐私保护',
+            legal_privacy_1: '您提交的照片、姓名、生日等信息仅用于本次咨询',
+            legal_privacy_2: '我们承诺不会将您的信息出售或分享给第三方',
+            legal_privacy_3: '所有数据将在30天后自动删除',
+            legal_privacy_4: '结果将通过您提供的邮箱发送（如未填写邮箱，请在12小时内主动联系客服）',
+            legal_disclaimer_title: '免责条款',
+            legal_disclaimer_1: '本服务仅供娱乐，不构成任何形式的承诺或保证',
+            legal_disclaimer_2: '用户应独立判断并承担相应风险',
+            legal_disclaimer_3: '我们不承担任何基于本服务做出的决定或行为的责任',
+            legal_contact_title: '联系方式',
+            legal_contact_body: '如需删除数据或有疑问，请联系：admin@temple-serenity.org',
+            legal_agree_text: '我已阅读并同意以上条款，且已满18岁',
+            legal_enter_btn: '我已理解，进入网站',
+            
+            // 服务流程
+            service_flow_title: '☸ 服务流程',
+            step1: '上传照片', step2: '填写信息', step3: '专业解读', step4: '邮箱接收',
+            
+            // 表单标签
+            label_photo: '照片', label_name: '姓名', label_birthday: '生日',
+            label_gender: '性别', label_message: '留言', label_email: '邮箱',
             placeholder_name: '请输入您的姓名',
-            label_birthday: '生日',
-            label_gender: '性别',
-            label_email: '邮箱',
-            placeholder_email: '选填（用于接收祈愿结果通知）',
-            gender_male: '男', gender_female: '女', gender_other: '其他',
+            placeholder_message: '在此留下您想对师傅说的话',
+            message_hint: '此留言将被平台管理者看到',
+            upload_hint: '点击或拖拽上传照片',
+            gender_male: '男', gender_female: '女',
+            
+            // 免责声明
+            disclaimer_title: '免责声明与隐私条款',
+            disc_1_title: '• 服务性质',
+            disc_1_body: '本服务基于传统玄学文化，仅供娱乐参考，不构成任何预测或保证。请理性看待结果。',
+            disc_2_title: '• 隐私保护',
+            disc_2_body: '您的个人信息（姓名、生日、照片）仅用于本次服务，绝不外泄。所有数据将在30天后自动删除。',
+            disc_3_title: '• 用户责任',
+            disc_3_body: '点击"提交"即表示您已阅读并同意上述条款。如需删除数据，请联系：admin@temple-serenity.org',
+            consent_text: '我已阅读并同意以上声明与隐私条款',
+            
+            // 提交
+            submit_text: '提交祈愿',
+            placeholder_email: '必填（用于接收结果通知）',
+            
+            // 随喜
             donation_title: '随喜供灯 · 功德自在',
             donation_desc: '您的善念是最好的供养 · 随心随力 · 量力而行',
             qr_hint: '长按识别 · 保存图片 · 转账随喜',
-            disclaimer_title: '⚖️ 重要声明与隐私条款',
-            disc_1_title: '📜 免责声明',
-            disc_1_body: '本网站提供的所有内容仅供娱乐参考，不构成任何形式的承诺或保证。提交信息后，我们不对任何基于本网站信息做出的决定或行为承担责任。用户应独立判断并承担相应风险。',
-            disc_2_title: '🔒 隐私保护声明',
-            disc_2_body: '您提交的个人信息（姓名、生日、性别、照片）仅用于本次祈愿活动。我们承诺不会将您的个人信息出售、分享或用于任何未经授权的商业用途。您的数据将在30天后自动销毁。',
-            disc_3_title: '📋 信息获取告知',
-            disc_3_body: '当您点击"提交祈愿"按钮时，即表示您已阅读并同意上述条款。您提交的信息将被安全存储，仅管理员可查看。如需删除数据，请通过管理员邮箱联系我们：admin@temple-serenity.org',
-            consent_text: '我已阅读并同意以上声明与隐私条款',
-            submit_text: '提交祈愿',
-            footer: '心净则国土净 · 一切唯心造',
-            footer_sub: '© 2026 Temple of Serenity · 保留所有权利',
+            
+            // 打赏功能模块
+            donation_hero_title: '支持我们的使命',
+            donation_hero_subtitle: '您的慷慨支持我们的精神指引',
+            amount_blessing: '祈福', amount_gratitude: '感恩', amount_wisdom: '智慧',
+            amount_enlightenment: '开悟', amount_zen: '禅宗', amount_karma: '功德',
+            popular_choice: '最受欢迎',
+            custom_amount_label: '或输入自定义金额（最低$5）',
+            confirm_btn: '确认',
+            donation_hint_text: '✨ 打赏金额越多，师傅越用心为您解读',
+            payment_method_title: '选择支付方式',
+            crypto_desc: '比特币、以太坊、USDT',
+            paypal_desc: '快速安全',
+            wise_desc: '低手续费转账',
+            qr_coming_soon: '二维码即将推出',
+            scan_to_pay: '扫码完成支付',
+            proceed_to_pay: '前往支付',
+            amount_selected: '已选择金额：',
+            payment_crypto: '加密货币',
+            payment_paypal: 'PayPal支付',
+            payment_wise: 'Wise转账',
+            
+
+            // 禅语名言
+            quote_1: '一花一世界，一叶一如来',
+            // 社区数据
+            stat_prayers: '已服务祈愿',
+            stat_satisfaction: '满意度',
+            stat_countries: '覆盖国家',
+
+            quote_2: '应无所住而生其心',
+            quote_3: '菩提本无树，明镜亦非台',
+            
+            // 网站使命
+            mission_badge: '关于此服务',
+            mission_desc: '这是一个古老智慧与现代指引交汇的神圣空间。植根于佛教哲学传统，我们通过禅修慈悲的视角，为您提供个人内心的洞察。无论您是在寻求清晰、内心平静，还是在灵性旅程中需要一丝温柔指引，我们都以尊重和谦逊的心陪伴您。',
+
+            // 弹窗
             modal_title: '感恩提交',
             modal_msg: '感谢您的支持，您的私人信息我们会保管好，12小时内，您将会收到结果',
             modal_sub: '功德无量 · 福慧增长',
             modal_btn: '确认',
-            submitting: '提交中...',
-            submit_error: '提交失败，请重试',
+            
+            // 底部
+            footer: '心净则国土净 · 一切唯心造',
+            footer_sub: '© 2026 Temple of Serenity · 保留所有权利'
         },
+        
         en: {
-            label_email: 'Email (optional)',
-            placeholder_email: 'Optional - for notification',
-            donation_title: 'Support This Project',
-            donation_desc: 'Your kindness is appreciated',
-            qr_hint: 'Scan to donate',
-            page_title: 'Temple of Serenity - Zen Garden',
-            char1: 'Zen', char2: 'Tao', char3: 'Chan', char4: 'Bless', char5: 'Wisdom', char6: 'Peace',
-            title1: '', title2: '', title3: '', title4: 'Temple of Serenity',
-            subtitle: 'May this merit adorn the pure land',
-            label_photo: 'Upload Photo',
-            upload_hint: 'Click or drag to upload',
-            label_name: 'Full Name',
-            placeholder_name: 'Enter your name',
-            label_birthday: 'Date of Birth',
-            label_gender: 'Gender',
-            gender_male: 'Male', gender_female: 'Female', gender_other: 'Other',
-            disclaimer_title: '⚖️ Important Notice & Privacy Terms',
-            disc_1_title: '📜 Disclaimer',
-            disc_1_body: 'All content on this website is for entertainment reference only and does not constitute any form of promise or guarantee. After submitting information, we assume no responsibility for any decisions or actions based on this website. Users should make independent judgments and bear corresponding risks.',
-            disc_2_title: '🔒 Privacy Protection',
-            disc_2_body: 'The personal information you submit (name, date of birth, gender, photo) is used solely for this prayer activity. We promise not to sell, share, or use your personal information for any unauthorized commercial purposes. Your data will be automatically destroyed after 30 days.',
-            disc_3_title: '📋 Information Consent',
-            disc_3_body: 'By clicking the "Submit Prayer" button, you confirm that you have read and agree to the above terms. Your submitted information will be securely stored and only accessible to administrators. To request data deletion, contact us at: admin@temple-serenity.org',
-            consent_text: 'I have read and agree to the above terms & privacy policy',
+            page_title: 'Temple of Serenity',
+            title1: 'Zen', title2: 'Mind', title3: 'Pure', title4: 'Land',
+            subtitle: 'May this merit adorn the Pure Land',
+            
+            legal_title: 'Important Notice',
+            legal_service_title: 'Service Description',
+            legal_service_body: 'This website provides metaphysical consultation services based on traditional culture, for entertainment purposes only. It does not constitute any form of prediction or guarantee.',
+            legal_privacy_title: 'Privacy Protection',
+            legal_privacy_1: 'Your photo, name, and birthday are used only for this consultation',
+            legal_privacy_2: 'We promise not to sell or share your information with third parties',
+            legal_privacy_3: 'All data will be automatically deleted after 30 days',
+            legal_privacy_4: 'Results will be sent via email (please contact support within 12 hours if no email provided)',
+            legal_disclaimer_title: 'Disclaimer',
+            legal_disclaimer_1: 'This service is for entertainment only and does not constitute any commitment or guarantee',
+            legal_disclaimer_2: 'Users should make independent judgments and bear corresponding risks',
+            legal_disclaimer_3: 'We are not responsible for any decisions or actions based on this service',
+            legal_contact_title: 'Contact',
+            legal_contact_body: 'For data deletion or inquiries, please contact: admin@temple-serenity.org',
+            legal_agree_text: 'I have read and agree to the above terms, and I am 18 years or older',
+            legal_enter_btn: 'I Understand, Enter Site',
+            
+            service_flow_title: '☸ Service Process',
+            step1: 'Upload Photo', step2: 'Fill Info', step3: 'Interpretation', step4: 'Email Result',
+            
+            label_photo: 'Photo', label_name: 'Name', label_birthday: 'Birthday',
+            label_gender: 'Gender', label_message: 'Message', label_email: 'Email',
+            placeholder_name: 'Please enter your name',
+            placeholder_message: 'Leave a message for the master here',
+            message_hint: 'This message will be visible to platform administrators',
+            upload_hint: 'Click or drag to upload photo',
+            gender_male: 'Male', gender_female: 'Female',
+            
+            disclaimer_title: 'Disclaimer & Privacy Policy',
+            disc_1_title: '• Service Nature',
+            disc_1_body: 'This service is based on traditional metaphysics, for entertainment only. Please view results rationally.',
+            disc_2_title: '• Privacy Protection',
+            disc_2_body: 'Your personal information is used only for this service and will never be leaked. All data deleted after 30 days.',
+            disc_3_title: '• User Responsibility',
+            disc_3_body: 'Clicking "Submit" means you have read and agreed to the above terms. Contact admin@temple-serenity.org for data deletion.',
+            consent_text: 'I have read and agree to the above disclaimer and privacy policy',
+            
             submit_text: 'Submit Prayer',
-            footer: 'Pure mind, pure land · All is mind-made',
-            footer_sub: '© 2026 Temple of Serenity · All rights reserved',
-            modal_title: 'Gratitude',
-            modal_msg: 'Thank you for your support. Your personal information will be kept safe. You will receive the result within 12 hours.',
-            modal_sub: 'Boundless merit · May wisdom grow',
-            modal_btn: 'OK',
-            submitting: 'Submitting...',
-            submit_error: 'Submission failed, please try again',
+            placeholder_email: 'Required (for receiving results)',
+            
+            donation_title: 'Offering · Merit',
+            donation_desc: 'Your good intention is the best offering · Give according to your ability',
+            qr_hint: 'Long press to identify · Save image · Transfer donation',
+            
+            // Donation Module
+            donation_hero_title: 'Support Our Mission',
+            donation_hero_subtitle: 'Your generosity fuels our spiritual guidance',
+            amount_blessing: 'Blessing', amount_gratitude: 'Gratitude', amount_wisdom: 'Wisdom',
+            amount_enlightenment: 'Enlightenment', amount_zen: 'Zen Master', amount_karma: 'Karma',
+            popular_choice: 'Most Popular',
+            custom_amount_label: 'Or enter custom amount (minimum $5)',
+            confirm_btn: 'Confirm',
+            donation_hint_text: '✨ The more generous your offering, the deeper the master\'s dedication to your reading',
+            payment_method_title: 'Choose Payment Method',
+            crypto_desc: 'Bitcoin, ETH, USDT',
+            paypal_desc: 'Fast & Secure',
+            wise_desc: 'Low Fee Transfer',
+            qr_coming_soon: 'QR Code Coming Soon',
+            scan_to_pay: 'Scan QR code to complete payment',
+            proceed_to_pay: 'Proceed to Payment',
+            amount_selected: 'Selected amount: ',
+            payment_crypto: 'Cryptocurrency',
+            payment_paypal: 'PayPal Payment',
+            payment_wise: 'Wise Transfer',
+            
+
+            // Wisdom Quotes
+            quote_1: 'In a single flower, a whole world; in a single leaf, a Buddha\'s form',
+            
+            // Community Stats
+            stat_prayers: 'Prayers Answered',
+            stat_satisfaction: 'Satisfaction Rate',
+            stat_countries: 'Countries Reached',
+            quote_2: 'Let your mind dwell nowhere, yet let it arise',
+            quote_3: 'The mind itself is the Buddha tree, the heart itself is the mirror stand',
+            
+            // Mission
+            mission_badge: 'About This Service',
+            mission_desc: 'This is a sacred space where ancient wisdom meets modern guidance. Rooted in Buddhist philosophical traditions, our service offers personal insight through the compassionate lens of Zen contemplation. Whether you seek clarity, inner peace, or a gentle nudge on your spiritual journey, we are here to walk beside you with respect and humility.',
+
+            modal_title: 'Thank You',
+            modal_msg: 'Thank you for your support. Your personal information is safe with us. You will receive results within 12 hours.',
+            modal_sub: 'Infinite Merit · Growing Wisdom',
+            modal_btn: 'Confirm',
+            
+            footer: 'A pure mind makes a pure land · All is created by the mind',
+            footer_sub: '© 2026 Temple of Serenity · All Rights Reserved',
+            
+            // Support Section
+            support_title: 'Support Our Work',
+            support_subtitle: 'Your contribution helps us continue providing spiritual guidance',
+            custom_amount: 'Custom',
+            support_now: 'Support Now',
+            qr_available: 'QR Code Available Soon',
+            amount_blessing: 'Blessing', amount_gratitude: 'Gratitude', amount_wisdom: 'Wisdom',
+            amount_enlightenment: 'Enlightenment', amount_zen: 'Zen Master', amount_karma: 'Karma',
+            popular_choice: 'Popular'
         },
+        
         ja: {
-            label_email: 'Email (optional)',
-            placeholder_email: 'Optional - for notification',
-            donation_title: 'Support This Project',
-            donation_desc: 'Your kindness is appreciated',
-            qr_hint: 'Scan to donate',
-            page_title: '禅の浄土 - Temple of Serenity',
-            char1: '仏', char2: '道', char3: '禅', char4: '福', char5: '慧', char6: '静',
-            title1: '禅', title2: 'の', title3: '浄', title4: '土',
-            subtitle: 'この功徳をもって仏の浄土を荘厳せん',
-            label_photo: '写真をアップロード',
-            upload_hint: 'クリックまたはドラッグ',
-            label_name: 'お名前',
-            placeholder_name: 'お名前を入力',
-            label_birthday: '生年月日',
-            label_gender: '性別',
-            gender_male: '男性', gender_female: '女性', gender_other: 'その他',
-            disclaimer_title: '⚖️ 重要事項とプライバシー',
-            disc_1_title: '📜 免責事項',
-            disc_1_body: '本ウェブサイトの内容は娯楽目的の参考情報であり、いかなる約束や保証を構成するものではありません。情報提出後、本サイトに基づく判断や行動について一切責任を負いません。',
-            disc_2_title: '🔒 プライバシー保護',
-            disc_2_body: '提出いただいた個人情報（氏名、生年月日、性別、写真）は本祈願活動のみに使用します。第三者への提供や商業目的での使用は一切いたしません。データは30日後に自動削除されます。',
-            disc_3_title: '📋 情報取得について',
-            disc_3_body: '「祈願を送信」ボタンをクリックすることで、上記条件に同意したものとみなします。お問い合わせは admin@temple-serenity.org まで。',
-            consent_text: '上記の声明とプライバシー条項に同意します',
+            // 名言
+            quote_1: '一花一世界、一葉一如来',
+            quote_2: '応無所住而生其心',
+            quote_3: '菩提本無樹、明鏡亦非台',
+            mission_badge: 'このサービスについて',
+            mission_desc: '古来の智慧と現代の導きが出会う神聖な空間です。仏教哲学の伝統に根ざし、禅の慈悲深い視点を通じて個人の内省を提供します。明晰さ、心の平和、または霊的な旅路での優しい導きをお求めの方に、敬意と謙虚さをもって寄り添います。',
+
+            page_title: '禅意浄土 - Temple of Serenity',
+            title1: '禅', title2: '意', title3: '浄', title4: '土',
+            subtitle: 'この功徳をもって、仏、仏浄土を荘厳せん',
+            
+            legal_title: '重要なお知らせ',
+            legal_service_title: 'サービス説明',
+            legal_service_body: '当サイトは伝統文化と形而上学に基づく鑑定サービスを提供しています。娯楽目的のみであり、いかなる予測や保証も构成しません。',
+            legal_privacy_title: 'プライバシー保護',
+            legal_privacy_1: '提出された写真、名前、誕生日は今回の鑑定のみに使用されます',
+            legal_privacy_2: 'お客様の情報を第三者に販売または共有することはありません',
+            legal_privacy_3: 'すべてのデータは30日後に自動的に削除されます',
+            legal_privacy_4: '結果はメールで送信されます（メール未記入の場合は12時間以内にサポートへご連絡ください）',
+            legal_disclaimer_title: '免責事項',
+            legal_disclaimer_1: '本サービスは娯楽目的のみであり、いかなる約束や保証も构成しません',
+            legal_disclaimer_2: 'ユーザーは独立して判断し、相応のリスクを負うものとします',
+            legal_disclaimer_3: '本サービスに基づく決定や行動について一切の責任を負いません',
+            legal_contact_title: 'お問い合わせ',
+            legal_contact_body: 'データ削除やご質問は：admin@temple-serenity.org',
+            legal_agree_text: '上記の条項を読み、同意しました。18歳以上です',
+            legal_enter_btn: '理解しました、サイトへ',
+            
+            service_flow_title: '☸ サービスの流れ',
+            step1: '写真をアップロード', step2: '情報を入力', step3: '専門解読', step4: 'メール受信',
+            
+            label_photo: '写真', label_name: '名前', label_birthday: '誕生日',
+            label_gender: '性別', label_message: 'メッセージ', label_email: 'メール',
+            placeholder_name: 'お名前を入力してください',
+            placeholder_message: '師匠へのメッセージをお書きください',
+            message_hint: 'このメッセージはプラットフォーム管理者に表示されます',
+            upload_hint: 'クリックまたはドラッグで写真をアップロード',
+            gender_male: '男性', gender_female: '女性',
+            
+            disclaimer_title: '免責事項とプライバシーポリシー',
+            disc_1_title: '• サービスの性質',
+            disc_1_body: '本サービスは伝統的な形而上学に基づき、娯楽目的のみです。結果は理性的にご覧ください。',
+            disc_2_title: '• プライバシー保護',
+            disc_2_body: '個人情報は本サービスのみに使用され、決して漏洩しません。すべてのデータは30日後に削除されます。',
+            disc_3_title: '• ユーザーの責任',
+            disc_3_body: '「送信」をクリックすると上記の条項に同意したことになります。データ削除はadmin@temple-serenity.orgまで。',
+            consent_text: '上記の免責事項とプライバシーポリシーを読み、同意しました',
+            
             submit_text: '祈願を送信',
-            footer: '心浄ければ国土浄し · 一切は心の造るところ',
-            footer_sub: '© 2026 Temple of Serenity · 全著作権所有',
+            placeholder_email: '必須（結果受信用）',
+            
+            donation_title: 'お布施 · 功德',
+            donation_desc: '善き心が最良の供養です · 無理なくできる範囲で',
+            qr_hint: '長押しで認識 · 画像を保存 · 寄付を送金',
+            
+            // 寄付モジュール
+            donation_hero_title: '私たちの使命を支援',
+            donation_hero_subtitle: 'あなたの寛大さが精神的な導きを支えます',
+            amount_blessing: '祝福', amount_gratitude: '感謝', amount_wisdom: '知恵',
+            amount_enlightenment: '悟り', amount_zen: '禅師', amount_karma: '功徳',
+            popular_choice: '人気No.1',
+            custom_amount_label: 'または金額を入力（最低$5）',
+            confirm_btn: '確認',
+            donation_hint_text: '✨ 寄付額が多いほど、師匠はより丁寧に鑑定します',
+            payment_method_title: '支払い方法を選択',
+            crypto_desc: 'ビットコイン、ETH、USDT',
+            paypal_desc: '高速で安全',
+            wise_desc: '低手数料送金',
+            qr_coming_soon: 'QRコード準備中',
+            scan_to_pay: 'QRコードをスキャンして支払い',
+            proceed_to_pay: '支払いへ進む',
+            amount_selected: '選択金額：',
+            payment_crypto: '暗号通貨',
+            payment_paypal: 'PayPal決済',
+            payment_wise: 'Wise送金',
+            
+            
             modal_title: '感謝',
-            modal_msg: 'ご支援ありがとうございます。個人情報は厳重に保管され、12時間以内に結果をお知らせいたします。',
-            modal_sub: '功德無量 · 福慧増長',
+            modal_msg: 'ご支持ありがとうございます。個人情報は安全に保管されます。12時間以内に結果をお届けします。',
+            modal_sub: '無量の功徳 · 智慧の成長',
             modal_btn: '確認',
-            submitting: '送信中...',
-            submit_error: '送信失敗、もう一度お試しください',
+            
+            footer: '心浄ければ国土浄し · 一切は心より生ず',
+            footer_sub: '© 2026 Temple of Serenity · 全著作権所有'
         },
+        
         ko: {
-            label_email: 'Email (optional)',
-            placeholder_email: 'Optional - for notification',
-            donation_title: 'Support This Project',
-            donation_desc: 'Your kindness is appreciated',
-            qr_hint: 'Scan to donate',
+            // 명언
+            quote_1: '한 송이 꽃 속에 한 세계, 한 잎 속에 여래가 있네',
+            quote_2: '머무는 바 없이 마음을 내라',
+            quote_3: '보리는 본래 나무가 없고, 명경도 받침대가 아니니라',
+            mission_badge: '서비스 소개',
+            mission_desc: '고대의 지혜와 현대의 인도가 만나는 신성한 공간입니다. 불교 철학 전통에 뿌리를 두고, 선(禪)의 자비로운 시선을 통해 개인적 통찰을 제공합니다. 명확성, 내면의 평화, 또는 영적 여정에서의 부드러운 안내를 찾는 분들께 존경과 겸손으로 함께합니다.',
+
             page_title: '선의 정토 - Temple of Serenity',
-            char1: '불', char2: '도', char3: '선', char4: '복', char5: '혜', char6: '정',
             title1: '선', title2: '의', title3: '정', title4: '토',
-            subtitle: '이 공덕으로 부처님 정토를 장엄하나이다',
-            label_photo: '사진 업로드',
-            upload_hint: '클릭 또는 드래그하여 업로드',
-            label_name: '성함',
-            placeholder_name: '성함을 입력하세요',
-            label_birthday: '생년월일',
-            label_gender: '성별',
-            gender_male: '남성', gender_female: '여성', gender_other: '기타',
-            disclaimer_title: '⚖️ 중요 고지 및 개인정보 약관',
-            disc_1_title: '📜 면책 조항',
-            disc_1_body: '본 웹사이트의 모든 내용은 오락적 참고용으로만 제공되며, 어떠한 형태의 약속이나 보증도 구성하지 않습니다. 정보 제출 후 본 사이트 정보에 기반한 결정이나 행동에 대해 책임을 지지 않습니다.',
-            disc_2_title: '🔒 개인정보 보호',
-            disc_2_body: '귀하가 제출한 개인정보(성명, 생년월일, 성별, 사진)는 본 기원 활동에만 사용됩니다. 개인정보를 판매, 공유 또는 무단 상업적 목적으로 사용하지 않을 것을 약속합니다. 데이터는 30일 후 자동 폐기됩니다.',
-            disc_3_title: '📋 정보 수집 동의',
-            disc_3_body: '"기원 제출" 버튼을 클릭하면 위 약관을 읽고 동의한 것으로 간주됩니다. 데이터 삭제를 원하시면 admin@temple-serenity.org로 연락주십시오.',
-            consent_text: '위 고지 및 개인정보 약관에 동의합니다',
+            subtitle: '이 공덕으로 불정토를 장엄하옵나이다',
+            
+            legal_title: '중요 공지',
+            legal_service_title: '서비스 설명',
+            legal_service_body: '본 웹사이트는 전통 문화와 현학에 기반한 명리 상담 서비스를 제공합니다. 오락 참고용이며 어떠한 예측이나 보증도 구성하지 않습니다.',
+            legal_privacy_title: '개인정보 보호',
+            legal_privacy_1: '제출하신 사진, 이름, 생일은 이번 상담에만 사용됩니다',
+            legal_privacy_2: '귀하의 정보를 제3자에게 판매하거나 공유하지 않을 것을 약속합니다',
+            legal_privacy_3: '모든 데이터는 30일 후 자동 삭제됩니다',
+            legal_privacy_4: '결과는 이메일로 발송됩니다 (이메일 미기재 시 12시간 내 고객센터 문의)',
+            legal_disclaimer_title: '면책 조항',
+            legal_disclaimer_1: '본 서비스는 오락 목적이며 어떠한 약속이나 보증도 구성하지 않습니다',
+            legal_disclaimer_2: '사용자는 독립적으로 판단하고 상응하는 위험을 부담해야 합니다',
+            legal_disclaimer_3: '본 서비스에 기반한 결정이나 행위에 대해 어떠한 책임도 지지 않습니다',
+            legal_contact_title: '연락처',
+            legal_contact_body: '데이터 삭제나 문의사항: admin@temple-serenity.org',
+            legal_agree_text: '위 약관을 읽고 동의하며, 만 18세 이상입니다',
+            legal_enter_btn: '이해했습니다, 사이트 입장',
+            
+            service_flow_title: '☸ 서비스 절차',
+            step1: '사진 업로드', step2: '정보 입력', step3: '전문 해독', step4: '이메일 수신',
+            
+            label_photo: '사진', label_name: '이름', label_birthday: '생일',
+            label_gender: '성별', label_message: '메시지', label_email: '이메일',
+            placeholder_name: '이름을 입력하세요',
+            placeholder_message: '스승님께 전할 말씀을 남겨주세요',
+            message_hint: '이 메시지는 플랫폼 관리자가 볼 수 있습니다',
+            upload_hint: '클릭하거나 드래그하여 사진 업로드',
+            gender_male: '남성', gender_female: '여성',
+            
+            disclaimer_title: '면책 조항 및 개인정보 보호정책',
+            disc_1_title: '• 서비스 성격',
+            disc_1_body: '본 서비스는 전통 현학에 기반하며 오락 참고용입니다. 결과는 이성적으로 판단하세요.',
+            disc_2_title: '• 개인정보 보호',
+            disc_2_body: '개인정보는 본 서비스에만 사용되며 절대 유출되지 않습니다. 모든 데이터는 30일 후 삭제됩니다.',
+            disc_3_title: '• 사용자 책임',
+            disc_3_body: '"제출" 클릭 시 위 약관에 동의한 것으로 간주됩니다. 데이터 삭제는 admin@temple-serenity.org로 문의.',
+            consent_text: '위 면책 조항과 개인정보 보호정책을 읽고 동의합니다',
+            
             submit_text: '기원 제출',
-            footer: '마음이 정화되면 국토도 정화되나니 · 모든 것은 마음이 만든다',
-            footer_sub: '© 2026 Temple of Serenity · 모든 권리 보유',
+            placeholder_email: '필수 (결과 수신용)',
+            
+            donation_title: '시주 · 공덕',
+            donation_desc: '선한 마음이 최고의 공양입니다 · 능력에 맞게',
+            qr_hint: '길게 눌러 인식 · 이미지 저장 · 기부 이체',
+            
+            // 기부 모듈
+            donation_hero_title: '우리의 사명을 지원',
+            donation_hero_subtitle: '당신의 관대함이 영적 인도를 지원합니다',
+            amount_blessing: '축복', amount_gratitude: '감사', amount_wisdom: '지혜',
+            amount_enlightenment: '깨달음', amount_zen: '선사', amount_karma: '공덕',
+            popular_choice: '가장 인기',
+            custom_amount_label: '또는 사용자 지정 금액 입력 (최소 $5)',
+            confirm_btn: '확인',
+            donation_hint_text: '✨ 기부 금액이 많을수록 스승이 더 정성껏 해독합니다',
+            payment_method_title: '결제 방법 선택',
+            crypto_desc: '비트코인, ETH, USDT',
+            paypal_desc: '빠르고 안전',
+            wise_desc: '저수수료 송금',
+            qr_coming_soon: 'QR 코드 곧 출시',
+            scan_to_pay: 'QR 코드를 스캔하여 결제',
+            proceed_to_pay: '결제 진행',
+            amount_selected: '선택 금액:',
+            payment_crypto: '암호화폐',
+            payment_paypal: 'PayPal 결제',
+            payment_wise: 'Wise 송금',
+            
             modal_title: '감사합니다',
-            modal_msg: '지원해 주셔서 감사합니다. 귀하의 개인 정보는 안전하게 보관되며, 12시간 이내에 결과를 받으실 수 있습니다.',
-            modal_sub: '공덕 무량 · 복혜 증장',
+            modal_msg: '지지해 주셔서 감사합니다. 개인정보는 안전하게 보관됩니다. 12시간 내 결과를 받으실 수 있습니다.',
+            modal_sub: '무량공덕 · 지혜증장',
             modal_btn: '확인',
-            submitting: '제출 중...',
-            submit_error: '제출 실패, 다시 시도해 주세요',
+            
+            footer: '마음이 깨끗하면 국토가 깨끗하다 · 모든 것은 마음에서 생긴다',
+            footer_sub: '© 2026 Temple of Serenity · 모든 권리 보유'
+        },
+        
+        es: {
+            // Citas
+            quote_1: 'En una sola flor, un mundo entero; en una sola hoja, la forma de un Buda',
+            quote_2: 'Deja que tu mente no more en ningún lugar, y sin embargo, que surja',
+            quote_3: 'La mente misma es el árbol de Buda, el corazón mismo es el espejo',
+            mission_badge: 'Acerca de Este Servicio',
+            mission_desc: 'Este es un espacio sagrado donde la sabiduría antigua se encuentra con la guía moderna. Arraigado en las tradiciones filosóficas budistas, nuestro servicio ofrece una visión personal a través de la lente compasiva de la contemplación Zen. Ya sea que busque claridad, paz interior o un suave impulso en su viaje espiritual, estamos aquí para caminar a su lado con respeto y humildad.',
+
+            page_title: 'Templo de la Serenidad',
+            title1: 'Zen', title2: 'Mente', title3: 'Pura', title4: 'Tierra',
+            subtitle: 'Que este mérito adorne la Tierra Pura',
+            
+            legal_title: 'Aviso Importante',
+            legal_service_title: 'Descripción del Servicio',
+            legal_service_body: 'Este sitio web proporciona servicios de consulta metafísica basados en la cultura tradicional, solo con fines de entretenimiento. No constituye ninguna forma de predicción o garantía.',
+            legal_privacy_title: 'Protección de Privacidad',
+            legal_privacy_1: 'Su foto, nombre y cumpleaños se utilizan solo para esta consulta',
+            legal_privacy_2: 'Prometemos no vender ni compartir su información con terceros',
+            legal_privacy_3: 'Todos los datos se eliminarán automáticamente después de 30 días',
+            legal_privacy_4: 'Los resultados se enviarán por correo electrónico (contacte al soporte dentro de 12 horas si no proporcionó correo)',
+            legal_disclaimer_title: 'Descargo de Responsabilidad',
+            legal_disclaimer_1: 'Este servicio es solo para entretenimiento y no constituye ningún compromiso o garantía',
+            legal_disclaimer_2: 'Los usuarios deben hacer juicios independientes y asumir los riesgos correspondientes',
+            legal_disclaimer_3: 'No nos hacemos responsables de ninguna decisión o acción basada en este servicio',
+            legal_contact_title: 'Contacto',
+            legal_contact_body: 'Para eliminación de datos o consultas, contacte: admin@temple-serenity.org',
+            legal_agree_text: 'He leído y acepto los términos anteriores, y soy mayor de 18 años',
+            legal_enter_btn: 'Entiendo, Entrar al Sitio',
+            
+            service_flow_title: '☸ Proceso del Servicio',
+            step1: 'Subir Foto', step2: 'Llenar Info', step3: 'Interpretación', step4: 'Email Resultado',
+            
+            label_photo: 'Foto', label_name: 'Nombre', label_birthday: 'Cumpleaños',
+            label_gender: 'Género', label_message: 'Mensaje', label_email: 'Correo',
+            placeholder_name: 'Por favor ingrese su nombre',
+            placeholder_message: 'Deje un mensaje para el maestro aquí',
+            message_hint: 'Este mensaje será visible para los administradores de la plataforma',
+            upload_hint: 'Haga clic o arrastre para subir foto',
+            gender_male: 'Masculino', gender_female: 'Femenino',
+            
+            disclaimer_title: 'Descargo y Política de Privacidad',
+            disc_1_title: '• Naturaleza del Servicio',
+            disc_1_body: 'Este servicio se basa en la metafísica tradicional, solo para entretenimiento. Vea los resultados racionalmente.',
+            disc_2_title: '• Protección de Privacidad',
+            disc_2_body: 'Su información personal se usa solo para este servicio y nunca se filtrará. Todos los datos se eliminan después de 30 días.',
+            disc_3_title: '• Responsabilidad del Usuario',
+            disc_3_body: 'Al hacer clic en "Enviar", acepta los términos anteriores. Contacte admin@temple-serenity.org para eliminación de datos.',
+            consent_text: 'He leído y acepto el descargo y la política de privacidad anteriores',
+            
+            submit_text: 'Enviar Oración',
+            placeholder_email: 'Obligatorio (para recibir resultados)',
+            
+            donation_title: 'Ofrenda · Mérito',
+            donation_desc: 'Su buena intención es la mejor ofrenda · Dé según su capacidad',
+            qr_hint: 'Mantenga presionado para identificar · Guarde imagen · Transferir donación',
+            
+            // Módulo de donación
+            donation_hero_title: 'Apoye Nuestra Misión',
+            donation_hero_subtitle: 'Su generosidad impulsa nuestra guía espiritual',
+            amount_blessing: 'Bendición', amount_gratitude: 'Gratitud', amount_wisdom: 'Sabiduría',
+            amount_enlightenment: 'Iluminación', amount_zen: 'Maestro Zen', amount_karma: 'Karma',
+            popular_choice: 'Más Popular',
+            custom_amount_label: 'O ingrese una cantidad personalizada (mínimo $5)',
+            confirm_btn: 'Confirmar',
+            donation_hint_text: '✨ Cuanto más generosa sea su ofrenda, más profunda será la dedicación del maestro',
+            payment_method_title: 'Elija Método de Pago',
+            crypto_desc: 'Bitcoin, ETH, USDT',
+            paypal_desc: 'Rápido y Seguro',
+            wise_desc: 'Transferencia Baja Comisión',
+            qr_coming_soon: 'Código QR Próximamente',
+            scan_to_pay: 'Escanee código QR para completar el pago',
+            proceed_to_pay: 'Proceder al Pago',
+            amount_selected: 'Cantidad seleccionada: ',
+            payment_crypto: 'Criptomonedas',
+            payment_paypal: 'Pago PayPal',
+            payment_wise: 'Transferencia Wise',
+            donation_desc: 'Su buena intención es la mejor ofrenda · Dé según su capacidad',
+            qr_hint: 'Mantenga presionado para identificar · Guarde imagen · Transferir donación',
+            
+            modal_title: 'Gracias',
+            modal_msg: 'Gracias por su apoyo. Su información personal está segura con nosotros. Recibirá resultados dentro de 12 horas.',
+            modal_sub: 'Mérito Infinito · Sabiduría Creciente',
+            modal_btn: 'Confirmar',
+            
+            footer: 'Una mente pura hace una tierra pura · Todo es creado por la mente',
+            footer_sub: '© 2026 Temple of Serenity · Todos los Derechos Reservados'
+        },
+        
+        pt: {
+            // Citações
+            quote_1: 'Em uma única flor, um mundo inteiro; em uma única folha, a forma de um Buda',
+            quote_2: 'Não deixe sua mente se fixar em lugar nenhum, e ainda assim, deixe-a surgir',
+            quote_3: 'A própria mente é a árvore de Buda, o próprio coração é o espelho',
+            mission_badge: 'Sobre Este Serviço',
+            mission_desc: 'Este é um espaço sagrado onde a sabedoria antiga encontra a orientação moderna. Enraizado nas tradições filosóficas budistas, nosso serviço oferece visão pessoal através da lente compassiva da contemplação Zen. Quer você busque clareza, paz interior ou um leve empurrão em sua jornada espiritual, estamos aqui para caminhar ao seu lado com respeito e humildade.',
+
+            page_title: 'Templo da Serenidade',
+            title1: 'Zen', title2: 'Mente', title3: 'Pura', title4: 'Terra',
+            subtitle: 'Que este mérito adorne a Terra Pura',
+            
+            legal_title: 'Aviso Importante',
+            legal_service_title: 'Descrição do Serviço',
+            legal_service_body: 'Este site fornece serviços de consulta metafísica baseados na cultura tradicional, apenas para fins de entretenimento. Não constitui qualquer forma de previsão ou garantia.',
+            legal_privacy_title: 'Proteção de Privacidade',
+            legal_privacy_1: 'Sua foto, nome e aniversário são usados apenas para esta consulta',
+            legal_privacy_2: 'Prometemos não vender ou compartilhar suas informações com terceiros',
+            legal_privacy_3: 'Todos os dados serão automaticamente excluídos após 30 dias',
+            legal_privacy_4: 'Os resultados serão enviados por e-mail (contate o suporte dentro de 12 horas se não forneceu e-mail)',
+            legal_disclaimer_title: 'Isenção de Responsabilidade',
+            legal_disclaimer_1: 'Este serviço é apenas para entretenimento e não constitui qualquer compromisso ou garantia',
+            legal_disclaimer_2: 'Os usuários devem fazer julgamentos independentes e assumir os riscos correspondentes',
+            legal_disclaimer_3: 'Não nos responsabilizamos por qualquer decisão ou ação baseada neste serviço',
+            legal_contact_title: 'Contato',
+            legal_contact_body: 'Para exclusão de dados ou dúvidas, contate: admin@temple-serenity.org',
+            legal_agree_text: 'Li e concordo com os termos acima, e sou maior de 18 anos',
+            legal_enter_btn: 'Entendi, Entrar no Site',
+            
+            service_flow_title: '☸ Processo do Serviço',
+            step1: 'Enviar Foto', step2: 'Preencher Info', step3: 'Interpretação', step4: 'Email Resultado',
+            
+            label_photo: 'Foto', label_name: 'Nome', label_birthday: 'Aniversário',
+            label_gender: 'Gênero', label_message: 'Mensagem', label_email: 'E-mail',
+            placeholder_name: 'Por favor insira seu nome',
+            placeholder_message: 'Deixe uma mensagem para o mestre aqui',
+            message_hint: 'Esta mensagem será visível para os administradores da plataforma',
+            upload_hint: 'Clique ou arraste para enviar foto',
+            gender_male: 'Masculino', gender_female: 'Feminino',
+            
+            disclaimer_title: 'Isenção e Política de Privacidade',
+            disc_1_title: '• Natureza do Serviço',
+            disc_1_body: 'Este serviço é baseado na metafísica tradicional, apenas para entretenimento. Veja os resultados racionalmente.',
+            disc_2_title: '• Proteção de Privacidade',
+            disc_2_body: 'Suas informações pessoais são usadas apenas para este serviço e nunca serão vazadas. Todos os dados são excluídos após 30 dias.',
+            disc_3_title: '• Responsabilidade do Usuário',
+            disc_3_body: 'Ao clicar em "Enviar", você concorda com os termos acima. Contate admin@temple-serenity.org para exclusão de dados.',
+            consent_text: 'Li e concordo com a isenção e política de privacidade acima',
+            
+            submit_text: 'Enviar Oração',
+            placeholder_email: 'Obrigatório (para receber resultados)',
+            
+            donation_title: 'Oferta · Mérito',
+            donation_desc: 'Sua boa intenção é a melhor oferta · Dê conforme sua capacidade',
+            qr_hint: 'Pressione longamente para identificar · Salve imagem · Transferir doação',
+            
+            // Módulo de doação
+            donation_hero_title: 'Apoie Nossa Missão',
+            donation_hero_subtitle: 'Sua generosidade impulsiona nossa orientação espiritual',
+            amount_blessing: 'Bênção', amount_gratitude: 'Gratidão', amount_wisdom: 'Sabedoria',
+            amount_enlightenment: 'Iluminação', amount_zen: 'Mestre Zen', amount_karma: 'Karma',
+            popular_choice: 'Mais Popular',
+            custom_amount_label: 'Ou insira valor personalizado (mínimo $5)',
+            confirm_btn: 'Confirmar',
+            donation_hint_text: '✨ Quanto mais generosa sua oferta, mais profunda será a dedicação do mestre',
+            payment_method_title: 'Escolha Método de Pagamento',
+            crypto_desc: 'Bitcoin, ETH, USDT',
+            paypal_desc: 'Rápido e Seguro',
+            wise_desc: 'Transferência Baixa Taxa',
+            qr_coming_soon: 'Código QR Em Breve',
+            scan_to_pay: 'Escaneie código QR para completar pagamento',
+            proceed_to_pay: 'Prosseguir para Pagamento',
+            amount_selected: 'Valor selecionado: ',
+            payment_crypto: 'Criptomoedas',
+            payment_paypal: 'Pagamento PayPal',
+            payment_wise: 'Transferência Wise',
+            donation_desc: 'Sua boa intenção é a melhor oferta · Dê conforme sua capacidade',
+            qr_hint: 'Pressione longamente para identificar · Salve imagem · Transferir doação',
+            
+            modal_title: 'Obrigado',
+            modal_msg: 'Obrigado pelo seu apoio. Suas informações pessoais estão seguras conosco. Você receberá resultados dentro de 12 horas.',
+            modal_sub: 'Mérito Infinito · Sabedoria Crescente',
+            modal_btn: 'Confirmar',
+            
+            footer: 'Uma mente pura faz uma terra pura · Tudo é criado pela mente',
+            footer_sub: '© 2026 Temple of Serenity · Todos os Direitos Reservados'
         }
     };
 
     // 当前语言
-    let currentLang = 'zh';
+    let currentLang = localStorage.getItem('temple_lang') || 'zh';
 
-    function switchLang(lang) {
+    // 切换语言函数
+    function setLanguage(lang) {
         currentLang = lang;
-        const t = translations[lang];
-
-        // 更新所有 data-i18n 元素
+        localStorage.setItem('temple_lang', lang);
+        document.documentElement.lang = lang;
+        
+        // 更新所有带 data-i18n 属性的元素
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
-            if (t[key] !== undefined) {
-                el.textContent = t[key];
+            if (translations[lang] && translations[lang][key]) {
+                el.textContent = translations[lang][key];
             }
         });
-
-        // 更新 data-i18n-placeholder 元素
+        
+        // 更新 placeholder
         document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
             const key = el.getAttribute('data-i18n-placeholder');
-            if (t[key] !== undefined) {
-                el.placeholder = t[key];
+            if (translations[lang] && translations[lang][key]) {
+                el.placeholder = translations[lang][key];
             }
         });
-
-        // 更新页面标题
-        if (t.page_title) {
-            document.title = t.page_title;
-        }
-
-        // 更新语言按钮状态
-        document.querySelectorAll('.lang-btn').forEach(btn => {
+        
+        // 更新按钮状态
+        document.querySelectorAll('.lang-btn, .gate-lang-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === lang);
         });
-
-        // 如果弹窗可见，更新提交按钮文本
-        const submitBtn = document.querySelector('#submitBtn .btn-text');
-        if (submitBtn) submitBtn.textContent = t.submit_text;
-
-        // 保存语言偏好
-        try {
-            localStorage.setItem('temple_lang', lang);
-        } catch(e) {}
+        
+        // 更新字幕
+        if (document.getElementById('subtitle')) {
+            typeWriter('subtitle', translations[lang].subtitle);
+        }
+        
+        // 更新页面标题
+        document.title = translations[lang].page_title;
     }
 
-    // ===== 语言切换事件 =====
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            switchLang(btn.dataset.lang);
+    // 打字机效果
+    function typeWriter(elementId, text, speed = 100) {
+        const el = document.getElementById(elementId);
+        if (!el) return;
+        el.textContent = '';
+        el.style.visibility = 'visible';
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                el.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        }
+        type();
+    }
+
+    // 初始化语言
+    document.addEventListener('DOMContentLoaded', () => {
+        setLanguage(currentLang);
+        
+        // 语言切换按钮事件
+        document.querySelectorAll('.lang-btn, .gate-lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
         });
     });
 
-    // ===== 恢复保存的语言偏好 =====
-    (function initLang() {
-        try {
-            const saved = localStorage.getItem('temple_lang');
-            if (saved && translations[saved]) {
-                switchLang(saved);
-            }
-        } catch(e) {}
+    // ============================================================
+    // 法律声明门
+    // ============================================================
+    function enterSite() {
+        document.getElementById('legalGate').style.display = 'none';
+        localStorage.setItem('temple_legal_agreed', 'true');
+    }
+
+    // 检查是否已同意
+    (function checkLegalGate() {
+        if (localStorage.getItem('temple_legal_agreed') === 'true') {
+            const gate = document.getElementById('legalGate');
+            if (gate) gate.style.display = 'none';
+        }
     })();
 
+    // DOM加载完成后绑定事件
+    document.addEventListener('DOMContentLoaded', function() {
+        const legalAgree = document.getElementById('legalAgree');
+        const legalGateBtn = document.getElementById('legalGateBtn');
+        
+        if (legalAgree && legalGateBtn) {
+            legalAgree.addEventListener('change', function() {
+                legalGateBtn.disabled = !this.checked;
+            });
+        }
+    });
+
     // ============================================================
-    // 粒子背景 Canvas
+    // 表单处理
+    // ============================================================
+    const photoInput = document.getElementById('photoInput');
+    const photoUploadArea = document.getElementById('photoUploadArea');
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+    const photoPreview = document.getElementById('photoPreview');
+    const previewImg = document.getElementById('previewImg');
+
+    photoUploadArea.addEventListener('click', () => photoInput.click());
+    
+    photoUploadArea.addEventListener('dragover', e => {
+        e.preventDefault();
+        photoUploadArea.classList.add('dragover');
+    });
+    
+    photoUploadArea.addEventListener('dragleave', () => {
+        photoUploadArea.classList.remove('dragover');
+    });
+    
+    photoUploadArea.addEventListener('drop', e => {
+        e.preventDefault();
+        photoUploadArea.classList.remove('dragover');
+        if (e.dataTransfer.files[0]) {
+            photoInput.files = e.dataTransfer.files;
+            handlePhotoSelect(e.dataTransfer.files[0]);
+        }
+    });
+
+    photoInput.addEventListener('change', () => {
+        if (photoInput.files[0]) {
+            handlePhotoSelect(photoInput.files[0]);
+        }
+    });
+
+    function handlePhotoSelect(file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            previewImg.src = e.target.result;
+            uploadPlaceholder.style.display = 'none';
+            photoPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function removePhoto() {
+        photoInput.value = '';
+        previewImg.src = '';
+        photoPreview.style.display = 'none';
+        uploadPlaceholder.style.display = 'block';
+    }
+
+    // 免责声明折叠
+    function toggleDisclaimer() {
+        const content = document.getElementById('disclaimerContent');
+        const arrow = document.getElementById('disclaimerArrow');
+        if (content.style.display === 'block') {
+            content.style.display = 'none';
+            arrow.textContent = '▼';
+        } else {
+            content.style.display = 'block';
+            arrow.textContent = '▲';
+        }
+    }
+
+    // 表单提交
+    document.getElementById('prayerForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.querySelector('.btn-text').textContent = '...';
+        
+        const formData = new FormData(e.target);
+        
+        try {
+            const res = await fetch('/submit', { method: 'POST', body: formData });
+            const data = await res.json();
+            
+            if (data.success) {
+                document.getElementById('successModal').style.display = 'flex';
+                document.getElementById('donationSection').style.display = 'block';
+                e.target.reset();
+                removePhoto();
+            } else {
+                alert(data.message);
+            }
+        } catch (err) {
+            alert('提交失败，请重试');
+        }
+        
+        btn.disabled = false;
+        const submitText = document.querySelector('[data-i18n="submit_text"]');
+        btn.querySelector('.btn-text').textContent = submitText ? submitText.textContent : '提交祈愿';
+    });
+
+    // 关闭弹窗
+    document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('successModal').style.display = 'none';
+    });
+    
+    document.getElementById('successModal').addEventListener('click', e => {
+        if (e.target === e.currentTarget) {
+            e.target.style.display = 'none';
+        }
+    });
+
+    // ============================================================
+    // 粒子背景
     // ============================================================
     const canvas = document.getElementById('particleCanvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
-    let mouseX = -1000, mouseY = -1000;
-
+    
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -458,83 +1223,35 @@
         reset() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 3 + 0.5;
-            this.speedX = (Math.random() - 0.5) * 0.3;
-            this.speedY = (Math.random() - 0.5) * 0.3;
+            this.vx = (Math.random() - 0.5) * 0.5;
+            this.vy = (Math.random() - 0.5) * 0.5;
+            this.radius = Math.random() * 2 + 1;
             this.opacity = Math.random() * 0.5 + 0.1;
-            this.golden = Math.random() > 0.5;
         }
         update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-
-            // 鼠标吸引效果
-            const dx = mouseX - this.x;
-            const dy = mouseY - this.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 200) {
-                const force = (200 - dist) / 200 * 0.02;
-                this.x += dx * force;
-                this.y += dy * force;
-            }
-
-            if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                this.reset();
-            }
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
         }
         draw() {
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = this.golden
-                ? `rgba(201, 168, 76, ${this.opacity})`
-                : `rgba(255, 255, 255, ${this.opacity * 0.5})`;
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(201, 168, 76, ${this.opacity})`;
             ctx.fill();
         }
     }
 
-    // 创建粒子
-    const particleCount = Math.min(Math.floor(window.innerWidth * 0.08), 100);
-    for (let i = 0; i < particleCount; i++) {
+    for (let i = 0; i < 50; i++) {
         particles.push(new Particle());
     }
 
-    // 鼠标追踪
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-    document.addEventListener('touchmove', (e) => {
-        if (e.touches.length) {
-            mouseX = e.touches[0].clientX;
-            mouseY = e.touches[0].clientY;
-        }
-    });
-
     function animateParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // 粒子间连线
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 150) {
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `rgba(201, 168, 76, ${0.1 * (1 - dist / 150)})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.stroke();
-                }
-            }
-        }
-
         particles.forEach(p => {
             p.update();
             p.draw();
         });
-
         requestAnimationFrame(animateParticles);
     }
     animateParticles();
@@ -542,160 +1259,140 @@
     // ============================================================
     // 飘落莲花瓣
     // ============================================================
-    const petalContainer = document.getElementById('petalContainer');
-    const petalCount = 8;
-    const petalSymbols = ['🌸', '🪷', '✿', '❀', '𓆸'];
-
-    for (let i = 0; i < petalCount; i++) {
+    function createPetal() {
+        const container = document.getElementById('petalContainer');
         const petal = document.createElement('div');
         petal.className = 'falling-petal';
-        petal.textContent = petalSymbols[i % petalSymbols.length];
         petal.style.left = Math.random() * 100 + '%';
-        petal.style.fontSize = (Math.random() * 12 + 10) + 'px';
-        petal.style.animationDuration = (Math.random() * 8 + 10) + 's';
-        petal.style.animationDelay = (Math.random() * 15) + 's';
-        petal.style.opacity = Math.random() * 0.2 + 0.05;
-        petalContainer.appendChild(petal);
+        petal.style.animationDuration = (8 + Math.random() * 6) + 's';
+        petal.innerHTML = `<svg viewBox="0 0 20 30" width="20" height="30">
+            <ellipse cx="10" cy="15" rx="8" ry="14" fill="rgba(201,168,76,0.3)"/>
+        </svg>`;
+        container.appendChild(petal);
+        setTimeout(() => petal.remove(), 15000);
     }
+    
+    setInterval(createPetal, 3000);
 
     // ============================================================
-    // 免责声明展开/收起
+    // 打赏功能逻辑
     // ============================================================
-    document.getElementById('disclaimerToggle').addEventListener('click', function() {
-        const content = document.getElementById('disclaimerContent');
-        const arrow = this.querySelector('.toggle-arrow');
-        if (content.style.display === 'block') {
-            content.style.display = 'none';
-            arrow.textContent = '▶';
-        } else {
-            content.style.display = 'block';
-            arrow.textContent = '▼';
-        }
-    });
-
+    // Support Section - Simplified JavaScript
     // ============================================================
-    // 照片上传预览
-    // ============================================================
-    const photoInput = document.getElementById('photo');
-    const photoUploadArea = document.getElementById('photoUploadArea');
-    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
-    const photoPreview = document.getElementById('photoPreview');
-    const previewImage = document.getElementById('previewImage');
-    const removePhoto = document.getElementById('removePhoto');
-
-    photoUploadArea.addEventListener('click', () => photoInput.click());
-
-    photoUploadArea.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        photoUploadArea.classList.add('dragover');
-    });
-
-    photoUploadArea.addEventListener('dragleave', () => {
-        photoUploadArea.classList.remove('dragover');
-    });
-
-    photoUploadArea.addEventListener('drop', (e) => {
-        e.preventDefault();
-        photoUploadArea.classList.remove('dragover');
-        if (e.dataTransfer.files.length) {
-            photoInput.files = e.dataTransfer.files;
-            showPreview(e.dataTransfer.files[0]);
-        }
-    });
-
-    photoInput.addEventListener('change', (e) => {
-        if (e.target.files.length) {
-            showPreview(e.target.files[0]);
-        }
-    });
-
-    function showPreview(file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            previewImage.src = e.target.result;
-            uploadPlaceholder.style.display = 'none';
-            photoPreview.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-    }
-
-    removePhoto.addEventListener('click', (e) => {
-        e.stopPropagation();
-        photoInput.value = '';
-        uploadPlaceholder.style.display = 'block';
-        photoPreview.style.display = 'none';
-    });
-
-    // ============================================================
-    // 表单提交
-    // ============================================================
-    document.getElementById('templeForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const formData = new FormData(e.target);
-        const submitBtn = e.target.querySelector('.submit-btn');
-        const t = translations[currentLang];
-        
-        submitBtn.disabled = true;
-        submitBtn.querySelector('.btn-text').textContent = t.submitting || '提交中...';
-
-        try {
-            const response = await fetch('/submit', {
-                method: 'POST',
-                body: formData
+    let selectedAmount = null;
+    let selectedPayment = 'crypto';
+    
+    // 初始化支持模块
+    document.addEventListener('DOMContentLoaded', function() {
+        // 金额按钮点击
+        document.querySelectorAll('.support-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.support-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                const amount = this.dataset.amount;
+                if (amount === 'custom') {
+                    // 显示自定义金额输入
+                    document.getElementById('customInputSection').style.display = 'block';
+                    selectedAmount = null;
+                } else {
+                    // 隐藏自定义金额输入
+                    document.getElementById('customInputSection').style.display = 'none';
+                    selectedAmount = parseInt(amount);
+                }
+                
+                updateSupportButton();
             });
-            
-            const result = await response.json();
-            
-            if (result.success) {
-                document.getElementById('successModal').style.display = 'flex';
-                e.target.reset();
-                uploadPlaceholder.style.display = 'block';
-                photoPreview.style.display = 'none';
-            } else {
-                alert(result.message);
-            }
-        } catch (error) {
-            alert(t.submit_error || '提交失败，请重试');
-        } finally {
-            submitBtn.disabled = false;
-            // 按钮文字可能会被语言切换更新
-            submitBtn.querySelector('.btn-text').textContent = t.submit_text;
+        });
+        
+        // 自定义金额输入
+        const customInput = document.getElementById('customAmountInput');
+        if (customInput) {
+            customInput.addEventListener('input', function() {
+                const amount = parseFloat(this.value);
+                if (amount >= 5) {
+                    selectedAmount = amount;
+                    updateSupportButton();
+                }
+            });
+        }
+        
+        // 支付方式选择
+        document.querySelectorAll('.payment-option').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.payment-option').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedPayment = this.dataset.method;
+                
+                // 更新显示
+                const methodNames = { crypto: 'Cryptocurrency', paypal: 'PayPal', wise: 'Wise' };
+                document.getElementById('displayMethod').textContent = methodNames[selectedPayment];
+            });
+        });
+        
+        // 提交按钮
+        const submitBtn = document.getElementById('supportSubmitBtn');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', function() {
+                if (!selectedAmount) return;
+                
+                // 显示支付详情
+                const details = document.getElementById('paymentDetails');
+                details.style.display = 'flex';
+                document.getElementById('displayAmount').textContent = selectedAmount;
+                
+                // 滚动到支付详情
+                details.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
         }
     });
-
-    // ===== 弹窗关闭 =====
-    document.getElementById('closeModal').addEventListener('click', () => {
-        document.getElementById('successModal').style.display = 'none';
-    });
-
-    // 点击弹窗背景关闭
-    document.getElementById('successModal').addEventListener('click', (e) => {
-        if (e.target === e.currentTarget) {
-            document.getElementById('successModal').style.display = 'none';
+    
+    // 更新提交按钮状态
+    function updateSupportButton() {
+        const btn = document.getElementById('supportSubmitBtn');
+        if (btn) {
+            btn.disabled = !selectedAmount;
         }
-    });
-
+    }
     // ============================================================
-    // 打字机效果
+    // 禅语轮播
     // ============================================================
-    (function typewriter() {
-        const el = document.querySelector('.typewriter-text');
-        if (!el) return;
-        const text = el.textContent;
-        el.textContent = '';
-        el.style.visibility = 'visible';
-        let i = 0;
-        function type() {
-            if (i < text.length) {
-                el.textContent += text.charAt(i);
-                i++;
-                const delay = text.charAt(i - 1).match(/[\u4e00-\u9fff]/) ? 120 : 60;
-                setTimeout(type, delay);
-            }
+    (function rotateQuotes() {
+        const quotes = document.querySelectorAll('.quote-text');
+        const dotsContainer = document.querySelector('.quote-dots');
+        if (!quotes.length) return;
+        
+        // Create dots
+        quotes.forEach((q, i) => {
+            const dot = document.createElement('span');
+            dot.className = 'quote-dot' + (i === 0 ? ' active' : '');
+            dot.dataset.index = i;
+            dot.addEventListener('click', function() {
+                showQuote(parseInt(this.dataset.index));
+            });
+            dotsContainer.appendChild(dot);
+        });
+        
+        let current = 0;
+        quotes[0].classList.add('active');
+        
+        function showQuote(index) {
+            quotes.forEach(q => q.classList.remove('active'));
+            document.querySelectorAll('.quote-dot').forEach(d => d.classList.remove('active'));
+            quotes[index].classList.add('active');
+            document.querySelectorAll('.quote-dot')[index].classList.add('active');
+            current = index;
         }
-        setTimeout(type, 500);
+        
+        // Auto-rotate every 6 seconds
+        setInterval(function() {
+            const next = (current + 1) % quotes.length;
+            showQuote(next);
+        }, 6000);
     })();
     </script>
 </body>
 </html>
+
+
+

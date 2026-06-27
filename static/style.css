@@ -1,6 +1,9 @@
 /* ============================================
    TEMPLE AESTHETIC - CSS STYLES
    Chinese Buddhist/Daoist Temple Design
+   Enhanced with Video Background & Fortune Service
+   Multi-language Support (6 Languages)
+   Mobile-First Responsive Design
    ============================================ */
 
 /* CSS Variables */
@@ -26,6 +29,10 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 16px;
+}
+
 body {
     font-family: 'Noto Serif SC', 'ZCOOL XiaoWei', 'Noto Sans SC', 'SimSun', serif;
     background-color: var(--bg-primary);
@@ -33,9 +40,51 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Background Texture */
+/* ============================================
+   VIDEO BACKGROUND
+   ============================================ */
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.video-background video {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.25;
+    filter: blur(3px) saturate(0.7);
+}
+
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: 
+        radial-gradient(ellipse at 20% 50%, rgba(139, 26, 26, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(201, 168, 76, 0.1) 0%, transparent 50%),
+        linear-gradient(180deg, rgba(10, 10, 10, 0.4) 0%, rgba(10, 10, 10, 0.7) 50%, rgba(10, 10, 10, 0.9) 100%);
+    pointer-events: none;
+}
+
+/* Background Texture Fallback */
 body::before {
     content: '';
     position: fixed;
@@ -44,8 +93,6 @@ body::before {
     width: 100%;
     height: 100%;
     background: 
-        radial-gradient(ellipse at 20% 50%, rgba(139, 26, 26, 0.05) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 50%, rgba(201, 168, 76, 0.05) 0%, transparent 50%),
         repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(201, 168, 76, 0.01) 50px, rgba(201, 168, 76, 0.01) 51px);
     pointer-events: none;
     z-index: 0;
@@ -105,7 +152,7 @@ body::before {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 0;
+    z-index: 1;
 }
 
 /* ============================================
@@ -635,7 +682,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /* ============================================
-   免责声明区域
+   免责声明区域（增强版 - 点击同意门）
    ============================================ */
 .disclaimer-section {
     background: rgba(139, 26, 26, 0.05);
@@ -702,7 +749,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /* ============================================
-   同意复选框
+   同意复选框（增强版）
    ============================================ */
 .consent-checkbox {
     margin-bottom: 20px;
@@ -1312,4 +1359,2352 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* ============================================
+   法律声明弹窗门（多语言）
+   ============================================ */
+.legal-gate-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.gate-lang-selector {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(201, 168, 76, 0.05);
+    border-radius: 8px;
+}
+
+.gate-lang-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-family: 'Noto Sans SC', sans-serif;
+    color: var(--text-secondary);
+    background: rgba(201, 168, 76, 0.08);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gate-lang-btn:hover {
+    background: rgba(201, 168, 76, 0.2);
+    color: var(--gold-primary);
+}
+
+.gate-lang-btn.active {
+    background: rgba(201, 168, 76, 0.3);
+    color: var(--gold-light);
+    border-color: var(--gold-primary);
+}
+
+.legal-gate-modal {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+    border: 3px solid var(--gold-primary);
+    border-radius: 10px;
+    padding: 30px 20px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 0 50px rgba(201, 168, 76, 0.3);
+}
+
+.legal-gate-title {
+    font-size: 28px;
+    color: var(--gold-primary);
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 5px;
+}
+
+.legal-gate-content {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+.legal-gate-content h3 {
+    color: var(--gold-primary);
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.legal-gate-content ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.legal-gate-content li {
+    margin-bottom: 8px;
+}
+
+.legal-gate-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(201, 168, 76, 0.05);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.legal-gate-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 20px;
+    font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+    color: var(--gold-primary);
+    background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-light) 100%);
+    border: 2px solid var(--gold-primary);
+    border-radius: 5px;
+    cursor: pointer;
+    letter-spacing: 3px;
+    transition: all 0.3s ease;
+}
+
+.legal-gate-btn:hover:not(:disabled) {
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
+}
+
+.legal-gate-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ============================================
+   服务流程说明（新增）
+   ============================================ */
+.service-flow {
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(201, 168, 76, 0.05);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 10px;
+}
+
+.service-flow-title {
+    font-size: 18px;
+    color: var(--gold-primary);
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+}
+
+.service-flow-steps {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.service-step {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    padding: 15px 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    position: relative;
+}
+
+.service-step-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.service-step-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.service-step::after {
+    content: '→';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold-primary);
+    font-size: 20px;
+    opacity: 0.5;
+}
+
+.service-step:last-child::after {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .service-flow-steps {
+        flex-direction: column;
+    }
+    .service-step::after {
+        content: '↓';
+        right: 50%;
+        bottom: -25px;
+        top: auto;
+        transform: translateX(50%);
+    }
+}
+
+/* ============================================
+   浮动寺庙图片装饰
+   ============================================ */
+.floating-images {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.08;
+}
+
+.float-img {
+    position: absolute;
+    border-radius: 10px;
+    filter: sepia(0.3) contrast(1.1);
+    box-shadow: 0 0 30px rgba(201, 168, 76, 0.2);
+}
+
+.float-img-1 {
+    width: 200px;
+    top: 15%;
+    left: 3%;
+    transform: rotate(-5deg);
+    animation: floatImg1 15s ease-in-out infinite;
+}
+
+.float-img-2 {
+    width: 180px;
+    top: 50%;
+    right: 2%;
+    transform: rotate(3deg);
+    animation: floatImg2 18s ease-in-out infinite;
+}
+
+.float-img-3 {
+    width: 150px;
+    bottom: 20%;
+    left: 5%;
+    transform: rotate(5deg);
+    animation: floatImg3 20s ease-in-out infinite;
+}
+
+.float-img-4 {
+    width: 160px;
+    top: 25%;
+    right: 5%;
+    transform: rotate(-3deg);
+    animation: floatImg4 16s ease-in-out infinite;
+}
+
+@keyframes floatImg1 {
+    0%, 100% { transform: rotate(-5deg) translateY(0); opacity: 0.08; }
+    50% { transform: rotate(-3deg) translateY(-15px); opacity: 0.12; }
+}
+
+@keyframes floatImg2 {
+    0%, 100% { transform: rotate(3deg) translateY(0); opacity: 0.08; }
+    50% { transform: rotate(5deg) translateY(10px); opacity: 0.1; }
+}
+
+@keyframes floatImg3 {
+    0%, 100% { transform: rotate(5deg) translateY(0); opacity: 0.06; }
+    50% { transform: rotate(3deg) translateY(-20px); opacity: 0.1; }
+}
+
+@keyframes floatImg4 {
+    0%, 100% { transform: rotate(-3deg) translateY(0); opacity: 0.07; }
+    50% { transform: rotate(-1deg) translateY(15px); opacity: 0.11; }
+}
+
+/* 移动端隐藏浮动图片 */
+@media (max-width: 768px) {
+    .floating-images {
+        display: none;
+    }
+}
+
+/* ============================================
+   用户留言框样式
+   ============================================ */
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.message-hint {
+    font-size: 12px;
+    color: rgba(201, 168, 76, 0.6);
+    margin-top: 8px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ============================================
+   移动端优化（Mobile-First）
+   ============================================ */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .container {
+        padding: 10px;
+        padding-top: 60px;
+    }
+    
+    .temple-header {
+        padding: 20px 10px;
+    }
+    
+    .main-title {
+        font-size: 36px;
+        letter-spacing: 8px;
+    }
+    
+    .title-char {
+        display: inline-block;
+        margin: 0 2px;
+    }
+    
+    .form-frame {
+        padding: 20px 15px;
+        border-radius: 8px;
+    }
+    
+    .form-label {
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+    
+    .form-input {
+        font-size: 16px; /* 防止iOS缩放 */
+        padding: 12px 15px;
+    }
+    
+    .photo-upload-area {
+        min-height: 150px;
+    }
+    
+    .gender-options {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .gender-label {
+        display: block;
+        text-align: center;
+        padding: 14px 30px;
+    }
+    
+    .submit-btn {
+        font-size: 18px;
+        padding: 16px 30px;
+        letter-spacing: 3px;
+    }
+    
+    .service-flow {
+        padding: 15px 10px;
+        margin: 20px 0;
+    }
+    
+    .service-step-icon {
+        font-size: 28px;
+    }
+    
+    .service-step-text {
+        font-size: 12px;
+    }
+    
+    .disclaimer-section {
+        margin-bottom: 15px;
+    }
+    
+    .disclaimer-toggle {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    
+    .disclaimer-item {
+        padding: 10px 12px;
+    }
+    
+    .disclaimer-item h4 {
+        font-size: 13px;
+    }
+    
+    .disclaimer-item p {
+        font-size: 12px;
+    }
+    
+    .modal-content {
+        padding: 25px 20px;
+        margin: 10px;
+    }
+    
+    .modal-title {
+        font-size: 24px;
+    }
+    
+    .modal-message {
+        font-size: 15px;
+    }
+    
+    .modal-lotus {
+        font-size: 60px;
+    }
+    
+    .temple-footer {
+        padding: 25px 15px;
+        margin-top: 40px;
+    }
+    
+    .footer-text {
+        font-size: 14px;
+        letter-spacing: 3px;
+    }
+    
+    .footer-sub {
+        font-size: 11px;
+    }
+    
+    .corner-decoration {
+        width: 25px;
+        height: 25px;
+    }
+    
+    /* 移动端语言切换 */
+    .lang-switcher {
+        padding: 6px 5px;
+        gap: 3px;
+    }
+    
+    .lang-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+        border-radius: 3px;
+    }
+    
+    /* 法律声明门移动端 */
+    .gate-lang-selector {
+        gap: 4px;
+    }
+    
+    .gate-lang-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .legal-gate-modal {
+        padding: 20px 15px;
+    }
+    
+    .legal-gate-title {
+        font-size: 22px;
+    }
+    
+    .legal-gate-content {
+        font-size: 13px;
+    }
+    
+    .legal-gate-content h3 {
+        font-size: 14px;
+    }
+    
+    .legal-gate-btn {
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+    
+    /* 随喜区域移动端 */
+    .donation-section {
+        padding: 15px 10px;
+    }
+    
+    .qr-image {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+/* 超小屏幕 */
+@media (max-width: 380px) {
+    .main-title {
+        font-size: 28px;
+        letter-spacing: 4px;
+    }
+    
+    .title-char {
+        display: block;
+        margin: 5px auto;
+    }
+    
+    .gate-lang-btn {
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+    
+    .lang-btn {
+        padding: 3px 6px;
+        font-size: 10px;
+    }
+}
+
+/* 横屏手机 */
+@media (max-width: 896px) and (orientation: landscape) {
+    .container {
+        padding-top: 50px;
+    }
+    
+    .temple-header {
+        padding: 15px 10px;
+    }
+    
+    .main-title {
+        font-size: 28px;
+    }
+    
+    .form-frame {
+        padding: 15px;
+    }
+}
+
+/* ============================================
+   Support Section - Minimal Western Style
+   ============================================ */
+
+/* 主容器 */
+.support-section {
+    margin: 60px auto;
+    max-width: 680px;
+    padding: 0 20px;
+}
+
+.support-container {
+    background: linear-gradient(145deg, #1a1a1a 0%, #0f0f0f 100%);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 24px;
+    padding: 48px 40px;
+    text-align: center;
+}
+
+/* 标题 */
+.support-header {
+    margin-bottom: 36px;
+}
+
+.support-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.support-subtitle {
+    font-size: 16px;
+    color: #888;
+    line-height: 1.5;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* 金额按钮 */
+.support-amounts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 28px;
+}
+
+.support-btn {
+    position: relative;
+    min-width: 90px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.support-btn:hover {
+    background: rgba(201, 168, 76, 0.1);
+    border-color: rgba(201, 168, 76, 0.3);
+    transform: translateY(-2px);
+}
+
+.support-btn.selected {
+    background: rgba(201, 168, 76, 0.2);
+    border-color: #c9a84c;
+    color: #c9a84c;
+}
+
+.support-btn.popular {
+    border-color: rgba(201, 168, 76, 0.4);
+    background: rgba(201, 168, 76, 0.08);
+}
+
+.popular-tag {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #c9a84c;
+    color: #000;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 自定义金额输入 */
+.custom-input-section {
+    margin-bottom: 28px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.input-prefix {
+    font-size: 20px;
+    color: #888;
+    font-weight: 500;
+}
+
+.custom-input {
+    width: 120px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.custom-input:focus {
+    border-color: #c9a84c;
+}
+
+.custom-input::placeholder {
+    color: #666;
+}
+
+/* 支付方式 */
+.payment-options {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+.payment-option {
+    width: 100px;
+    height: 72px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #aaa;
+}
+
+.payment-option:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+.payment-option.active {
+    background: rgba(201, 168, 76, 0.12);
+    border-color: #c9a84c;
+    color: #c9a84c;
+}
+
+.payment-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.payment-option span {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* 提交按钮 */
+.support-submit-btn {
+    width: 100%;
+    max-width: 320px;
+    height: 56px;
+    background: linear-gradient(135deg, #c9a84c 0%, #a88a2a 100%);
+    border: none;
+    border-radius: 14px;
+    color: #000;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 auto;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.support-submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201, 168, 76, 0.3);
+}
+
+.support-submit-btn:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: #666;
+    cursor: not-allowed;
+}
+
+.btn-arrow {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.support-submit-btn:hover:not(:disabled) .btn-arrow {
+    transform: translateX(4px);
+}
+
+/* 支付详情 */
+.payment-details {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+}
+
+.payment-qr {
+    width: 140px;
+    height: 140px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr-placeholder {
+    text-align: center;
+    color: #666;
+}
+
+.qr-placeholder svg {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+}
+
+.qr-placeholder p {
+    font-size: 11px;
+    margin-top: 8px;
+}
+
+.payment-info-text {
+    text-align: left;
+}
+
+.amount-display {
+    font-size: 42px;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'Inter', -apple-system, sans-serif;
+    margin-bottom: 4px;
+}
+
+.method-display {
+    font-size: 14px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* 信任徽章 */
+.trust-badges {
+    margin-top: 28px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.badge {
+    font-size: 12px;
+    color: #666;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+/* 响应式 - Support Section */
+@media (max-width: 600px) {
+    .support-container {
+        padding: 32px 24px;
+        border-radius: 20px;
+    }
+
+    .support-title {
+        font-size: 26px;
+    }
+
+    .support-amounts {
+        gap: 8px;
+    }
+
+    .support-btn {
+        min-width: 75px;
+        height: 48px;
+        font-size: 16px;
+    }
+
+    .payment-options {
+        gap: 8px;
+    }
+
+    .payment-option {
+        width: 85px;
+        height: 64px;
+    }
+
+    .payment-details {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .payment-info-text {
+        text-align: center;
+    }
+
+    .amount-display {
+        font-size: 36px;
+    }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .lang-switcher {
+        gap: 2px;
+        padding: 6px 5px;
+    }
+    .lang-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    .main-title {
+        font-size: 42px;
+        letter-spacing: 10px;
+    }
+
+    .form-frame {
+        padding: 30px 20px;
+    }
+
+    .form-label {
+        font-size: 18px;
+    }
+
+    .gender-options {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .gender-label {
+        display: block;
+        text-align: center;
+    }
+
+    .submit-btn {
+        font-size: 20px;
+    }
+
+    .float-char {
+        font-size: 40px;
+    }
+
+    .modal-content {
+        padding: 30px 20px;
+    }
+    .modal-title {
+        font-size: 28px;
+    }
+    .modal-message {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 32px;
+        letter-spacing: 5px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+        letter-spacing: 2px;
+    }
+
+    .container {
+        padding: 10px;
+        padding-top: 50px;
+    }
+
+    .form-frame {
+        padding: 20px 15px;
+    }
+}
+
+/* ============================================
+   ADMIN LOGIN PAGE
+   ============================================ */
+.admin-login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.admin-login-box {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+    border: 2px solid var(--gold-primary);
+    border-radius: 10px;
+    padding: 50px 40px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 0 50px rgba(201, 168, 76, 0.2);
+}
+
+.admin-login-title {
+    font-size: 32px;
+    color: var(--gold-primary);
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 5px;
+    font-weight: 400;
+}
+
+.admin-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+    color: var(--gold-primary);
+    background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-light) 100%);
+    border: 2px solid var(--gold-primary);
+    border-radius: 5px;
+    cursor: pointer;
+    letter-spacing: 3px;
+    transition: all 0.3s ease;
+}
+
+.admin-btn:hover {
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
+}
+
+.error-message {
+    color: var(--red-light);
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+/* ============================================
+   ADMIN PAGE
+   ============================================ */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 0;
+    border-bottom: 2px solid var(--gold-dark);
+    margin-bottom: 30px;
+}
+
+.admin-title {
+    font-size: 36px;
+    color: var(--gold-primary);
+    letter-spacing: 5px;
+    font-weight: 400;
+}
+
+.logout-btn {
+    padding: 10px 30px;
+    font-size: 16px;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid var(--border-dark);
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-family: 'Noto Serif SC', 'Noto Sans SC', serif;
+}
+
+.logout-btn:hover {
+    border-color: var(--gold-primary);
+    color: var(--gold-primary);
+}
+
+.submissions-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+.submissions-table th {
+    background: rgba(201, 168, 76, 0.1);
+    color: var(--gold-primary);
+    padding: 15px;
+    text-align: left;
+    font-weight: 400;
+    letter-spacing: 2px;
+    border-bottom: 2px solid var(--gold-dark);
+}
+
+.submissions-table td {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-dark);
+    color: var(--text-secondary);
+}
+
+.submissions-table tr:hover {
+    background: rgba(201, 168, 76, 0.02);
+}
+
+.submission-photo {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid var(--gold-dark);
+}
+
+.download-link {
+    color: var(--gold-primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.download-link:hover {
+    text-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
+}
+
+.no-submissions {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+    font-size: 18px;
+    letter-spacing: 3px;
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold-dark);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-primary);
+}
+
+/* ===== 邮箱字段样式 ===== */
+.form-group input[type="email"].form-input {
+    background: rgba(20, 12, 5, 0.8);
+    border: 1px solid rgba(201, 168, 76, 0.4);
+    color: #f5e6c8;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Noto Sans SC', sans-serif;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group input[type="email"].form-input:focus {
+    outline: none;
+    border-color: #c9a84c;
+    box-shadow: 0 0 12px rgba(201, 168, 76, 0.3);
+}
+
+.form-group input[type="email"].form-input::placeholder {
+    color: rgba(245, 230, 200, 0.4);
+}
+
+/* ===== 自愿随喜收款码区域 ===== */
+.donation-section {
+    margin-top: 24px;
+    padding: 20px 16px;
+    background: rgba(20, 12, 5, 0.7);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: 12px;
+    text-align: center;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.donation-divider {
+    color: #c9a84c;
+    font-size: 16px;
+    letter-spacing: 8px;
+    margin-bottom: 12px;
+    opacity: 0.7;
+}
+
+.donation-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 18px;
+    color: #c9a84c;
+    margin: 8px 0;
+    text-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
+}
+
+.donation-desc {
+    font-size: 13px;
+    color: rgba(245, 230, 200, 0.6);
+    margin: 8px 0 16px;
+    line-height: 1.6;
+}
+
+.qr-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.qr-image {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    border: 2px solid rgba(201, 168, 76, 0.5);
+    border-radius: 12px;
+    background: white;
+    padding: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.qr-hint {
+    font-size: 12px;
+    color: rgba(245, 230, 200, 0.5);
+    letter-spacing: 2px;
+}
+
+/* Fade in animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   法律声明弹窗门（多语言）
+   ============================================ */
+.legal-gate-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.gate-lang-selector {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(201, 168, 76, 0.05);
+    border-radius: 8px;
+}
+
+.gate-lang-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-family: 'Noto Sans SC', sans-serif;
+    color: var(--text-secondary);
+    background: rgba(201, 168, 76, 0.08);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gate-lang-btn:hover {
+    background: rgba(201, 168, 76, 0.2);
+    color: var(--gold-primary);
+}
+
+.gate-lang-btn.active {
+    background: rgba(201, 168, 76, 0.3);
+    color: var(--gold-light);
+    border-color: var(--gold-primary);
+}
+
+.legal-gate-modal {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+    border: 3px solid var(--gold-primary);
+    border-radius: 10px;
+    padding: 30px 20px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 0 50px rgba(201, 168, 76, 0.3);
+}
+
+.legal-gate-title {
+    font-size: 28px;
+    color: var(--gold-primary);
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 5px;
+}
+
+.legal-gate-content {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+.legal-gate-content h3 {
+    color: var(--gold-primary);
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.legal-gate-content ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.legal-gate-content li {
+    margin-bottom: 8px;
+}
+
+.legal-gate-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(201, 168, 76, 0.05);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.legal-gate-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 20px;
+    font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+    color: var(--gold-primary);
+    background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-light) 100%);
+    border: 2px solid var(--gold-primary);
+    border-radius: 5px;
+    cursor: pointer;
+    letter-spacing: 3px;
+    transition: all 0.3s ease;
+}
+
+.legal-gate-btn:hover:not(:disabled) {
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
+}
+
+.legal-gate-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ============================================
+   服务流程说明（新增）
+   ============================================ */
+.service-flow {
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(201, 168, 76, 0.05);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 10px;
+}
+
+.service-flow-title {
+    font-size: 18px;
+    color: var(--gold-primary);
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+}
+
+.service-flow-steps {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.service-step {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    padding: 15px 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    position: relative;
+}
+
+.service-step-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.service-step-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.service-step::after {
+    content: '→';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold-primary);
+    font-size: 20px;
+    opacity: 0.5;
+}
+
+.service-step:last-child::after {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .service-flow-steps {
+        flex-direction: column;
+    }
+    .service-step::after {
+        content: '↓';
+        right: 50%;
+        bottom: -25px;
+        top: auto;
+        transform: translateX(50%);
+    }
+}
+
+/* ============================================
+   浮动寺庙图片装饰
+   ============================================ */
+.floating-images {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.08;
+}
+
+.float-img {
+    position: absolute;
+    border-radius: 10px;
+    filter: sepia(0.3) contrast(1.1);
+    box-shadow: 0 0 30px rgba(201, 168, 76, 0.2);
+}
+
+.float-img-1 {
+    width: 200px;
+    top: 15%;
+    left: 3%;
+    transform: rotate(-5deg);
+    animation: floatImg1 15s ease-in-out infinite;
+}
+
+.float-img-2 {
+    width: 180px;
+    top: 50%;
+    right: 2%;
+    transform: rotate(3deg);
+    animation: floatImg2 18s ease-in-out infinite;
+}
+
+.float-img-3 {
+    width: 150px;
+    bottom: 20%;
+    left: 5%;
+    transform: rotate(5deg);
+    animation: floatImg3 20s ease-in-out infinite;
+}
+
+.float-img-4 {
+    width: 160px;
+    top: 25%;
+    right: 5%;
+    transform: rotate(-3deg);
+    animation: floatImg4 16s ease-in-out infinite;
+}
+
+@keyframes floatImg1 {
+    0%, 100% { transform: rotate(-5deg) translateY(0); opacity: 0.08; }
+    50% { transform: rotate(-3deg) translateY(-15px); opacity: 0.12; }
+}
+
+@keyframes floatImg2 {
+    0%, 100% { transform: rotate(3deg) translateY(0); opacity: 0.08; }
+    50% { transform: rotate(5deg) translateY(10px); opacity: 0.1; }
+}
+
+@keyframes floatImg3 {
+    0%, 100% { transform: rotate(5deg) translateY(0); opacity: 0.06; }
+    50% { transform: rotate(3deg) translateY(-20px); opacity: 0.1; }
+}
+
+@keyframes floatImg4 {
+    0%, 100% { transform: rotate(-3deg) translateY(0); opacity: 0.07; }
+    50% { transform: rotate(-1deg) translateY(15px); opacity: 0.11; }
+}
+
+/* 移动端隐藏浮动图片 */
+@media (max-width: 768px) {
+    .floating-images {
+        display: none;
+    }
+}
+
+/* ============================================
+   用户留言框样式
+   ============================================ */
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.message-hint {
+    font-size: 12px;
+    color: rgba(201, 168, 76, 0.6);
+    margin-top: 8px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ============================================
+   移动端优化（Mobile-First）
+   ============================================ */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .container {
+        padding: 10px;
+        padding-top: 60px;
+    }
+    
+    .temple-header {
+        padding: 20px 10px;
+    }
+    
+    .main-title {
+        font-size: 36px;
+        letter-spacing: 8px;
+    }
+    
+    .title-char {
+        display: inline-block;
+        margin: 0 2px;
+    }
+    
+    .form-frame {
+        padding: 20px 15px;
+        border-radius: 8px;
+    }
+    
+    .form-label {
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+    
+    .form-input {
+        font-size: 16px; /* 防止iOS缩放 */
+        padding: 12px 15px;
+    }
+    
+    .photo-upload-area {
+        min-height: 150px;
+    }
+    
+    .gender-options {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .gender-label {
+        display: block;
+        text-align: center;
+        padding: 14px 30px;
+    }
+    
+    .submit-btn {
+        font-size: 18px;
+        padding: 16px 30px;
+        letter-spacing: 3px;
+    }
+    
+    .service-flow {
+        padding: 15px 10px;
+        margin: 20px 0;
+    }
+    
+    .service-step-icon {
+        font-size: 28px;
+    }
+    
+    .service-step-text {
+        font-size: 12px;
+    }
+    
+    .disclaimer-section {
+        margin-bottom: 15px;
+    }
+    
+    .disclaimer-toggle {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    
+    .disclaimer-item {
+        padding: 10px 12px;
+    }
+    
+    .disclaimer-item h4 {
+        font-size: 13px;
+    }
+    
+    .disclaimer-item p {
+        font-size: 12px;
+    }
+    
+    .modal-content {
+        padding: 25px 20px;
+        margin: 10px;
+    }
+    
+    .modal-title {
+        font-size: 24px;
+    }
+    
+    .modal-message {
+        font-size: 15px;
+    }
+    
+    .modal-lotus {
+        font-size: 60px;
+    }
+    
+    .temple-footer {
+        padding: 25px 15px;
+        margin-top: 40px;
+    }
+    
+    .footer-text {
+        font-size: 14px;
+        letter-spacing: 3px;
+    }
+    
+    .footer-sub {
+        font-size: 11px;
+    }
+    
+    .corner-decoration {
+        width: 25px;
+        height: 25px;
+    }
+    
+    /* 移动端语言切换 */
+    .lang-switcher {
+        padding: 6px 5px;
+        gap: 3px;
+    }
+    
+    .lang-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+        border-radius: 3px;
+    }
+    
+    /* 法律声明门移动端 */
+    .gate-lang-selector {
+        gap: 4px;
+    }
+    
+    .gate-lang-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .legal-gate-modal {
+        padding: 20px 15px;
+    }
+    
+    .legal-gate-title {
+        font-size: 22px;
+    }
+    
+    .legal-gate-content {
+        font-size: 13px;
+    }
+    
+    .legal-gate-content h3 {
+        font-size: 14px;
+    }
+    
+    .legal-gate-btn {
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+    
+    /* 随喜区域移动端 */
+    .donation-section {
+        padding: 15px 10px;
+    }
+    
+    .qr-image {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+/* 超小屏幕 */
+@media (max-width: 380px) {
+    .main-title {
+        font-size: 28px;
+        letter-spacing: 4px;
+    }
+    
+    .title-char {
+        display: block;
+        margin: 5px auto;
+    }
+    
+    .gate-lang-btn {
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+    
+    .lang-btn {
+        padding: 3px 6px;
+        font-size: 10px;
+    }
+}
+
+/* 横屏手机 */
+@media (max-width: 896px) and (orientation: landscape) {
+    .container {
+        padding-top: 50px;
+    }
+    
+    .temple-header {
+        padding: 15px 10px;
+    }
+    
+    .main-title {
+        font-size: 28px;
+    }
+    
+    .form-frame {
+        padding: 15px;
+    }
+}
+
+/* ============================================
+   打赏功能模块（显眼明亮设计）
+   ============================================ */
+.donation-hero-section {
+    position: relative;
+    margin: 40px auto;
+    max-width: 800px;
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.15) 0%, rgba(139, 26, 26, 0.1) 100%);
+    border: 3px solid var(--gold-primary);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(201, 168, 76, 0.4), inset 0 0 60px rgba(201, 168, 76, 0.05);
+}
+
+.donation-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(201, 168, 76, 0.2) 0%, transparent 70%);
+    animation: glowPulse 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+.donation-content {
+    position: relative;
+    z-index: 1;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.donation-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.donation-hero-title {
+    font-size: 32px;
+    color: var(--gold-light);
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(201, 168, 76, 0.5);
+}
+
+.donation-hero-subtitle {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 35px;
+    letter-spacing: 2px;
+}
+
+/* 金额网格 */
+.amount-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.amount-btn {
+    position: relative;
+    background: rgba(201, 168, 76, 0.08);
+    border: 2px solid rgba(201, 168, 76, 0.3);
+    border-radius: 12px;
+    padding: 20px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.amount-btn:hover {
+    background: rgba(201, 168, 76, 0.15);
+    border-color: var(--gold-primary);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(201, 168, 76, 0.3);
+}
+
+.amount-btn.selected {
+    background: rgba(201, 168, 76, 0.25);
+    border-color: var(--gold-light);
+    box-shadow: 0 0 30px rgba(201, 168, 76, 0.5);
+}
+
+.amount-btn.popular {
+    border-color: var(--gold-primary);
+    background: rgba(201, 168, 76, 0.12);
+}
+
+.amount-value {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--gold-light);
+    font-family: 'Noto Serif SC', serif;
+}
+
+.amount-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.popular-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+    color: #000;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+}
+
+/* 自定义金额 */
+.custom-amount-section {
+    background: rgba(201, 168, 76, 0.05);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.custom-label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.custom-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.currency-symbol {
+    font-size: 24px;
+    color: var(--gold-primary);
+    font-weight: bold;
+}
+
+.custom-amount-input {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(201, 168, 76, 0.3);
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 18px;
+    color: var(--gold-light);
+    text-align: center;
+    font-family: 'Noto Serif SC', serif;
+}
+
+.custom-amount-input:focus {
+    outline: none;
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 15px rgba(201, 168, 76, 0.3);
+}
+
+.custom-confirm-btn {
+    background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.custom-confirm-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(201, 168, 76, 0.5);
+}
+
+/* 提示文字 */
+.donation-hint-text {
+    font-size: 14px;
+    color: var(--gold-light);
+    margin: 20px 0 30px;
+    letter-spacing: 1px;
+    line-height: 1.6;
+    padding: 15px;
+    background: rgba(201, 168, 76, 0.08);
+    border-radius: 10px;
+    border-left: 3px solid var(--gold-primary);
+}
+
+/* 支付方式 */
+.payment-methods {
+    margin-bottom: 25px;
+}
+
+.payment-title {
+    font-size: 16px;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+}
+
+.payment-options {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.payment-btn {
+    flex: 1;
+    min-width: 140px;
+    max-width: 180px;
+    background: rgba(201, 168, 76, 0.05);
+    border: 2px solid rgba(201, 168, 76, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.payment-btn:hover {
+    background: rgba(201, 168, 76, 0.12);
+    border-color: var(--gold-primary);
+}
+
+.payment-btn.active {
+    background: rgba(201, 168, 76, 0.2);
+    border-color: var(--gold-light);
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
+}
+
+.payment-icon {
+    font-size: 28px;
+}
+
+.payment-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--gold-light);
+}
+
+.payment-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+/* 二维码显示区域 */
+.qr-payment-section {
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--gold-primary);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 25px 0;
+}
+
+.qr-display {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.payment-qr-image {
+    width: 200px;
+    height: 200px;
+    border: 3px solid var(--gold-primary);
+    border-radius: 10px;
+    background: #fff;
+    padding: 10px;
+}
+
+.qr-placeholder {
+    width: 200px;
+    height: 200px;
+    border: 2px dashed rgba(201, 168, 76, 0.5);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background: rgba(201, 168, 76, 0.05);
+}
+
+.qr-placeholder-icon {
+    font-size: 40px;
+    opacity: 0.5;
+}
+
+.qr-placeholder-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 0 20px;
+}
+
+.payment-info {
+    text-align: center;
+}
+
+.selected-amount {
+    font-size: 24px;
+    color: var(--gold-light);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.payment-instruction {
+    font-size: 14px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+/* 确认按钮 */
+.donate-confirm-btn {
+    background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+    border: none;
+    border-radius: 15px;
+    padding: 18px 50px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: inherit;
+    letter-spacing: 2px;
+    box-shadow: 0 5px 25px rgba(201, 168, 76, 0.4);
+}
+
+.donate-confirm-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 35px rgba(201, 168, 76, 0.6);
+}
+
+.donate-confirm-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-icon {
+    font-size: 22px;
+}
+
+/* 移动端打赏模块适配 */
+@media (max-width: 768px) {
+    .donation-hero-section {
+        margin: 20px 10px;
+        border-radius: 15px;
+    }
+    
+    .donation-content {
+        padding: 25px 15px;
+    }
+    
+    .donation-icon {
+        font-size: 40px;
+    }
+    
+    .donation-hero-title {
+        font-size: 24px;
+        letter-spacing: 2px;
+    }
+    
+    .donation-hero-subtitle {
+        font-size: 13px;
+    }
+    
+    .amount-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .amount-btn {
+        padding: 15px 10px;
+    }
+    
+    .amount-value {
+        font-size: 22px;
+    }
+    
+    .amount-label {
+        font-size: 11px;
+    }
+    
+    .popular-badge {
+        font-size: 9px;
+        padding: 3px 8px;
+    }
+    
+    .custom-amount-section {
+        padding: 15px;
+    }
+    
+    .custom-amount-input {
+        font-size: 16px;
+        padding: 10px;
+    }
+    
+    .donation-hint-text {
+        font-size: 13px;
+        padding: 12px;
+    }
+    
+    .payment-options {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .payment-btn {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    
+    .qr-payment-section {
+        padding: 20px 15px;
+    }
+    
+    .payment-qr-image,
+    .qr-placeholder {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .donate-confirm-btn {
+        padding: 15px 35px;
+        font-size: 16px;
+    }
+}
+
+
+/* ============================================
+   WISDOM QUOTES
+   ============================================ */
+.wisdom-quotes {
+    text-align: center;
+    padding: 20px 0 10px;
+    min-height: 60px;
+}
+
+.quote-container {
+    position: relative;
+}
+
+.quote-text {
+    font-size: 1.1rem;
+    color: var(--gold-primary);
+    font-style: italic;
+    letter-spacing: 0.05em;
+    opacity: 1;
+    transition: opacity 0.8s ease;
+    line-height: 1.8;
+    display: none;
+}
+
+.quote-text.active {
+    display: block;
+    animation: fadeQuote 0.8s ease;
+}
+
+@keyframes fadeQuote {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.quote-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.quote-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold-dark);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quote-dot.active {
+    background: var(--gold-primary);
+    width: 20px;
+    border-radius: 3px;
+}
+
+/* ============================================
+   MISSION SECTION
+   ============================================ */
+.mission-section {
+    text-align: center;
+    padding: 10px 20px 20px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.mission-badge {
+    display: inline-block;
+    padding: 4px 16px;
+    border: 1px solid var(--gold-dark);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--gold-primary);
+    margin-bottom: 12px;
+    letter-spacing: 0.08em;
+}
+
+.mission-content p {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-family: 'Georgia', serif;
+}
+
+/* ============================================
+   TRUST SECTION
+   ============================================ */
+.trust-section {
+    padding: 10px 0;
+}
+
+.trust-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.trust-stat {
+    text-align: center;
+    padding: 8px 16px;
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--gold-primary);
+    line-height: 1.4;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ============================================
+   SUPPORT AMOUNTS - ADDITIONAL REFINEMENT
+   ============================================ */
+.support-btn[data-amount="200"] {
+    border-color: var(--gold-dark);
+}
+
+@media (max-width: 600px) {
+    .trust-stats { gap: 15px; }
+    .stat-number { font-size: 1.1rem; }
+    .mission-content p { font-size: 0.85rem; }
+}
+
+/* ============================================
+   EMAIL REQUIRED INDICATOR
+   ============================================ */
+.form-input:required + .form-label::after,
+.form-input[required] ~ .form-label .required-star {
+    content: ' *';
+    color: var(--red-primary);
 }
