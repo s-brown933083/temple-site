@@ -1,5 +1,12 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, session, Response
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session, Response, make_response
 from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
+import os as _os
+
+# Load .env before reading any environment variables
+_dotenv_path = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '.env')
+load_dotenv(_dotenv_path)
+
 import sqlite3
 import os
 import csv
@@ -8,11 +15,44 @@ from datetime import datetime, timedelta
 import hashlib
 import smtplib
 import threading
+import re
+from collections import defaultdict
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from functools import wraps
 
 app = Flask(__name__)
-app.secret_key = 'temple_secret_key_2026'
+app.secret_key = os.environ.get('SECRET_KEY', 'temple_secret_key_2026')
+
+# ─── Security Headers ─────────────────────────────────────────
+@app.after_request
+def security_headers(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    return response
+
+# ─── Simple Rate Limiting ─────────────────────────────────────
+# Per-IP submission rate limiting (sliding window, 5 submissions per hour)
+_submit_rates = defaultdict(list)
+
+def rate_limit(max_requests=5, window_seconds=3600):
+    def decorator(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            ip = request.remote_addr or '127.0.0.1'
+            now = datetime.now().timestamp()
+            _submit_rates[ip] = [t for t in _submit_rates[ip] if now - t < window_seconds]
+            if len(_submit_rates[ip]) >= max_requests:
+                return jsonify({
+                    'success': False,
+                    'message': '提交过于频繁，请稍后再试。'
+                }), 429
+            _submit_rates[ip].append(now)
+            return f(*args, **kwargs)
+        return wrapped
+    return decorator
 
 # Configuration
 UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', os.path.join(os.path.dirname(__file__), 'static', 'uploads'))
@@ -76,6 +116,7 @@ def health():
     return {'status': 'ok', 'service': 'temple-site'}
 
 @app.route('/submit', methods=['POST'])
+@rate_limit(max_requests=5, window_seconds=3600)
 def submit():
     try:
         name = request.form.get('name', '').strip()
@@ -107,13 +148,17 @@ def submit():
         conn.close()
         
         # 后台异步发送通知邮件（不阻塞提交响应）
-        threading.Thread(
-            target=send_admin_notification,
-            args=(name, birthday, gender, email, photo_filename, message),
-            daemon=True
-        ).start()
-        
-        return jsonify({'success': True, 'message': '感恩您的提交。愿福慧增长，吉祥如意。'})
+        # 注意：send_admin_notification 内部已经使用线程，不会阻塞
+        try:
+            threading.Thread(
+                target=send_admin_notification,
+                args=(name, birthday, gender, email, photo_filename, message, submission_id),
+                daemon=True
+            ).start()
+        except Exception as e:
+            print(f'通知邮件发送失败: {e}')
+
+        return jsonify({'success': True, 'message': '感恩您的提交。愿福慧增长，吉祥如意。', 'submission_id': submission_id})
     
     except Exception as e:
         return jsonify({'success': False, 'message': f'提交失败: {str(e)}'})
@@ -245,6 +290,7 @@ def admin_api_submissions():
             'gender': row['gender'],
             'photo_filename': row['photo_filename'],
             'email': row['email'],
+            'message': row['message'],
             'submitted_at': row['submitted_at']
         })
     
@@ -279,6 +325,7 @@ def admin_api_submission_detail(submission_id):
         'gender': row['gender'],
         'photo_filename': row['photo_filename'],
         'email': row['email'],
+        'message': row['message'],
         'submitted_at': row['submitted_at']
     })
 
@@ -352,63 +399,167 @@ def admin_photo(filename):
     return redirect(url_for('static', filename=f'uploads/{filename}'))
 
 
-# ─── Email Notification ─────────────────────────────────────
+# ─── Auto-cleanup: delete data older than 30 days ──────
+def cleanup_old_data():
+    try:
+        conn = get_db()
+        c = conn.cursor()
+        cutoff = (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d %H:%M:%S')
+        c.execute('SELECT photo_filename FROM submissions WHERE submitted_at < ? AND photo_filename IS NOT NULL', (cutoff,))
+        old_photos = [row['photo_filename'] for row in c.fetchall()]
+        for pf in old_photos:
+            fp = os.path.join(app.config['UPLOAD_FOLDER'], pf)
+            if os.path.exists(fp):
+                try: os.remove(fp)
+                except: pass
+        c.execute('DELETE FROM submissions WHERE submitted_at < ?', (cutoff,))
+        deleted = c.rowcount
+        conn.commit()
+        conn.close()
+        if deleted > 0:
+            print(f'🗑️ Auto-cleanup: deleted {deleted} records older than {cutoff}')
+    except Exception as e:
+        print(f'Cleanup failed: {e}')
 
-def send_notification_email(to_email, subject, body):
-    """发送通知邮件"""
-    if not to_email:
+cleanup_old_data()
+
+# ─── Beautiful Email Templates ─────────────────────────────────
+
+def get_email_template(content_html, title="禅意净土"):
+    """Beautiful temple-aesthetic HTML email wrapper"""
+    return f'''<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title}</title></head>
+<body style="margin:0;padding:0;background:#0a0a0a;font-family:'Microsoft YaHei','PingFang SC',sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:30px 10px;">
+  <tr><td align="center">
+    <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#111111;border:2px solid #c9a84c;border-radius:16px;overflow:hidden;">
+      <tr><td style="background:linear-gradient(135deg,#1a1408 0%,#0d0d0d 100%);padding:40px 40px 30px;text-align:center;border-bottom:1px solid rgba(201,168,76,0.3);">
+        <div style="font-size:36px;margin-bottom:10px;">☸</div>
+        <h1 style="color:#c9a84c;font-size:24px;font-weight:400;letter-spacing:8px;margin:0;">{title}</h1>
+        <div style="color:#6b5c3e;font-size:12px;letter-spacing:4px;margin-top:8px;">TEMPLE OF SERENITY</div>
+      </td></tr>
+      <tr><td style="padding:40px;">{content_html}</td></tr>
+      <tr><td style="background:rgba(201,168,76,0.05);padding:25px 40px;border-top:1px solid rgba(201,168,76,0.2);text-align:center;">
+        <p style="color:#6b5c3e;font-size:12px;line-height:2;margin:0 0 8px;">☸ 愿以此功德，庄严佛净土</p>
+        <p style="color:#4a3f2f;font-size:11px;margin:0;">© 2026 Temple of Serenity · temple-serenity.org · 全部数据30天后自动删除</p>
+      </td></tr>
+    </table>
+  </td></tr>
+</table></body></html>'''
+
+def get_admin_notification_html(name, birthday, gender, email, photo_filename, message, submission_id, base_url=''):
+    photo_section = ''
+    if photo_filename:
+        photo_section = f'''<div style="margin:20px 0;text-align:center;">
+          <img src="{base_url}/static/uploads/{photo_filename}" alt="用户照片"
+          style="max-width:180px;border-radius:12px;border:2px solid #c9a84c;max-height:180px;object-fit:cover;"
+          onerror="this.outerHTML='<span style=\'color:#6b5c3e;font-size:13px;\'>[照片加载失败]</span>'">
+        </div>'''
+    return f'''<div style="text-align:center;margin-bottom:30px;">
+  <div style="display:inline-block;background:#c9a84c;color:#0a0a0a;padding:6px 20px;border-radius:20px;font-size:12px;letter-spacing:3px;margin-bottom:18px;">NEW SUBMISSION</div>
+  <h2 style="color:#e8e0d0;font-size:20px;font-weight:400;margin:0 0 6px;">新的祈愿已提交</h2>
+  <p style="color:#6b5c3e;font-size:13px;margin:0;">祈愿 #{submission_id} · {datetime.now().strftime('%Y-%m-%d %H:%M')}</p>
+</div>
+<table width="100%" cellpadding="12" cellspacing="0" style="background:rgba(201,168,76,0.06);border-radius:12px;border:1px solid rgba(201,168,76,0.2);margin-bottom:20px;">
+  <tr><td style="color:#c9a84c;width:80px;font-size:13px;">姓名</td><td style="color:#e8e0d0;font-size:14px;font-weight:500;">{name}</td></tr>
+  <tr><td style="color:#c9a84c;font-size:13px;">生日</td><td style="color:#b8a890;font-size:14px;">{birthday}</td></tr>
+  <tr><td style="color:#c9a84c;font-size:13px;">性别</td><td style="color:#b8a890;font-size:14px;">{'男' if gender=='male' else '女'}</td></tr>
+  <tr><td style="color:#c9a84c;font-size:13px;">邮箱</td><td style="color:#b8a890;font-size:14px;">{email or '<span style="color:#e74c3c;">未提供</span>'}</td></tr>
+</table>
+{photo_section}
+''' + (f'''<div style="background:rgba(201,168,76,0.06);border-left:3px solid #c9a84c;padding:15px 20px;border-radius:0 8px 8px 0;margin:15px 0;"><p style="color:#b8a890;font-size:13px;margin:0;line-height:1.8;">{message}</p></div>''' if message else '') + f'''
+<div style="text-align:center;margin-top:30px;">
+  <a href="{base_url}/admin" style="display:inline-block;background:#c9a84c;color:#0a0a0a;padding:12px 32px;border-radius:25px;text-decoration:none;font-size:14px;letter-spacing:2px;font-weight:500;">进入管理后台 →</a>
+</div>'''
+
+def get_result_email_html(name, result_text):
+    return f'''<div style="text-align:center;margin-bottom:30px;">
+  <h2 style="color:#c9a84c;font-size:22px;font-weight:400;letter-spacing:4px;margin:0 0 10px;">☸ {name}，吉祥如意</h2>
+  <p style="color:#6b5c3e;font-size:13px;margin:0;">您的祈愿结果已生成</p>
+</div>
+<div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.3);border-radius:16px;padding:30px;margin-bottom:25px;text-align:center;">
+  <p style="color:#e8e0d0;font-size:15px;line-height:2.2;margin:0;white-space:pre-wrap;">{result_text}</p>
+</div>
+<p style="color:#6b5c3e;font-size:12px;text-align:center;line-height:2;margin:0;">
+  本结果仅供参考娱乐，不构成任何预测或保证<br>如有疑问请联系：admin@temple-serenity.org
+</p>'''
+
+# ─── Low-level SMTP ───────────────────────────────────────────
+
+def send_smtp_email(to_email, subject, html_content):
+    if not to_email or to_email in ('your-email@gmail.com', 'your-app-password'):
+        print(f'[SKIP] Email not configured: {subject}')
         return False
-    
     try:
         msg = MIMEMultipart('alternative')
-        msg['From'] = SMTP_USER
+        msg['From'] = f'Temple of Serenity <{SMTP_USER}>'
         msg['To'] = to_email
         msg['Subject'] = subject
-        
-        html_body = f'''
-        <html>
-        <body style="font-family: 'Noto Serif SC', serif; background: #0a0a0a; color: #e8e0d0; padding: 20px;">
-        <div style="max-width: 600px; margin: 0 auto; background: #1a1a1a; border: 2px solid #c9a84c; border-radius: 10px; padding: 30px;">
-        <h2 style="color: #c9a84c; text-align: center; letter-spacing: 3px;">☸ 禅意净土</h2>
-        <p style="text-align: center; color: #b8a890;">{body}</p>
-        <hr style="border-color: #c9a84c; margin: 20px 0;">
-        <p style="text-align: center; font-size: 12px; color: #888;">
-        © 2026 Temple of Serenity · 愿以此功德，庄严佛净土
-        </p>
-        </div>
-        </body>
-        </html>
-        '''
-        
-        msg.attach(MIMEText(html_body, 'html', 'utf-8'))
-        
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=10)
+        msg.attach(MIMEText(html_content, 'html', 'utf-8'))
+        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15)
         server.starttls()
         server.login(SMTP_USER, SMTP_PASSWORD)
-        server.sendmail(SMTP_USER, to_email, msg.as_string())
+        server.send_message(msg)
         server.quit()
-        
+        print(f'[OK] Email sent: {to_email}')
         return True
     except Exception as e:
-        print(f'Email error: {e}')
+        print(f'[FAIL] Email failed: {to_email} -> {e}')
         return False
 
+# ─── Admin Notification ────────────────────────────────────────
 
-def send_admin_notification(name, birthday, gender, email, photo_filename, message=None):
-    """通知管理员有新提交"""
-    subject = f'【新祈愿提交】{name}'
-    body = f'''
-    新的祈愿已提交：<br><br>
-    姓名：{name}<br>
-    生日：{birthday}<br>
-    性别：{gender}<br>
-    邮箱：{email or "未提供"}<br>
-    照片：{'已上传' if photo_filename else '未上传'}<br>
-    留言：{message or "无"}<br><br>
-    请登录管理后台查看详情。<br>
-    <a href="https://your-domain.com/admin" style="color: #c9a84c;">点击进入管理后台</a>
-    '''
-    return send_notification_email(ADMIN_EMAIL, subject, body)
+def send_admin_notification(name, birthday, gender, email, photo_filename, message=None, submission_id=None):
+    base_url = os.environ.get('BASE_URL', '').rstrip('/')
+    content = get_admin_notification_html(name, birthday, gender, email, photo_filename, message, submission_id or '?', base_url)
+    html = get_email_template(content, f'【新祈愿提交】{name}')
+    return send_smtp_email(ADMIN_EMAIL, f'【新祈愿 #{submission_id}】来自 {name}', html)
+
+
+# ─── SEO: robots.txt & sitemap.xml ─────────────────────────────
+
+@app.route('/robots.txt')
+def robots_txt():
+    return Response(
+        'User-agent: *\n'
+        'Allow: /\n'
+        'Disallow: /admin\n'
+        'Disallow: /admin/api/\n'
+        'Sitemap: https://temple-serenity.org/sitemap.xml\n',
+        mimetype='text/plain'
+    )
+
+@app.route('/sitemap.xml')
+def sitemap_xml():
+    base = os.environ.get('BASE_URL', 'https://temple-serenity.org').rstrip('/')
+    pages = [
+        {'loc': f'{base}/', 'priority': '1.0', 'changefreq': 'weekly'},
+        {'loc': f'{base}/admin', 'priority': '0.3', 'changefreq': 'monthly'},
+    ]
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for p in pages:
+        xml += f'  <url><loc>{p["loc"]}</loc><priority>{p["priority"]}</priority><changefreq>{p["changefreq"]}</changefreq></url>\n'
+    xml += '</urlset>'
+    return Response(xml, mimetype='application/xml')
+
+# ─── Admin: Test Email API ────────────────────────────────────
+
+@app.route('/admin/api/test-email', methods=['POST'])
+def admin_test_email():
+    if not session.get('admin_logged_in'):
+        return jsonify({'error': '未登录'}), 401
+    test_html = get_email_template(
+        '<p style="color:#e8e0d0;font-size:15px;text-align:center;padding:30px 0;">'
+        '这是一封测试邮件。<br>禅意净土邮件系统运行正常 ☸</p>',
+        '邮件测试 - 禅意净土'
+    )
+    success = send_smtp_email(ADMIN_EMAIL, '【测试】禅意净土邮件系统', test_html)
+    if success:
+        return jsonify({'success': True, 'message': f'测试邮件已发送至 {ADMIN_EMAIL}'})
+    else:
+        return jsonify({'error': '发送失败，请检查 SMTP 配置'}), 500
 
 
 if __name__ == '__main__':
@@ -420,47 +571,9 @@ if __name__ == '__main__':
 # ─── Email Functions ─────────────────────────────────────────
 
 def send_result_email(to_email, name, result_text):
-    """发送算命结果到用户邮箱"""
-    if not to_email:
-        return False
-    
-    try:
-        msg = MIMEMultipart('alternative')
-        msg['From'] = f'禅意净土 <{SMTP_USER}>'
-        msg['To'] = to_email
-        msg['Subject'] = '您的祈愿结果已出炉 - 禅意净土'
-        
-        html_content = f'''
-        <html>
-        <body style="font-family: 'Microsoft YaHei', sans-serif; background: #0a0a0a; color: #e8e0d0; padding: 20px;">
-        <div style="max-width: 600px; margin: 0 auto; background: #1a1a1a; border: 2px solid #c9a84c; border-radius: 10px; padding: 30px;">
-            <h1 style="color: #c9a84c; text-align: center; letter-spacing: 5px;">☸ 感恩祈愿 ☸</h1>
-            <p style="text-align: center; color: #b8a890;">{name}，愿福慧增长，吉祥如意</p>
-            <div style="background: rgba(201, 168, 76, 0.1); padding: 20px; border-radius: 5px; margin: 20px 0;">
-                {result_text}
-            </div>
-            <p style="font-size: 12px; color: #888; text-align: center; margin-top: 30px;">
-                © 2026 Temple of Serenity · 本服务仅供娱乐参考
-            </p>
-        </div>
-        </body>
-        </html>
-        '''
-        
-        msg.attach(MIMEText(html_content, 'html', 'utf-8'))
-        
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=10) as server:
-            server.starttls()
-            server.login(SMTP_USER, SMTP_PASSWORD)
-            server.send_message(msg)
-        
-        return True
-    except Exception as e:
-        print(f"Email send error: {e}")
-        return False
-
-
-@app.route('/admin/api/submissions/<int:submission_id>/send-result', methods=['POST'])
+    content = get_result_email_html(name, result_text)
+    html = get_email_template(content, f'您的祈愿结果 - 禅意净土')
+    return send_smtp_email(to_email, '您的祈愿结果已出炉 - 禅意净土', html)
 def admin_api_send_result(submission_id):
     """管理员发送结果到用户邮箱"""
     if not session.get('admin_logged_in'):

@@ -508,12 +508,13 @@
                                 <th onclick="sortBy('birthday')">生日 <span class="sort-icon">⇅</span></th>
                                 <th onclick="sortBy('gender')">性别 <span class="sort-icon">⇅</span></th>
                                 <th>邮箱</th>
+                                <th>留言</th>
                                 <th onclick="sortBy('submitted_at')">提交时间 <span class="sort-icon">⇅</span></th>
                                 <th>操作</th>
                             </tr>
                         </thead>
                         <tbody id="submissionsBody">
-                            <tr class="loading-row"><td colspan="8"><div class="loading-spinner"><div class="spinner"></div><p>加载中...</p></div></td></tr>
+                            <tr class="loading-row"><td colspan="9"><div class="loading-spinner"><div class="spinner"></div><p>加载中...</p></div></td></tr>
                         </tbody>
                     </table>
                     
@@ -661,6 +662,10 @@ function loadSubmissions(page) {
                 const time = s.submitted_at ? s.submitted_at.slice(0,16).replace('T',' ') : '-';
                 const emailDisplay = s.email || '<span style="opacity:0.4;">-</span>';
                 
+                const messageDisplay = s.message && s.message.trim()
+                    ? `<span class="message-tag" title="${s.message.replace(/"/g,'&quot;')}">${s.message.slice(0,20)}${s.message.length > 20 ? '...' : ''}</span>`
+                    : '<span style="opacity:0.3;">-</span>';
+
                 return `<tr>
                     <td style="font-family:monospace;">${s.id}</td>
                     <td>${photoHtml}</td>
@@ -668,6 +673,8 @@ function loadSubmissions(page) {
                     <td>${s.birthday}</td>
                     <td>${genderHtml}</td>
                     <td style="font-size:13px;">${emailDisplay}</td>
+                    <td style="font-size:12px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${(s.message||'')
+.replace(/</g,'&lt;').replace(/>/g,'&gt;')}">${messageDisplay}</td>
                     <td style="font-size:12px;white-space:nowrap;">${time}</td>
                     <td>
                         <div class="action-btns">
@@ -753,6 +760,7 @@ function showDetail(id) {
                     <div class="modal-field"><label>性别</label><div class="value">${s.gender || '-'}</div></div>
                     <div class="modal-field"><label>生日</label><div class="value">${s.birthday}</div></div>
                     <div class="modal-field"><label>邮箱</label><div class="value">${s.email || '-'}</div></div>
+                    ${s.message ? `<div class="modal-field full"><label>留言</label><div class="value" style="white-space:pre-wrap;">${s.message}</div></div>` : ''}
                     <div class="modal-field full"><label>提交时间</label><div class="value">${s.submitted_at?.replace('T',' ') || '-'}</div></div>
                     <div class="modal-field full" style="text-align:center;margin-top:10px;">
                         <button class="btn btn-danger" onclick="closeModal();confirmDelete(${s.id})">🗑️ 删除此记录</button>
