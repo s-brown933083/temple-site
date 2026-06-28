@@ -71,7 +71,7 @@ def rate_limit(max_requests=5, window_seconds=3600):
 # Configuration
 UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', os.path.join(os.path.dirname(__file__), 'static', 'uploads'))
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
-ADMIN_PASSWORD = 'temple2026'
+ADMIN_PASSWORD = 'zx897007360'
 
 # Email Configuration (环境变量优先，支持 Gmail / QQ / QQ企业邮箱 / SendGrid 等)
 SMTP_SERVER = os.environ.get('SMTP_SERVER', 'smtp.gmail.com')
