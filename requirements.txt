@@ -3,4 +3,3 @@ werkzeug
 gunicorn
 Pillow
 python-dotenv
-psycopg2-binary

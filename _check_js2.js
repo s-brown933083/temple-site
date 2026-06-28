@@ -1,0 +1,1128 @@
+
+    // ============================================================
+    // Translation System (6 Languages)
+    // ============================================================
+    const translations = {
+        zh: {
+            page_title: '禅意净土 - Temple of Serenity',
+            title1: '禅', title2: '意', title3: '净', title4: '土',
+            subtitle: '愿以此功德，庄严佛净土',
+            legal_title: '重要声明',
+            legal_service_title: '服务说明',
+            legal_service_body: '本网站提供基于东方智慧传统的命理咨询服务，仅供娱乐和自我反思之用，不构成任何形式的预测、保证，也不构成专业医疗/财务/法律建议。',
+            legal_privacy_title: '隐私保护',
+            legal_privacy_1: '您提交的照片、姓名、生日等信息仅用于本次咨询',
+            legal_privacy_2: '我们承诺不会将您的信息出售、分享或披露给任何第三方',
+            legal_privacy_3: '所有数据将在您本次咨询后立刻自动删除',
+            legal_privacy_4: '结果将在12小时内发送至您的邮箱（如未填写邮箱，请在12小时内联系客服）',
+            legal_disclaimer_title: '免责条款',
+            legal_disclaimer_1: '本服务仅供娱乐，不构成任何形式的承诺或保证',
+            legal_disclaimer_2: '用户应独立判断并承担相应风险',
+            legal_disclaimer_3: '我们不承担任何基于本服务做出的决定或行为的责任',
+            legal_contact_title: '联系方式',
+            legal_contact_body: '如需删除数据或有疑问，请联系：zx2628804@gmail.com',
+            legal_agree_text: '我已阅读并同意以上条款，且已满18岁',
+            legal_enter_btn: '我已理解，进入网站',
+            mission_badge: '关于此服务',
+            mission_desc: '这是一个古老智慧与现代指引交汇的神圣空间。植根于佛教哲学传统，我们通过东方神秘的沉思视角，为您提供个人洞察。无论您寻求的是清晰、内心平静，还是在人生道路上需要一点深思熟虑的指引，我们都怀着尊重和谦逊与您同行。',
+            how_it_works_title: '服务流程',
+            how_it_works_sub: '四步轻松获取您的解读',
+            step_1_title: '分享您的信息',
+            step_1_desc: '上传清晰照片并提供基本信息。您分享的细节越多，解读就能越个性化。',
+            step_2_title: '我们为您分析',
+            step_2_desc: '您的提交会经过细心审阅。我们运用传统命理方法来解读您独特的能量模式。',
+            step_3_title: '收取您的解读',
+            step_3_desc: '在12小时内，您个性化的解读将发送至您的邮箱。花些时间细细品味这些洞见。',
+            step_4_title: '自愿支持',
+            step_4_desc: '如果您觉得解读有价值，我们欢迎自愿支持——但绝非强制要求。每份提交都会得到同等用心对待。',
+            services_title: '我们的服务',
+            services_subtitle: '古老智慧，现代应用',
+            service_tarot_title: '塔罗牌解读',
+            service_tarot_desc: '通过塔罗牌永恒的象征意义，为您的问题带来清晰认知。每一张牌阵都为您的处境提供独特的视角。',
+            service_birth_title: '生辰八字分析',
+            service_birth_desc: '通过古老的生辰八字解读科学，理解您的性格特点、人生优势与命运模式。',
+            service_face_title: '面相解读',
+            service_face_desc: '古老的中国面相术通过面部特征揭示性格特质与人生倾向。',
+            service_destiny_title: '命运咨询',
+            service_destiny_desc: '探索人生更广阔的命运轨迹。理解生命中的周期、时机和人生方向。',
+            service_love_title: '感情与关系',
+            service_love_desc: '深思熟虑地处理感情问题。在人际关系和情感模式上获得新的视角。',
+            service_career_title: '事业与人生路径',
+            service_career_desc: '将您的职业与更深层的人生使命对齐。了解您的优势和发展方向。',
+            about_title: '关于禅意净土',
+            about_1: '禅意净土源于对东方神秘传统的深厚敬意。我们的 practitioners 汲取佛教哲学、道家宇宙观和数百年来的命理体系，提供既古老又与时俱进的指引。',
+            about_2: '我们相信，智慧传统拥有永恒的价值——不是字面意义上的算命，而是自我反思的镜子。我们的解读旨在激发深思，而非制造依赖。',
+            about_3: '每份解读都会受到同等关心和保密对待，无论您是否选择自愿支持。我们在此服务，而非施压。',
+            about_value_privacy: '完全隐私保护',
+            about_value_tradition: '活着的传统',
+            about_value_global: '全球社群',
+            about_value_sincere: '真诚诚实',
+            entertainment_notice: '仅供娱乐参考。不能替代专业建议。结果提供的是视角，而非预测。',
+            quote_1: '一花一世界，一叶一如来',
+            quote_2: '应无所住而生其心',
+            quote_3: '菩提本无树，明镜亦非台',
+            label_photo: '照片',
+            label_name: '姓名',
+            label_birthday: '生日',
+            label_gender: '性别',
+            label_message: '留言',
+            label_email: '邮箱',
+            placeholder_name: '请输入您的姓名',
+            placeholder_message: '分享是什么让您来到这里...',
+            message_hint: '此留言仅平台管理者可见',
+            upload_hint: '点击或拖拽上传照片',
+            gender_male: '男',
+            gender_female: '女',
+            disclaimer_title: '免责声明与隐私条款',
+            disc_1_title: '• 服务性质',
+            disc_1_body: '本服务基于传统玄学文化，仅供娱乐和自我反思。请理性看待结果，不要仅凭此服务做出重大人生决定。',
+            disc_2_title: '• 隐私保护',
+            disc_2_body: '您的个人信息仅用于本次服务，绝不外泄。所有数据将在您本次咨询后立刻自动删除。',
+            disc_3_title: '• 用户责任',
+            disc_3_body: '点击"提交"即表示您已阅读并同意上述条款。如需删除数据，请联系：zx2628804@gmail.com',
+            consent_text: '我已阅读并同意以上声明与隐私条款',
+            submit_text: '提交祈愿',
+            placeholder_email: '必填（用于接收结果通知）',
+            donation_title: '随喜供灯 · 功德自在',
+            donation_desc: '您的善念是最好的供养 · 随心随力 · 量力而行',
+            qr_hint: '长按识别 · 保存图片 · 转账随喜',
+            qr_paypal_hint: '使用 PayPal APP 扫码完成支付',
+            qr_crypto_hint: '使用加密钱包扫码（支持 USDT TRC20/ERC20）',
+            why_choose_title: '为何选择禅意净土',
+            why_choose_sub: '千年智慧 · 现代解读 · 真诚指引',
+            why_1_title: '古老传承',
+            why_1_body: '汲取数百年佛教与道家传统，融合现代心理学洞察，提供深思熟虑、有层次的解读。',
+            why_2_title: '隐私保障',
+            why_2_body: '您的信息仅用于本次解读，本次咨询后立刻自动删除。我们从不出售或分享任何数据。',
+            why_3_title: '全球社群',
+            why_3_body: '以6种语言服务来自世界各地的求索者。每个视角在这里都受到欢迎。',
+            why_4_title: '真诚指引',
+            why_4_body: '无压力、无夸大承诺。我们提供视角和反思——不多不少，恰到好处。',
+            testi_title: '用户感言',
+            testi_sub: '来自我们社群的真诚反馈',
+            testi_1: '"我不确定会有什么期待，但这次解读让我对一些困境有了真正新的视角。内容体贴善意，没有推销感。"',
+            testi_1_name: '张女士 · 北京',
+            testi_3: '"御礼申し上げます。先生のお陰で、人生の新しい章を開く勇気が湧きました。"',
+            testi_3_name: '田中様 · 日本',
+            faq_title: '常见问题',
+            faq_1_q: '解读结果准确吗？',
+            faq_1_a: '我们的解读基于传统命理体系，结合反思性的方法。它们不是预测——而是自我反思的镜子。许多人发现它们出乎意料地有洞察力，请以开放的心态和理性的期望来对待。',
+            faq_2_q: '我的隐私安全吗？',
+            faq_2_a: '绝对安全。您所有的数据——姓名、生日、照片、留言——都仅用于您的解读，本次咨询后立刻自动删除。我们从不出售、分享或披露您的信息。详见法律声明门。',
+            faq_3_q: '如何提供支持？',
+            faq_3_a: '提交后，会显示可选的二维码。您可以扫描它通过加密货币、PayPal或银行转账提供自愿支持。支持完全可选——您的解读从不以支付为条件。',
+            faq_4_q: '多久能收到结果？',
+            faq_4_a: '我们在提交后12小时内送达所有解读。在繁忙时段可能有轻微延迟，感谢您的耐心。',
+            modal_title: '感恩提交',
+            modal_msg: '感谢您的信任。您的解读将在12小时内发送至您的邮箱。',
+            modal_sub: '愿您找到所寻求的清晰',
+            modal_btn: '确认',
+            support_title: '支持我们的工作',
+            support_subtitle: '您的慷慨支持我们的精神指引使命',
+            custom_amount: '自定义',
+            support_now: '立即支持',
+            qr_available: '二维码即将推出',
+            footer: '心净则国土净 · 一切唯心造',
+            footer_sub: '© 2026 Temple of Serenity · 保留所有权利'
+        },
+
+        en: {
+            page_title: 'Temple of Serenity',
+            title1: 'Zen', title2: 'Mind', title3: 'Pure', title4: 'Land',
+            subtitle: 'May this merit adorn the Pure Land',
+            legal_title: 'Important Notice',
+            legal_service_title: 'Service Description',
+            legal_service_body: 'This website provides metaphysical consultation services rooted in Eastern wisdom traditions. Results are for entertainment and self-reflection purposes only, and do not constitute any form of prediction, guarantee, or professional medical/financial/legal advice.',
+            legal_privacy_title: 'Privacy Protection',
+            legal_privacy_1: 'Your photo, name, birthday, and other information are used solely for this consultation',
+            legal_privacy_2: 'We do not sell, share, or disclose your information to any third party',
+            legal_privacy_3: 'All submitted data is deleted immediately after your consultation',
+            legal_privacy_4: 'Results are delivered via email within 12 hours (contact support if no email was provided)',
+            legal_disclaimer_title: 'Disclaimer',
+            legal_disclaimer_1: 'This service is for entertainment purposes only and does not constitute any commitment or guarantee',
+            legal_disclaimer_2: 'Users should exercise independent judgment and bear corresponding risks',
+            legal_disclaimer_3: 'We bear no responsibility for any decisions or actions taken based on this service',
+            legal_contact_title: 'Contact',
+            legal_contact_body: 'For data deletion requests or inquiries: zx2628804@gmail.com',
+            legal_agree_text: 'I have read and agree to the above terms, and I am 18 years or older',
+            legal_enter_btn: 'I Understand, Enter Site',
+            mission_badge: 'About This Service',
+            mission_desc: 'This is a sacred space where ancient wisdom meets modern guidance. Rooted in Buddhist philosophical traditions, our service offers personal insight through the contemplative lens of Eastern mysticism. Whether you seek clarity, inner peace, or a thoughtful perspective on your path, we walk beside you with respect and humility.',
+            how_it_works_title: 'How It Works',
+            how_it_works_sub: 'Four simple steps to receive your reading',
+            step_1_title: 'Share Your Info',
+            step_1_desc: 'Upload a clear photo and provide your basic information. The more detail you share, the more personalized your reading can be.',
+            step_2_title: 'We Analyze',
+            step_2_desc: 'Your submission is reviewed with care and intention. We apply traditional divination methods to interpret your unique energy patterns.',
+            step_3_title: 'Receive Your Reading',
+            step_3_desc: 'Within 12 hours, your personalized reading will be delivered to your email inbox. Take your time to reflect on the insights.',
+            step_4_title: 'Optional Support',
+            step_4_desc: 'If you found value in your reading, voluntary support is appreciated — but never required. Every submission is treated with equal care.',
+            services_title: 'Our Services',
+            services_subtitle: 'Ancient wisdom, modern application',
+            service_tarot_title: 'Tarot Reading',
+            service_tarot_desc: 'Gain clarity on your questions through the timeless symbolism of tarot cards. Each spread offers a unique lens into your situation.',
+            service_birth_title: 'Birth Chart Analysis',
+            service_birth_desc: 'Understand your personality, strengths, and life patterns through the ancient science of birth chart interpretation.',
+            service_face_title: 'Face Reading',
+            service_face_desc: 'Ancient Chinese physiognomy offers unique insights into character traits and life tendencies through facial features.',
+            service_destiny_title: 'Destiny Consultation',
+            service_destiny_desc: 'Explore the broader patterns of your life path. Understand cycles, timing, and where your journey may lead.',
+            service_love_title: 'Love & Relationship',
+            service_love_desc: 'Navigate matters of the heart with thoughtful guidance. Gain perspective on relationships and emotional patterns.',
+            service_career_title: 'Career & Life Path',
+            service_career_desc: 'Align your professional life with your deeper purpose. Understand your strengths and ideal directions for growth.',
+            about_title: 'About Temple of Serenity',
+            about_1: 'Temple of Serenity was born from a deep reverence for Eastern mystical traditions. Our practitioners draw from Buddhist philosophy, Daoist cosmology, and centuries-old divination systems to offer guidance that is both ancient and relevant.',
+            about_2: 'We believe that wisdom traditions hold timeless value — not as fortune-telling in the literal sense, but as mirrors for self-reflection. Our readings are crafted to inspire contemplation, not dependency.',
+            about_3: 'Every reading is treated with the same care and confidentiality, regardless of whether you choose to offer voluntary support. We are here to serve, not to pressure.',
+            about_value_privacy: 'Complete Privacy',
+            about_value_tradition: 'Living Tradition',
+            about_value_global: 'Global Community',
+            about_value_sincere: 'Sincere & Honest',
+            entertainment_notice: 'For entertainment purposes only. Not a substitute for professional advice. Results offer perspective, not predictions.',
+            quote_1: 'In a single flower, a whole world; in a single leaf, a Buddha\'s form',
+            quote_2: 'Let your mind dwell nowhere, and yet let it arise',
+            quote_3: 'The mind itself is the Buddha tree; the heart itself is the mirror stand',
+            label_photo: 'Photo',
+            label_name: 'Name',
+            label_birthday: 'Birthday',
+            label_gender: 'Gender',
+            label_message: 'Message',
+            label_email: 'Email',
+            placeholder_name: 'Enter your name',
+            placeholder_message: 'Share what brings you here...',
+            message_hint: 'This message is visible to platform administrators only',
+            upload_hint: 'Click or drag to upload a photo',
+            gender_male: 'Male',
+            gender_female: 'Female',
+            disclaimer_title: 'Disclaimer & Privacy Policy',
+            disc_1_title: '• Service Nature',
+            disc_1_body: 'This service is based on traditional metaphysics, for entertainment and self-reflection only. Please view results rationally and do not make major life decisions solely based on this service.',
+            disc_2_title: '• Privacy Protection',
+            disc_2_body: 'Your personal information is used only for this service and will never be leaked. All data is deleted immediately after your consultation.',
+            disc_3_title: '• User Responsibility',
+            disc_3_body: 'By clicking "Submit", you confirm that you have read and agreed to the above terms. For data deletion: zx2628804@gmail.com',
+            consent_text: 'I have read and agree to the above disclaimer and privacy policy',
+            submit_text: 'Submit',
+            placeholder_email: 'Required (for receiving your reading)',
+            donation_title: 'Offer Support · Merit',
+            donation_desc: 'Your generosity supports our work · Give freely as you feel moved',
+            qr_hint: 'Long press to save · Transfer your support',
+            qr_paypal_hint: 'Scan with PayPal app to complete payment',
+            qr_crypto_hint: 'Scan with your crypto wallet (USDT TRC20/ERC20 supported)',
+            why_choose_title: 'Why Temple of Serenity',
+            why_choose_sub: 'Rooted in tradition · Guided by sincerity',
+            why_1_title: 'Ancient Heritage',
+            why_1_body: 'Drawing from centuries-old Buddhist and Daoist traditions, blended with modern psychological insight to offer thoughtful, layered readings.',
+            why_2_title: 'Your Privacy Matters',
+            why_2_body: 'Your information is used only for this reading. All data is deleted immediately after your consultation. We never sell or share anything.',
+            why_3_title: 'Global Community',
+            why_3_body: 'Serving seekers from around the world in 6 languages. Every perspective is welcome here.',
+            why_4_title: 'Sincere & Honest',
+            why_4_body: 'No pressure, no exaggerated claims. We offer perspective and reflection — nothing more, nothing less.',
+            testi_title: 'What People Say',
+            testi_sub: 'Honest reflections from our community',
+            testi_1: '"I wasn\'t sure what to expect, but the reading gave me a genuinely new perspective on some patterns I\'d been stuck in. It was thoughtful and kind, without being pushy."',
+            testi_1_name: 'Sarah M. · USA',
+            testi_3: '"I am deeply grateful. The reading helped me see my situation from a calmer perspective. Not over-promising, genuinely thought-provoking."',
+            testi_3_name: 'Tanaka · Japan',
+            faq_title: 'Frequently Asked Questions',
+            faq_1_q: 'Are the readings accurate?',
+            faq_1_a: 'Our readings are based on traditional divination systems combined with a reflective, compassionate approach. They are not predictions — they are mirrors for self-reflection. Many find them surprisingly insightful, but please approach them with an open mind and rational expectations.',
+            faq_2_q: 'Is my privacy protected?',
+            faq_2_a: 'Absolutely. All your data — name, birthday, photo, message — is used only for your reading and is deleted immediately after your consultation. We never sell, share, or disclose your information. See our Legal Gate for full details.',
+            faq_3_q: 'How do I offer support?',
+            faq_3_a: 'After submission, an optional QR code is shown. You may scan it to offer voluntary support via crypto, PayPal, or bank transfer. Support is entirely optional — your reading is never conditional on payment.',
+            faq_4_q: 'When will I receive my reading?',
+            faq_4_a: 'We deliver all readings within 12 hours of submission. During busy periods, there may be a slight delay — thank you for your patience.',
+            modal_title: 'Submission Received',
+            modal_msg: 'Thank you for your trust. Your reading will be delivered to your email within 12 hours.',
+            modal_sub: 'May you find the clarity you seek',
+            modal_btn: 'Confirm',
+            support_title: 'Support Our Work',
+            support_subtitle: 'Your generosity helps us continue providing spiritual guidance',
+            custom_amount: 'Custom',
+            support_now: 'Support Now',
+            qr_available: 'QR Code Available Soon',
+            footer: 'A pure mind creates a pure world · All things arise from the heart',
+            footer_sub: '© 2026 Temple of Serenity · All Rights Reserved'
+        },
+
+        ja: {
+            page_title: '禅意浄土 - Temple of Serenity',
+            title1: '禅', title2: '意', title3: '浄', title4: '土',
+            subtitle: 'この功徳をもって、仏浄土を荘厳せん',
+            legal_title: '重要なお知らせ',
+            legal_service_title: 'サービス説明',
+            legal_service_body: '当サービスは東洋の知恵の伝統に根ざした形而上学鑑定サービスをお届けします。結果は娯楽および自己省察の目的のみであり、いかなる予測、保証、または専門的医療・金融・法的アドバイスも構成しません。',
+            legal_privacy_title: 'プライバシー保護',
+            legal_privacy_1: '提出された写真、名前、誕生日などの情報は今回の鑑定のみに使用されます',
+            legal_privacy_2: 'お客様の情報を第三者に販売、共有、または開示することは一切ありません',
+            legal_privacy_3: 'すべてのデータはご相談後すぐに自動的に削除されます',
+            legal_privacy_4: '結果は12時間以内にメールで配信されます（メール未記入の場合は12時間以内にサポートへご連絡ください）',
+            legal_disclaimer_title: '免責事項',
+            legal_disclaimer_1: '本サービスは娯楽目的のみであり、いかなる約束や保証も構成しません',
+            legal_disclaimer_2: 'ユーザーは独立して判断し、相应のリスクを負うものとします',
+            legal_disclaimer_3: '本サービスに基づく決定や行動について責任を負いません',
+            legal_contact_title: 'お問い合わせ',
+            legal_contact_body: 'データ削除やご質問：zx2628804@gmail.com',
+            legal_agree_text: '上記の条項を読み、同意しました。18歳以上です',
+            legal_enter_btn: '理解しました、网站へ',
+            mission_badge: 'このサービスについて',
+            mission_desc: '古来の知恵と現代の導きが出会う神聖な空間です。仏教哲学の伝統に根ざし、東洋神秘の瞑想的な視点から個人洞察を提供します。明晰さ、心の平和、または人生の道における思慮深い視点をお求めの方に、敬意と謙虚さをもって寄り添います。',
+            how_it_works_title: 'サービスの流れ',
+            how_it_works_sub: '4つのステップで鑑定を受け取る',
+            step_1_title: '情報を共有する',
+            step_1_desc: '鮮明な写真をアップロードし、基本的な情報を提供してください。共有する詳細が多いほど、鑑定はよりパーソナルになります。',
+            step_2_title: '私たちが分析',
+            step_2_desc: 'あなたの提出は丁寧かつ意図的に審査されます。伝統的な占術方法来きて、あなたのユニークなエネルギーパターンを解釈します。',
+            step_3_title: '鑑定を受け取る',
+            step_3_desc: '12時間以内に、個人化された鑑定がメールボックスに配信されます。洞察を反映するために時間をかけてください。',
+            step_4_title: '任意のサポート',
+            step_4_desc: '鑑定に価値を感じた場合、自主的なサポートは感謝されますが、決して必要ではありません。すべての提出は同等の注意を持って扱われます。',
+            services_title: '私たちのサービス',
+            services_subtitle: '古来の知恵、現代的应用',
+            service_tarot_title: 'タロットリーディング',
+            service_tarot_desc: 'タロットカードの時代を超えた象徴主義を通じて、あなたの疑問に明晰さを 얻ます。各スプレッドはあなたの状況への独自の視点を提供します。',
+            service_birth_title: '八字分析',
+            service_birth_desc: '八字解釈の古老の科学を通じて、あなたの性格、強み、人生パターンを理解します。',
+            service_face_title: '顔相術',
+            service_face_desc: '中国古代の顔相術は、顔の特徴を通じて性格特性と人生の傾向に関する独特の洞察を提供します。',
+            service_destiny_title: '運命相談',
+            service_destiny_desc: '人生道のより広範なパターンを探求します。サイクル、タイミング、旅がどこに向かうかを理解します。',
+            service_love_title: '愛情と関係',
+            service_love_desc: '思慮深い指導で心の問題をナビゲートします。関係と感情パターンについて新たな視点を得ます。',
+            service_career_title: 'キャリアと人生道',
+            service_career_desc: 'プロフェッショナルな人生を より深い人生使命と整合させます。自分の強みと成長の理想方向を理解します。',
+            about_title: '禅意浄土について',
+            about_1: '禅意浄土は、東洋神秘主義の伝統への深い畏敬の念から生まれました。私たちの実践者は仏教哲学、道教宇宙観、 数百年ものの占術システムから引き出し、古くて関連性のある指引を提供します。',
+            about_2: '私たちは、知恵の伝統が時代を超えた価値を持っていると信じています—文字通りの運勢占星ではなく、自己反映の鏡として。我们的解読は沈黙ではなく、内省を育むために 作られました。',
+            about_3: '自主的なサポートを提供するかどうかに関係なく、すべての解読は同等の注意と機密性を持って扱われます。私たちは圧力をかけるためではなく、 服务するためにここにあります。',
+            about_value_privacy: '完全なプライバシー',
+            about_value_tradition: '生きている伝統',
+            about_value_global: 'グローバルコミュニティ',
+            about_value_sincere: '真実で正直',
+            entertainment_notice: '娯楽目的のみ。専門的アドバイスに代わるものではありません。結果は予測ではなく、視点を提供します。',
+            quote_1: '一花一世界、一葉一如来る',
+            quote_2: '応无所住而生其心',
+            quote_3: '菩提本無樹、明鏡亦非台',
+            label_photo: '写真',
+            label_name: '名前',
+            label_birthday: '誕生日',
+            label_gender: '性別',
+            label_message: 'メッセージ',
+            label_email: 'メール',
+            placeholder_name: 'お名前を入力してください',
+            placeholder_message: 'ここに来た理由をシェアしてください...',
+            message_hint: 'このメッセージはプラットフォーム管理者のみが見えます',
+            upload_hint: 'クリックまたはドラッグで写真をアップロード',
+            gender_male: '男性',
+            gender_female: '女性',
+            disclaimer_title: '免責事項とプライバシーポリシー',
+            disc_1_title: '• サービスの性質',
+            disc_1_body: '本サービスは伝統的な形而上学に基づき、娯楽および自己省察のみを目的としています。結果は理性的にご覧になり、このサービスのみに依存して大きな人生の決定をしないでください。',
+            disc_2_title: '• プライバシー保護',
+            disc_2_body: '個人情報はこのサービスのみに使用され、決して漏洩しません。すべてのデータはご相談後すぐに自動的に削除されます。',
+            disc_3_title: '• ユーザーの責任',
+            disc_3_body: '「送信」をクリックすると、上記の条項を読み同意したことになります。データ削除：zx2628804@gmail.com',
+            consent_text: '上記の免責事項とプライバシーポリシーを読み、同意しました',
+            submit_text: '祈願を送信',
+            placeholder_email: '必須（結果受信用）',
+            donation_title: 'お布施 · 功德',
+            donation_desc: '善き心が最良の供养です · 無理のない範囲で',
+            qr_hint: '長押しで保存 · サポートを送金',
+            qr_paypal_hint: 'PayPalアプリでスキャンして支払いを完了',
+            qr_crypto_hint: '暗号通貨ウォレットでスキャン（USDT TRC20/ERC20対応）',
+            why_choose_title: 'なぜ禅意浄土を選ぶのか',
+            why_choose_sub: '伝統に根ざす · 真剣さに導かれる',
+            why_1_title: '古来の伝統',
+            why_1_body: '数百年ものの仏教と道教の伝統から引き出し、現代心理学の洞察とブレンドして、思慮深く階層的な解読を提供します。',
+            why_2_title: 'プライバシーを保護',
+            why_2_body: 'あなたの情報はこの解読のみに使用され、ご相談後すぐに削除されます。私たちは決して何も продадиまたは共有しません。',
+            why_3_title: 'グローバルコミュニティ',
+            why_3_body: '6つの言語で世界中の探求者に奉仕します。すべての視点はここで歓迎されます。',
+            why_4_title: '真実で正直',
+            why_4_body: '壓力なし、誇大広告なし。私たちは視点と反映を提供します—それ以上でもそれ以下でもありません。',
+            testi_title: 'お客様の声',
+            testi_sub: '私たちのコミュニティからの誠実な反応',
+            testi_1: '"何が変わるか分からなかったですが、解読は行き詰まっていたいくつかのパターンについて真に新しい視点を与えてくれました。思慮深く親切で、壓力もありませんでした。"',
+            testi_1_name: '张様 · 北京',
+            testi_3: '"深く感謝申し上げます。解読は私の状況をより穏やかな視点から見るのを助けました。過度な期待を押し付けることなく、真剣に考えさせる内容でした。"',
+            testi_3_name: '田中様 · 日本',
+            faq_title: 'よくある質問',
+            faq_1_q: '解読結果は正確ですか？',
+            faq_1_a: '私たちの解読は伝統的な占術システムと反映的で慈悲深いアプローチを組み合わせたものです。それらは予測ではなく、自己反映の鏡です。多くは驚くほど洞察に満ちていると感じますが、開放的な心と合理的な期待を持って接してください。',
+            faq_2_q: 'プライバシーは保護されていますか？',
+            faq_2_a: '絶対に保護されています。あなたのすべてのデータ—名前、誕生日、写真、メッセージ—は解読のみに使用され、ご相談後すぐに自動的に削除されます。私たちは決して情報を販売、共有、または開示しません。法的入り口（Legal Gate）をご覧ください。',
+            faq_3_q: 'どのようにサポートを提供できますか？',
+            faq_3_a: '提出後、オプションのQRコードが表示されます。暗号通貨、PayPal、または銀行送金を介して自主的なサポートを提供するためにスキャンできます。サポートは完全に任意です—あなたの解読は支払い条件で決して変わりません。',
+            faq_4_q: 'いつ解読を受け取りませんか？',
+            faq_4_a: '提出から12時間以内にすべての解読をお届けします。繁忙期にはわずかな遅延が発生場合があります。あなたの辛抱強さに感謝します。',
+            modal_title: '感謝',
+            modal_msg: 'ご信頼ありがとうございます。解読は12時間以内にメールでお送りします。',
+            modal_sub: 'あなたが求める明晰さを見つかりますように',
+            modal_btn: '確認',
+            support_title: '私たちの活動をサポート',
+            support_subtitle: 'あなたの寛大さが精神的な導きを続けるのを助けます',
+            custom_amount: 'カスタム',
+            support_now: '今すぐサポート',
+            qr_available: 'QRコード近日公開',
+            footer: '心が純粋なら世界も純粋 · すべてのことは心加ら生まれる',
+            footer_sub: '© 2026 Temple of Serenity · 全著作権所有'
+        },
+
+        ko: {
+            page_title: '선의 정토 - Temple of Serenity',
+            title1: '선', title2: '의', title3: '정', title4: '토',
+            subtitle: '이 공덕으로 불정토를 장엄하옵나이다',
+            legal_title: '중요 공지',
+            legal_service_title: '서비스 설명',
+            legal_service_body: '본 웹사이트는 동양 지혜 전통에 뿌리를 둔 명리 상담 서비스를 제공합니다. 결과는 오락 및 자기 성찰 목적으로만 제공되며, 어떠한 예측, 보증, 또는 전문적인 의료/재정/법률 자문도 구성하지 않습니다.',
+            legal_privacy_title: '개인정보 보호',
+            legal_privacy_1: '제출된 사진, 이름, 생일 등의 정보는 이번 상담에만 사용됩니다',
+            legal_privacy_2: '고객님의 정보를 제3자에게 판매, 공유 또는 공개하지 않습니다',
+            legal_privacy_3: '모든 데이터는 30일 후 자동으로 삭제됩니다',
+            legal_privacy_4: '결과는 12시간 이내에 이메일로 발송됩니다 (이메일 미기재 시 12시간 내 고객센터 문의)',
+            legal_disclaimer_title: '면책 조항',
+            legal_disclaimer_1: '본 서비스는 오락 목적이며 어떠한 약속이나 보증도 구성하지 않습니다',
+            legal_disclaimer_2: '사용자는 독립적으로 판단하고 상응하는 위험을 부담해야 합니다',
+            legal_disclaimer_3: '본 서비스에 기반한 결정이나 행위에 대해 어떠한 책임도 지지 않습니다',
+            legal_contact_title: '연락처',
+            legal_contact_body: '데이터 삭제나 문의사항: zx2628804@gmail.com',
+            legal_agree_text: '위 약관을 읽고 동의하며, 만 18세 이상입니다',
+            legal_enter_btn: '이해했습니다, 사이트 입장',
+            mission_badge: '이 서비스에 대하여',
+            mission_desc: '고대의 지혜와 현대의 인도가 만나는 신성한 공간입니다. 불교 철학 전통에 뿌리를 두고, 동양 신비주의의 명상적 렌즈를 통해 개인적 통찰을 제공합니다. 명확성, 내면의 평화, 또는 당신의 길에 대한 사려 깊은 관점을 찾는 분들께 존경과 겸손으로 함께합니다.',
+            how_it_works_title: '서비스 절차',
+            how_it_works_sub: '4단계로 리딩을 받으세요',
+            step_1_title: '정보를 공유하세요',
+            step_1_desc: '선명한 사진을 업로드하고 기본 정보를 제공하세요. 더 많은 세부 정보를 공유할수록 리딩이 더 개인화될 수 있습니다.',
+            step_2_title: '우리가 분석합니다',
+            step_2_desc: '제출물은 세심하고 의도적으로 검토됩니다. 전통적인 점술方法来 당신의 고유한 에너지 패턴을 해석합니다.',
+            step_3_title: '리딩을 받으세요',
+            step_3_desc: '12시간 이내에 개인화된 리딩이 이메일로 발송됩니다. 통찰을 반영할 시간을 가지세요.',
+            step_4_title: '선택적 지원',
+            step_4_desc: '리딩에 가치를 느꼈다면 자발적인 지원에 감사드립니다—하지만 절대 필수ではありません. 모든 제출물은 동등한 관심을 가지고 처리됩니다.',
+            services_title: '우리의 서비스',
+            services_subtitle: '고대의 지혜, 현대의 적용',
+            service_tarot_title: '타로 리딩',
+            service_tarot_desc: '타로 카드의 시대를 초월한 상징주의를 통해 당신의 질문에 명확함을 얻으세요. 각 스프레드는 당신의 상황에 대한 고유한 렌즈를 제공합니다.',
+            service_birth_title: '생辰八字 분석',
+            service_birth_desc: '생辰 차트 해석의 고대 과학을 통해 성격, 강점, 인생 패턴을 이해하세요.',
+            service_face_title: '면상술',
+            service_face_desc: '고대 중국 비전술은 얼굴 특징을 통해 성격 특성과 인생 경향에 대한 독특한 통찰을 제공합니다.',
+            service_destiny_title: '운명 상담',
+            service_destiny_desc: '인생 길의 더 넓은 패턴을 탐구하세요. 순환, 타이밍, 여정이 어디로 향하는지 이해하세요.',
+            service_love_title: '사랑과 관계',
+            service_love_desc: '사려 깊은 안내로 마음의 문제를 탐색하세요. 관계와 감정 패턴에 대한 관점을 얻으세요.',
+            service_career_title: '커리어와 인생 길',
+            service_career_desc: '전문적 삶을 더 깊은人生 사명자와 함께하세요. 자신의 강점과 성장의 이상적인 방향을 이해하세요.',
+            about_title: '선의 정토에 대하여',
+            about_1: '선의 정토는 동양 신비주의 전통에 대한 깊은 경외심에서 탄생했습니다. 우리의 수행자들은 불교 철학, 도교 우주론, 수백 년 된 점술 체계에서 이끌어내어, 고대하면서도 관련된 안내를 제공합니다.',
+            about_2: '우리는 지혜 전통이 시대 초월적 가치를 가진다고 믿습니다—문자 그대로의 운세풀이 아니라 자기 성찰의 거울로서. 우리의 리딩은 명상에 영감을 주기 위해 만들어졌으며, 의존을 만들기 위함이 아닙니다.',
+            about_3: '자발적 지원을 선택했는지 여부와 관계없이 모든 리딩은 동등한 관심과 기밀성으로 처리됩니다. 우리는 압박하기 위해서가 아니라 서비스하기 위해 여기 있습니다.',
+            about_value_privacy: '완전한 개인정보 보호',
+            about_value_tradition: '살아 있는 전통',
+            about_value_global: '글로벌 커뮤니티',
+            about_value_sincere: '진실하고 정직한',
+            entertainment_notice: '오락 목적のみ。전문적인 조언의 대체물이 아닙니다. 결과는 예측이 아닌 관점을 제공합니다.',
+            quote_1: '한 송이 꽃 속에 한 세계, 한 잎 속에 여래가 있네',
+            quote_2: '머무는 바 없이 마음을 내라',
+            quote_3: '보리는 본래 나무가 없고, 명경도 받침대가 아니니라',
+            label_photo: '사진',
+            label_name: '이름',
+            label_birthday: '생일',
+            label_gender: '성별',
+            label_message: '메시지',
+            label_email: '이메일',
+            placeholder_name: '이름을 입력하세요',
+            placeholder_message: '무엇이 당신을 여기로 데려왔는지 공유하세요...',
+            message_hint: '이 메시지는 플랫폼 관리자만 볼 수 있습니다',
+            upload_hint: '클릭하거나 드래그하여 사진 업로드',
+            gender_male: '남성',
+            gender_female: '여성',
+            disclaimer_title: '면책 조항 및 개인정보 보호정책',
+            disc_1_title: '• 서비스 성격',
+            disc_1_body: '본 서비스는 전통 현학에 기반하며 오락 및 자기 성찰 목적のみ입니다. 결과는 이성적으로 판단하고 이 서비스에만 의존하여 주요 인생 결정을 내리지 마세요.',
+            disc_2_title: '• 개인정보 보호',
+            disc_2_body: '개인정보는 본 서비스에만 사용되며 절대 유출되지 않습니다. 모든 데이터는 30일 후 자동 삭제됩니다.',
+            disc_3_title: '• 사용자 책임',
+            disc_3_body: '"제출"을 클릭하면 위 약관을 읽고 동의한 것으로 확인됩니다. 데이터 삭제: zx2628804@gmail.com',
+            consent_text: '위 면책 조항과 개인정보 보호정책을 읽고 동의합니다',
+            submit_text: '기원 제출',
+            placeholder_email: '필수 (결과 수신용)',
+            donation_title: '시주 · 공덕',
+            donation_desc: '선한 마음이 최고의 공양입니다 · 능력에 맞게 자유롭게',
+            qr_hint: '길게 눌러 저장 · 지원금 이체',
+            qr_paypal_hint: 'PayPal 앱으로 스캔하여 결제 완료',
+            qr_crypto_hint: '암호화폐 지갑으로 스캔 (USDT TRC20/ERC20 지원)',
+            why_choose_title: '왜 선의 정토를 선택하는가',
+            why_choose_sub: '전통에 뿌리를 두고 · 성실함에 의해 안내됨',
+            why_1_title: '고대의 유산',
+            why_1_body: '수백 년 불교와 도교 전통에서 끌어내고, 현대 심리학적 통찰과 혼합하여 사려 깊고 계층적인 리딩을 제공합니다.',
+            why_2_title: '당신의 개인정보 중요',
+            why_2_body: '귀하의 정보는 이 리딩에만 사용되며 30일 후 삭제됩니다. 우리는 절대 무엇이든 판매하거나 공유하지 않습니다.',
+            why_3_title: '글로벌 커뮤니티',
+            why_3_body: '6개 언어로 전 세계의探求자들게 서비스합니다. 모든 관점은 여기서 환영받습니다.',
+            why_4_title: '진실하고 정직한',
+            why_4_body: '압박 없음, 과장된 주장 없음. 우리는 관점과 성찰을 제공합니다—그 이상도 이하도 아닙니다.',
+            testi_title: '사용자 후기',
+            testi_sub: '우리 커뮤니티의 솔직한 반응',
+            testi_1: '"무엇을 기대해야 할지 몰랐지만, 이 리딩은 제가 빠져 있던 몇 가지 패턴에 대해 진정으로 새로운 관점을 제공했습니다. 사려 깊고 친절했으며, 압박감도 없었습니다."',
+            testi_1_name: '장양 · 베이징',
+            testi_3: '"깊이 감사드립니다. 리딩은 제 상황을 더 침착한 관점에서 볼 수 있게 도와주었습니다. 과도한 기대를 요구하지 않으면서도, 진지하게 생각하게 하는 내용이었습니다."',
+            testi_3_name: '다나카 · 일본',
+            faq_title: '자주 묻는 질문',
+            faq_1_q: '리딩 결과는 정확합니까?',
+            faq_1_a: '저희의 리딩은 전통 점술 체계와 반영적, 동정적 접근을 결합한 것입니다. 그것들은 예측이 아니라 자기 성찰의 거울입니다. 많은 사람들이 놀라울 정도로 통찰력 있다고 느끼지만, 열린 마음과 합리적인 기대로 접근해 주세요.',
+            faq_2_q: '개인정보는 보호받습니까?',
+            faq_2_a: '분명히 보호받습니다. 귀하의 모든 데이터—이름, 생일, 사진, 메시지—는 리딩에만 사용되며 30일 후 자동으로 삭제됩니다. 우리는 절대 정보를 판매, 공유 또는 공개하지 않습니다. 법적 입구(Legal Gate)를 참조하세요.',
+            faq_3_q: '어떻게 지원을 제공할 수 있습니까?',
+            faq_3_a: '제출 후 선택적 QR 코드가 표시됩니다. 암호화폐, PayPal 또는 은행 송금을 통해 자발적 지원을 제공하기 위해 스캔할 수 있습니다. 지원은 완전히 선택 사항입니다—귀하의 리딩은 지불 조건으로 절대 달라지지 않습니다.',
+            faq_4_q: '언제 리딩을 받게 됩니까?',
+            faq_4_a: '저희는 제출 후 12시간 이내에 모든 리딩을 발송합니다.繁忙期에는 약간의 지연이 있을 수 있습니다—辛抱해 주셔서 감사합니다.',
+            modal_title: '감사합니다',
+            modal_msg: '신임을 내려주셔서 감사합니다. 리딩은 12시간 이내에 이메일로 발송됩니다.',
+            modal_sub: '당신이 찾는 명확함을 찾으시길 바랍니다',
+            modal_btn: '확인',
+            support_title: '우리의 사업 지원',
+            support_subtitle: '당신의 관용이 정신적 안내를 계속 제공하는 것을 돕습니다',
+            custom_amount: '사용자 지정',
+            support_now: '지금 지원',
+            qr_available: 'QR 코드 곧 출시',
+            footer: '마음이 깨끗하면 세계가 깨끗하다 · 모든 것은 마음에서 비롯된다',
+            footer_sub: '© 2026 Temple of Serenity · 모든 권리 보유'
+        },
+
+        es: {
+            page_title: 'Templo de la Serenidad',
+            title1: 'Zen', title2: 'Mente', title3: 'Pura', title4: 'Tierra',
+            subtitle: 'Que este mérito adorne la Tierra Pura',
+            legal_title: 'Aviso Importante',
+            legal_service_title: 'Descripción del Servicio',
+            legal_service_body: 'Este sitio web proporciona servicios de consulta metafísica arraigados en tradiciones de sabiduría oriental. Los resultados son solo para fines de entretenimiento y autorreflexión, y no constituyen ninguna forma de predicción, garantía o asesoramiento profesional médico/financiero/legal.',
+            legal_privacy_title: 'Protección de Privacidad',
+            legal_privacy_1: 'Su foto, nombre, cumpleaños y otra información se utilizan únicamente para esta consulta',
+            legal_privacy_2: 'No vendemos, compartimos ni revelamos su información a ningún tercero',
+            legal_privacy_3: 'Todos los datos enviados se eliminan inmediatamente después de su consulta',
+            legal_privacy_4: 'Los resultados se envían por correo electrónico dentro de 12 horas (contacte al soporte si no proporcionó correo)',
+            legal_disclaimer_title: 'Descargo de Responsabilidad',
+            legal_disclaimer_1: 'Este servicio es solo para entretenimiento y no constituye ningún compromiso o garantía',
+            legal_disclaimer_2: 'Los usuarios deben hacer juicios independientes y asumir los riesgos correspondientes',
+            legal_disclaimer_3: 'No nos hacemos responsables de ninguna decisión o acción basada en este servicio',
+            legal_contact_title: 'Contacto',
+            legal_contact_body: 'Para eliminación de datos o consultas: zx2628804@gmail.com',
+            legal_agree_text: 'He leído y acepto los términos anteriores, y soy mayor de 18 años',
+            legal_enter_btn: 'Entiendo, Entrar al Sitio',
+            mission_badge: 'Acerca de Este Servicio',
+            mission_desc: 'Este es un espacio sagrado donde la sabiduría antigua se encuentra con la guía moderna. Arraigado en tradiciones filosóficas budistas, nuestro servicio ofrece visión personal a través del lente contemplativo del misticismo oriental. Ya sea que busque claridad, paz interior o una perspectiva reflexiva sobre su camino, caminamos a su lado con respeto y humildad.',
+            how_it_works_title: 'Cómo Funciona',
+            how_it_works_sub: 'Cuatro pasos simples para recibir su lectura',
+            step_1_title: 'Comparta Su Información',
+            step_1_desc: 'Cargue una foto clara y proporcione su información básica. Cuantos más detalles comparta, más personalizada puede ser su lectura.',
+            step_2_title: 'Nosotros Analizamos',
+            step_2_desc: 'Su envío se revisa con cuidado e intención. Aplicamos métodos tradicionales de adivinación para interpretar sus patrones de energía únicos.',
+            step_3_title: 'Reciba Su Lectura',
+            step_3_desc: 'Dentro de 12 horas, su lectura personalizada se entregara en su correo electrónico. Tómese su tiempo para reflexionar sobre las ideas.',
+            step_4_title: 'Soporte Opcional',
+            step_4_desc: 'Si encontró valor en su lectura, se agradece el apoyo voluntario — pero nunca es obligatorio. Cada envío se trata con igual cuidado.',
+            services_title: 'Nuestros Servicios',
+            services_subtitle: 'Sabiduría antigua, aplicación moderna',
+            service_tarot_title: 'Lectura de Tarot',
+            service_tarot_desc: 'Obtenga claridad sobre sus preguntas a través del simbolismo atemporal de las cartas de tarot. Cada spread ofrece una perspectiva única sobre su situación.',
+            service_birth_title: 'Análisis de Carta Natal',
+            service_birth_desc: 'Comprenda su personalidad, fortalezas y patrones de vida a través de la ciencia antigua de la interpretación de cartas natales.',
+            service_face_title: 'Lectura del Rostro',
+            service_face_desc: 'La fisiognomía china antigua ofrece perspectivas únicas sobre rasgos de carácter y tendencias de vida a través de las características faciales.',
+            service_destiny_title: 'Consulta del Destino',
+            service_destiny_desc: 'Explore los patrones más amplios de su camino vital. Comprenda ciclos, tiempos y hacia dónde puede llevar su viaje.',
+            service_love_title: 'Amor y Relaciones',
+            service_love_desc: 'Navegue los asuntos del corazón con orientación reflexiva. Obtenga perspectiva sobre relaciones y patrones emocionales.',
+            service_career_title: 'Carrera y Camino Vital',
+            service_career_desc: 'Alinee su vida profesional con su propósito más profundo. Comprenda sus fortalezas y direcciones ideales para el crecimiento.',
+            about_title: 'Sobre el Templo de la Serenidad',
+            about_1: 'El Templo de la Serenidad nació de un profundo respeto por las tradiciones místicas orientales. Nuestros practicantes extraen de la filosofía budista, la cosmología taoísta y sistemas de adivinación centenarios para ofrecer guía que es tanto antigua como relevante.',
+            about_2: 'Creemos que las tradiciones de sabiduría tienen valor atemporal — no como adivinación literal, sino como espejos para la autorreflexión. Nuestras lecturas están diseñadas para inspirar contemplación, no dependencia.',
+            about_3: 'Cada lectura se trata con el mismo cuidado y confidencialidad, independientemente de si elige ofrecer apoyo voluntario. Estamos aquí para servir, no para presionar.',
+            about_value_privacy: 'Privacidad Completa',
+            about_value_tradition: 'Tradición Viva',
+            about_value_global: 'Comunidad Global',
+            about_value_sincere: 'Sincero y Honesto',
+            entertainment_notice: 'Solo para fines de entretenimiento. No sustituye el asesoramiento profesional. Los resultados ofrecen perspectiva, no predicciones.',
+            quote_1: 'En una sola flor, un mundo entero; en una sola hoja, la forma de un Buda',
+            quote_2: 'Deja que tu mente no more en ningún lugar, y sin embargo, que surja',
+            quote_3: 'La mente misma es el árbol de Buda, el corazón mismo es el espejo',
+            label_photo: 'Foto',
+            label_name: 'Nombre',
+            label_birthday: 'Cumpleaños',
+            label_gender: 'Género',
+            label_message: 'Mensaje',
+            label_email: 'Correo',
+            placeholder_name: 'Por favor ingrese su nombre',
+            placeholder_message: 'Comparta lo que le trae aquí...',
+            message_hint: 'Este mensaje será visible solo para los administradores de la plataforma',
+            upload_hint: 'Haga clic o arrastre para subir foto',
+            gender_male: 'Masculino',
+            gender_female: 'Femenino',
+            disclaimer_title: 'Descargo y Política de Privacidad',
+            disc_1_title: '• Naturaleza del Servicio',
+            disc_1_body: 'Este servicio se basa en metafísica tradicional, solo para entretenimiento y autorreflexión. Por favor vea los resultados racionalmente y no tome decisiones de vida importantes basándose únicamente en este servicio.',
+            disc_2_title: '• Protección de Privacidad',
+            disc_2_body: 'Su información personal se usa solo para este servicio y nunca se filtrará. Todos los datos se eliminan inmediatamente después de su consulta.',
+            disc_3_title: '• Responsabilidad del Usuario',
+            disc_3_body: 'Al hacer clic en "Enviar", confirma que ha leído y aceptado los términos anteriores. Para eliminación de datos: zx2628804@gmail.com',
+            consent_text: 'He leído y acepto el descargo y la política de privacidad anteriores',
+            submit_text: 'Enviar',
+            placeholder_email: 'Obligatorio (para recibir su lectura)',
+            donation_title: 'Ofrenda · Mérito',
+            donation_desc: 'Su buena intención es la mejor ofrenda · Dé libremente según se sienta movido',
+            qr_hint: 'Mantenga presionado para guardar · Transfiera su apoyo',
+            qr_paypal_hint: 'Escanee con la app de PayPal para completar el pago',
+            qr_crypto_hint: 'Escanee con su billetera cripto (USDT TRC20/ERC20)',
+            why_choose_title: 'Por qué Templo de la Serenidad',
+            why_choose_sub: 'Arraigado en tradición · Guiado por sinceridad',
+            why_1_title: 'Herencia Antigua',
+            why_1_body: 'Extrayendo de tradiciones budistas y taoístas centenarios, mezclado con perspectivas psicológicas modernas para ofrecer lecturas reflexivas y profundas.',
+            why_2_title: 'Su Privacidad Importa',
+            why_2_body: 'Su información se usa solo para esta lectura. Todos los datos se eliminan inmediatamente después de su consulta. Nunca vendemos ni compartimos nada.',
+            why_3_title: 'Comunidad Global',
+            why_3_body: 'Sirviendo a buscadores de todo el mundo en 6 idiomas. Toda perspectiva es bienvenida aquí.',
+            why_4_title: 'Sincero y Honesto',
+            why_4_body: 'Sin presión, sin afirmaciones exageradas. Ofrecemos perspectiva y reflexión — nada más, nada menos.',
+            testi_title: 'Lo Que Dicen Las Personas',
+            testi_sub: 'Reflexiones honestas de nuestra comunidad',
+            testi_1: '"No estaba seguro de qué esperar, pero la lectura me dio una perspectiva genuinamente nueva sobre algunos patrones en los que estaba atascado. Fue reflexiva y amable, sin ser presionante."',
+            testi_1_name: 'Sra. Zhang · Beijing',
+            testi_3: '"Profunda gratitud. La lectura me ayudó a ver mi situación desde una perspectiva más tranquila. Sin prometer demasiado, genuinamente hacerte pensar."',
+            testi_3_name: 'Sra. Tanaka · Japón',
+            faq_title: 'Preguntas Frecuentes',
+            faq_1_q: '¿Son precisas las lecturas?',
+            faq_1_a: 'Nuestras lecturas se basan en sistemas tradicionales de adivinación combinados con un enfoque reflexivo y compasivo. No son predicciones — son espejos para la autorreflexión. Muchos las encuentran sorprendentemente perspicaces, pero por favor acérquese a ellas con mente abierta y expectativas racionales.',
+            faq_2_q: '¿Está protegida mi privacidad?',
+            faq_2_a: 'Absolutamente. Todos sus datos —nombre, cumpleaños, foto, mensaje— se usan solo para su lectura y se eliminan inmediatamente después de su consulta. Nunca vendemos, compartimos ni revelamos su información. Consulte nuestra Puerta Legal para detalles completos.',
+            faq_3_q: '¿Cómo puedo ofrecer apoyo?',
+            faq_3_a: 'Después del envío, se muestra un código QR opcional. Puede escanearlo para ofrecer apoyo voluntario a través de criptomonedas, PayPal o transferencia bancaria. El apoyo es completamente opcional — su lectura nunca está condicionada al pago.',
+            faq_4_q: '¿Cuándo recibiré mi lectura?',
+            faq_4_a: 'Entregamos todas las lecturas dentro de las 12 horas posteriores al envío. Durante períodos de mucha demanda, puede haber un slight retraso — gracias por su paciencia.',
+            modal_title: 'Envío Recibido',
+            modal_msg: 'Gracias por su confianza. Su lectura se enviará a su correo electrónico dentro de 12 horas.',
+            modal_sub: 'Que encuentre la claridad que busca',
+            modal_btn: 'Confirmar',
+            support_title: 'Apoye Nuestra Labor',
+            support_subtitle: 'Su generosidad nos ayuda a continuar proporcionando guía espiritual',
+            custom_amount: 'Personalizado',
+            support_now: 'Apoyar Ahora',
+            qr_available: 'Código QR Próximamente',
+            footer: 'Una mente pura hace un mundo puro · Todo surge del corazón',
+            footer_sub: '© 2026 Temple of Serenity · Todos los Derechos Reservados'
+        },
+
+        pt: {
+            page_title: 'Templo da Serenidade',
+            title1: 'Zen', title2: 'Mente', title3: 'Pura', title4: 'Terra',
+            subtitle: 'Que este mérito adorne a Terra Pura',
+            legal_title: 'Aviso Importante',
+            legal_service_title: 'Descrição do Serviço',
+            legal_service_body: 'Este site fornece serviços de consulta metafísica enraizados em tradições de sabedoria oriental. Os resultados são apenas para fins de entretenimento e autorreflexão, e não constituem qualquer forma de previsão, garantia ou aconselhamento profissional médico/financeiro/legal.',
+            legal_privacy_title: 'Proteção de Privacidade',
+            legal_privacy_1: 'Sua foto, nome, aniversário e outras informações são usados apenas para esta consulta',
+            legal_privacy_2: 'Não vendemos, compartilhamos nem divulgamos suas informações a terceiros',
+            legal_privacy_3: 'Todos os dados enviados são excluídos imediatamente após sua consulta',
+            legal_privacy_4: 'Os resultados são enviados por e-mail dentro de 12 horas (contate o suporte se não forneceu e-mail)',
+            legal_disclaimer_title: 'Isenção de Responsabilidade',
+            legal_disclaimer_1: 'Este serviço é apenas para entretenimento e não constitui qualquer compromisso ou garantia',
+            legal_disclaimer_2: 'Os usuários devem fazer julgamentos independentes e assumir os riscos correspondentes',
+            legal_disclaimer_3: 'Não nos responsabilizamos por quaisquer decisões ou ações tomadas com base neste serviço',
+            legal_contact_title: 'Contato',
+            legal_contact_body: 'Para exclusão de dados ou dúvidas: zx2628804@gmail.com',
+            legal_agree_text: 'Li e concordo com os termos acima, e sou maior de 18 anos',
+            legal_enter_btn: 'Entendi, Entrar no Site',
+            mission_badge: 'Sobre Este Serviço',
+            mission_desc: 'Este é um espaço sagrado onde a sabedoria antiga encontra a orientação moderna. Enraizado em tradições filosóficas budistas, nosso serviço oferece visão pessoal através da lente contemplativa do misticismo oriental. Quer você busque clareza, paz interior ou uma perspectiva reflexiva sobre seu caminho, caminhamos ao seu lado com respeito e humildade.',
+            how_it_works_title: 'Como Funciona',
+            how_it_works_sub: 'Quatro passos simples para receber sua leitura',
+            step_1_title: 'Compartilhe Suas Informações',
+            step_1_desc: 'Carregue uma foto clara e forneça suas informações básicas. Quanto mais detalhes você compartilhar, mais personalizada pode ser sua leitura.',
+            step_2_title: 'Nós Analisamos',
+            step_2_desc: 'Sua submissão é revisada com cuidado e intenção. Aplicamos métodos tradicionais de adivinhação para interpretar seus padrões de energia únicos.',
+            step_3_title: 'Receba Sua Leitura',
+            step_3_desc: 'Dentro de 12 horas, sua leitura personalizada será entregue em sua caixa de e-mail. Tome seu tempo para refletir sobre os insights.',
+            step_4_title: 'Suporte Opcional',
+            step_4_desc: 'Se você encontrou valor em sua leitura, apoio voluntário é apreciado — mas nunca obrigatório. Cada submissão é tratada com igual cuidado.',
+            services_title: 'Nossos Serviços',
+            services_subtitle: 'Sabedoria antiga, aplicação moderna',
+            service_tarot_title: 'Leitura de Tarot',
+            service_tarot_desc: 'Obtenha clareza sobre suas perguntas através do simbolismo atemporal das cartas de tarot. Cada spread oferece uma perspectiva única sobre sua situação.',
+            service_birth_title: 'Análise de Carta Natal',
+            service_birth_desc: 'Entenda sua personalidade, pontos fortes e padrões de vida através da ciência antiga da interpretação de cartas natais.',
+            service_face_title: 'Leitura Facial',
+            service_face_desc: 'A fisiognomia chinesa antiga oferece insights únicos sobre traços de caráter e tendências de vida através de características faciais.',
+            service_destiny_title: 'Consulta do Destino',
+            service_destiny_desc: 'Explore os padrões mais amplos de seu caminho de vida. Entenda ciclos, timing e para onde sua jornada pode levar.',
+            service_love_title: 'Amor e Relacionamentos',
+            service_love_desc: 'Navegue questões do coração com orientação reflexiva. Obtenha perspectiva sobre relacionamentos e padrões emocionais.',
+            service_career_title: 'Carreira e Caminho de Vida',
+            service_career_desc: 'Alinhe sua vida profissional com seu propósito mais profundo. Entenda seus pontos fortes e direções ideais para crescimento.',
+            about_title: 'Sobre o Templo da Serenidade',
+            about_1: 'O Templo da Serenidade nasceu de um profundo respeito pelas tradições místicas orientais. Nossos praticantes bebem da filosofia budista, cosmologia taoísta e sistemas de adivinhação centenarios para oferecer orientação que é tanto antiga quanto relevante.',
+            about_2: ' acreditamos que as tradições de sabedoria possuem valor atemporal — não como adivinhação literal, mas como espelhos para autorreflexão. Nossas leituras são elaboradas para inspirar contemplação, não dependência.',
+            about_3: 'Cada leitura é tratada com o mesmo cuidado e confidencialidade, independentemente de você escolher oferecer apoio voluntário. Estamos aqui para servir, não para pressionar.',
+            about_value_privacy: 'Privacidade Completa',
+            about_value_tradition: 'Tradição Viva',
+            about_value_global: 'Comunidade Global',
+            about_value_sincere: 'Sincero e Honesto',
+            entertainment_notice: 'Apenas para fins de entretenimento. Não substitui aconselhamento profissional. Os resultados oferecem perspectiva, não previsões.',
+            quote_1: 'Em uma única flor, um mundo inteiro; em uma única folha, a forma de um Buda',
+            quote_2: 'Não deixe sua mente se fixar em lugar nenhum, e ainda assim, deixe-a surgir',
+            quote_3: 'A própria mente é a árvore de Buda, o próprio coração é o espelho',
+            label_photo: 'Foto',
+            label_name: 'Nome',
+            label_birthday: 'Aniversário',
+            label_gender: 'Gênero',
+            label_message: 'Mensagem',
+            label_email: 'E-mail',
+            placeholder_name: 'Por favor insira seu nome',
+            placeholder_message: 'Compartilhe o que traz você aqui...',
+            message_hint: 'Esta mensagem será visível apenas para os administradores da plataforma',
+            upload_hint: 'Clique ou arraste para enviar foto',
+            gender_male: 'Masculino',
+            gender_female: 'Feminino',
+            disclaimer_title: 'Isenção e Política de Privacidade',
+            disc_1_title: '• Natureza do Serviço',
+            disc_1_body: 'Este serviço é baseado em metafísica tradicional, apenas para entretenimento e autorreflexão. Por favor veja os resultados racionalmente e não tome decisões importantes de vida baseando-se solely neste serviço.',
+            disc_2_title: '• Proteção de Privacidade',
+            disc_2_body: 'Suas informações pessoais são usadas apenas para este serviço e nunca serão vazadas. Todos os dados são excluídos imediatamente após sua consulta.',
+            disc_3_title: '• Responsabilidade do Usuário',
+            disc_3_body: 'Ao clicar em "Enviar", você confirma que leu e concordou com os termos acima. Para exclusão de dados: zx2628804@gmail.com',
+            consent_text: 'Li e concordo com a isenção e política de privacidade acima',
+            submit_text: 'Enviar',
+            placeholder_email: 'Obrigatório (para receber sua leitura)',
+            donation_title: 'Oferta · Mérito',
+            donation_desc: 'Sua boa intenção é a melhor oferta · Dê livremente conforme se sentir movido',
+            qr_hint: 'Pressione longamente para salvar · Transfira seu apoio',
+            qr_paypal_hint: 'Escaneie com o app PayPal para concluir o pagamento',
+            qr_crypto_hint: 'Escaneie com sua carteira cripto (USDT TRC20/ERC20)',
+            why_choose_title: 'Por que Templo da Serenidade',
+            why_choose_sub: 'Enraizado em tradição · Guiado por sinceridade',
+            why_1_title: 'Herança Antiga',
+            why_1_body: 'Bebendo de tradições budistas e taoístas centenarios, misturado com perspectivas psicológicas modernas para oferecer leituras reflexivas e profundas.',
+            why_2_title: 'Sua Privacidade Importa',
+            why_2_body: 'Sua informação é usada apenas para esta leitura. Todos os dados são excluídos imediatamente após sua consulta. Nunca vendemos ou compartilhamos nada.',
+            why_3_title: 'Comunidade Global',
+            why_3_body: 'Servindo buscadoras de todo o mundo em 6 idiomas. Toda perspectiva é bem-vinda aqui.',
+            why_4_title: 'Sincero e Honesto',
+            why_4_body: 'Sem pressão, sem alegações exageradas. Oferecemos perspectiva e reflexão — nada mais, nada menos.',
+            testi_title: 'O Que Dizem as Pessoas',
+            testi_sub: 'Reflexões honestas da nossa comunidade',
+            testi_1: '"Não tinha certeza do que esperar, mas a leitura me deu uma perspectiva genuinamente nova sobre alguns padrões em que estava presa. Foi reflexiva e gentil, sem ser impositiva."',
+            testi_1_name: 'Sra. Zhang · Beijing',
+            testi_3: '"Profunda gratidão. A leitura me ajudou a ver minha situação de uma perspectiva mais calma. Sem prometer demais, genuinamente para fazer você pensar."',
+            testi_3_name: 'Sra. Tanaka · Japão',
+            faq_title: 'Perguntas Frequentes',
+            faq_1_q: 'As leituras são precisas?',
+            faq_1_a: 'Nossas leituras são baseadas em sistemas tradicionais de adivinhação combinados com uma abordagem reflexiva e compassiva. Não são previsões — são espelhos para autorreflexão. Muitos acham surpreendentemente perspicazes, mas por favor aproxime-se deles com mente aberta e expectativas racionais.',
+            faq_2_q: 'Minha privacidade é protegida?',
+            faq_2_a: 'Absolutamente. Todos os seus dados —nome, aniversário, foto, mensagem— são usados apenas para sua leitura e excluídos imediatamente após sua consulta. Nunca vendemos, compartilhamos ou divulgamos suas informações. Veja nossa Portaria Legal para detalhes completos.',
+            faq_3_q: 'Como posso oferecer apoio?',
+            faq_3_a: 'Após a submissão, um código QR opcional é mostrado. Você pode escaneá-lo para oferecer apoio voluntário via criptomoeda, PayPal ou transferência bancária. O apoio é totalmente opcional — sua leitura nunca é condicional ao pagamento.',
+            faq_4_q: 'Quando receberei minha leitura?',
+            faq_4_a: 'Entregamos todas as leituras dentro de 12 horas após a submissão. Durante períodos de alta demanda, pode haver um pequeno atraso — obrigado pela sua paciência.',
+            modal_title: 'Submissão Recebida',
+            modal_msg: 'Obrigado pela sua confiança. Sua leitura será enviada para seu e-mail dentro de 12 horas.',
+            modal_sub: 'Que você encontre a clareza que busca',
+            modal_btn: 'Confirmar',
+            support_title: 'Apoie Nossa Obra',
+            support_subtitle: 'Sua generosidade nos ajuda a continuar fornecendo orientação espiritual',
+            custom_amount: 'Personalizado',
+            support_now: 'Apoiar Agora',
+            qr_available: 'Código QR Em Breve',
+            footer: 'Uma mente pura faz um mundo puro · Tudo surge do coração',
+            footer_sub: '© 2026 Temple of Serenity · Todos os Direitos Reservados'
+        }
+    };
+
+    // ============================================================
+    // Language System
+    // ============================================================
+    let currentLang = localStorage.getItem('temple_lang') || 'zh';
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('temple_lang', lang);
+        document.documentElement.lang = lang;
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                el.textContent = translations[lang][key];
+            }
+        });
+
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (translations[lang] && translations[lang][key]) {
+                el.placeholder = translations[lang][key];
+            }
+        });
+
+        document.querySelectorAll('.lang-btn, .gate-lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+
+        if (document.getElementById('subtitle')) {
+            typeWriter('subtitle', translations[lang].subtitle);
+        }
+
+        document.title = translations[lang].page_title;
+    }
+
+    function typeWriter(elementId, text, speed) {
+        if (speed === undefined) speed = 100;
+        const el = document.getElementById(elementId);
+        if (!el) return;
+        el.textContent = '';
+        el.style.visibility = 'visible';
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                el.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        }
+        type();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        setLanguage(currentLang);
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+        });
+    });
+
+    // ============================================================
+    // Form Handling
+    // ============================================================
+    const photoInput = document.getElementById('photoInput');
+    const photoUploadArea = document.getElementById('photoUploadArea');
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+    const photoPreview = document.getElementById('photoPreview');
+    const previewImg = document.getElementById('previewImg');
+
+    photoUploadArea.addEventListener('click', () => photoInput.click());
+
+    photoUploadArea.addEventListener('dragover', e => {
+        e.preventDefault();
+        photoUploadArea.classList.add('drag-over');
+    });
+
+    photoUploadArea.addEventListener('dragleave', () => {
+        photoUploadArea.classList.remove('drag-over');
+    });
+
+    photoUploadArea.addEventListener('drop', e => {
+        e.preventDefault();
+        photoUploadArea.classList.remove('drag-over');
+        if (e.dataTransfer.files[0]) {
+            photoInput.files = e.dataTransfer.files;
+            handlePhotoSelect(e.dataTransfer.files[0]);
+        }
+    });
+
+    photoInput.addEventListener('change', () => {
+        if (photoInput.files[0]) {
+            handlePhotoSelect(photoInput.files[0]);
+        }
+    });
+
+    function handlePhotoSelect(file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            previewImg.src = e.target.result;
+            uploadPlaceholder.style.display = 'none';
+            photoPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function removePhoto() {
+        photoInput.value = '';
+        previewImg.src = '';
+        photoPreview.style.display = 'none';
+        uploadPlaceholder.style.display = 'block';
+    }
+
+    function toggleDisclaimer() {
+        const content = document.getElementById('disclaimerContent');
+        const toggle = document.querySelector('.disclaimer-toggle');
+        if (content.classList.contains('open')) {
+            content.classList.remove('open');
+            toggle.classList.remove('open');
+        } else {
+            content.classList.add('open');
+            toggle.classList.add('open');
+        }
+    }
+
+    document.getElementById('prayerForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.classList.add('loading');
+        btn.querySelector('.btn-text').textContent = '...';
+
+        const formData = new FormData(e.target);
+
+        try {
+            const res = await fetch('/submit', { method: 'POST', body: formData });
+            const data = await res.json();
+
+            if (data.success) {
+                document.getElementById('successModal').style.display = 'flex';
+                document.getElementById('donationSection').style.display = 'block';
+                e.target.reset();
+                removePhoto();
+            } else {
+                alert(data.message);
+            }
+        } catch (err) {
+            alert('Submission failed, please try again');
+        }
+
+        btn.disabled = false;
+        btn.classList.remove('loading');
+        const submitText = document.querySelector('[data-i18n="submit_text"]');
+        btn.querySelector('.btn-text').textContent = submitText ? submitText.textContent : 'Submit';
+    });
+
+    document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('successModal').style.display = 'none';
+    });
+
+    document.getElementById('successModal').addEventListener('click', e => {
+        if (e.target === e.currentTarget) {
+            e.target.style.display = 'none';
+        }
+    });
+
+    // ============================================================
+    // Particle Background (reduced count for cleaner look)
+    // ============================================================
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = (Math.random() - 0.5) * 0.4;
+            this.radius = Math.random() * 1.5 + 0.5;
+            this.opacity = Math.random() * 0.4 + 0.05;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(201, 168, 76, ' + this.opacity + ')';
+            ctx.fill();
+        }
+    }
+
+    // Reduced from 80 to 30 particles for a cleaner look
+    for (let i = 0; i < 30; i++) {
+        particles.push(new Particle());
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // ============================================================
+    // Support Section Logic
+    // ============================================================
+    let selectedAmount = null;
+    let selectedPayment = 'crypto';
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.support-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.support-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+
+                const amount = this.dataset.amount;
+                if (amount === 'custom') {
+                    document.getElementById('customInputSection').style.display = 'block';
+                    selectedAmount = null;
+                } else {
+                    document.getElementById('customInputSection').style.display = 'none';
+                    selectedAmount = parseInt(amount);
+                }
+                updateSupportButton();
+            });
+        });
+
+        const customInput = document.getElementById('customAmountInput');
+        if (customInput) {
+            customInput.addEventListener('input', function() {
+                const amount = parseFloat(this.value);
+                if (amount >= 5) {
+                    selectedAmount = amount;
+                    updateSupportButton();
+                }
+            });
+        }
+
+        document.querySelectorAll('.payment-option').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.payment-option').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedPayment = this.dataset.method;
+                const methodNames = { crypto: 'Cryptocurrency', paypal: 'PayPal' };
+                const displayMethod = document.getElementById('displayMethod');
+                if (displayMethod) displayMethod.textContent = methodNames[selectedPayment];
+
+                // 切换二维码图片和提示
+                const qrImage = document.getElementById('qrImage');
+                const qrHint = document.getElementById('qrHint');
+                if (qrImage) {
+                    if (selectedPayment === 'paypal') {
+                        qrImage.src = "{{ url_for('static', filename='images/qrcode_paypal.jpg') }}";
+                        qrImage.alt = 'PayPal QR Code';
+                        if (qrHint) {
+                            qrHint.setAttribute('data-i18n', 'qr_paypal_hint');
+                            qrHint.textContent = 'Scan with PayPal app to complete payment';
+                        }
+                    } else {
+                        qrImage.src = "{{ url_for('static', filename='images/qrcode_crypto.jpg') }}";
+                        qrImage.alt = 'Cryptocurrency QR Code (USDT TRC20 / ERC20)';
+                        if (qrHint) {
+                            qrHint.setAttribute('data-i18n', 'qr_crypto_hint');
+                            qrHint.textContent = 'Scan with your crypto wallet (USDT TRC20/ERC20 supported)';
+                        }
+                    }
+                }
+            });
+        });
+
+        const submitBtn = document.getElementById('supportSubmitBtn');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', function() {
+                if (!selectedAmount) return;
+                const details = document.getElementById('paymentDetails');
+                details.style.display = 'flex';
+                const displayAmount = document.getElementById('displayAmount');
+                if (displayAmount) displayAmount.textContent = selectedAmount;
+                details.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        }
+    });
+
+    function updateSupportButton() {
+        const btn = document.getElementById('supportSubmitBtn');
+        if (btn) {
+            btn.disabled = !selectedAmount;
+        }
+    }
+
+    // ============================================================
+    // Quote Carousel
+    // ============================================================
+    (function rotateQuotes() {
+        const quotes = document.querySelectorAll('.quote-text');
+        const dotsContainer = document.querySelector('.quote-dots');
+        if (!quotes.length) return;
+
+        quotes.forEach((q, i) => {
+            const dot = document.createElement('span');
+            dot.className = 'quote-dot' + (i === 0 ? ' active' : '');
+            dot.dataset.index = i;
+            dot.addEventListener('click', function() {
+                showQuote(parseInt(this.dataset.index));
+            });
+            dotsContainer.appendChild(dot);
+        });
+
+        let current = 0;
+        quotes[0].classList.add('active');
+
+        function showQuote(index) {
+            quotes.forEach(q => q.classList.remove('active'));
+            document.querySelectorAll('.quote-dot').forEach(d => d.classList.remove('active'));
+            quotes[index].classList.add('active');
+            const dots = document.querySelectorAll('.quote-dot');
+            if (dots[index]) dots[index].classList.add('active');
+            current = index;
+        }
+
+        setInterval(function() {
+            const next = (current + 1) % quotes.length;
+            showQuote(next);
+        }, 6000);
+    })();
+
+    // ============================================================
+    // FAQ Accordion
+    // ============================================================
+    function toggleFaq(el) {
+        const item = el.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => {
+            i.classList.remove('open');
+        });
+        if (!isOpen) {
+            item.classList.add('open');
+        }
+    }
+
+    // ============================================================
+    // Scroll Animations
+    // ============================================================
+    (function scrollAnimations() {
+        const sections = document.querySelectorAll('.why-choose-us, .testimonials-section, .faq-section, .support-section, .mission-section, .how-it-works, .services-section, .about-section');
+        sections.forEach(s => s.classList.add('fade-in-section'));
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        sections.forEach(s => observer.observe(s));
+    })();
+
+    // ============================================================
+    // Page Load Animation
+    // ============================================================
+    window.addEventListener('load', function() {
+        document.body.classList.add('loaded');
+    });
+
+    console.log('Temple of Serenity initialized');
+    
