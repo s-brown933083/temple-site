@@ -3,7 +3,7 @@
   "build": {
     "builder": "NIXPACKS",
     "buildCommand": "pip install -r requirements.txt",
-    "startCommand": "gunicorn app:app --bind 0.0.0.0:$PORT"
+    "startCommand": "gunicorn app:app --bind 0.0.0.0:${PORT:-8000} --workers 2 --timeout 120"
   },
   "deploy": {
     "numReplicas": 1,
