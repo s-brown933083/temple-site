@@ -8,9 +8,21 @@ _dotenv_path = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '.env
 load_dotenv(_dotenv_path)
 
 import sqlite3
-import psycopg2
-import psycopg2.extras
 import os
+
+# Lazy import psycopg2 — only when DATABASE_URL is set (production)
+# This prevents crash on platforms without libpq (e.g. CloudBase slim images)
+_psycopg2 = None
+_psycopg2_extras = None
+
+def _get_psycopg2():
+    global _psycopg2, _psycopg2_extras
+    if _psycopg2 is None:
+        import psycopg2 as _pg2
+        import psycopg2.extras as _pg2e
+        _psycopg2 = _pg2
+        _psycopg2_extras = _pg2e
+    return _psycopg2, _psycopg2_extras
 import csv
 import io
 from datetime import datetime, timedelta
@@ -126,8 +138,9 @@ class _DBWrapper:
 def get_db():
     """Return a database connection (SQLite for dev, PostgreSQL for production)."""
     if _detect_db_type() == 'postgres':
+        psycopg2, psycopg2_extras = _get_psycopg2()
         conn = psycopg2.connect(os.environ['DATABASE_URL'])
-        conn.cursor_factory = psycopg2.extras.RealDictCursor
+        conn.cursor_factory = psycopg2_extras.RealDictCursor
         return _DBWrapper(conn, True)
     else:
         db_path = os.environ.get('DATABASE_PATH', os.path.join(os.path.dirname(__file__), 'submissions.db'))
@@ -138,6 +151,7 @@ def get_db():
 def init_db():
     """Create tables if not exist — works for both SQLite and PostgreSQL."""
     if _detect_db_type() == 'postgres':
+        psycopg2, _ = _get_psycopg2()
         conn = psycopg2.connect(os.environ['DATABASE_URL'])
         conn.autocommit = True
         c = conn.cursor()
