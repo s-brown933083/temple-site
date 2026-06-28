@@ -21,48 +21,6 @@
     <meta property="og:type" content="website">
 </head>
 <body>
-    <!-- Legal Gate Overlay -->
-    <div class="legal-gate-overlay" id="legalGate">
-        <div class="legal-gate-modal">
-            <div class="gate-lang-selector">
-                <button class="gate-lang-btn active" data-lang="zh">中文</button>
-                <button class="gate-lang-btn" data-lang="en">English</button>
-                <button class="gate-lang-btn" data-lang="ja">日本語</button>
-                <button class="gate-lang-btn" data-lang="ko">한국어</button>
-                <button class="gate-lang-btn" data-lang="es">Español</button>
-                <button class="gate-lang-btn" data-lang="pt">Português</button>
-            </div>
-            <h2 class="legal-gate-title">✦ <span data-i18n="legal_title">Important Notice</span></h2>
-            <div class="legal-gate-content">
-                <h3>✦ <span data-i18n="legal_service_title">Service Description</span></h3>
-                <p data-i18n="legal_service_body">This website provides metaphysical consultation services rooted in Eastern wisdom traditions. Results are for entertainment and self-reflection purposes only, and do not constitute any form of prediction, guarantee, or professional medical/financial/legal advice.</p>
-                <h3>🔒 <span data-i18n="legal_privacy_title">Privacy Protection</span></h3>
-                <ul>
-                    <li data-i18n="legal_privacy_1">Your photo, name, birthday, and other information are used solely for this consultation</li>
-                    <li data-i18n="legal_privacy_2">We do not sell, share, or disclose your information to any third party</li>
-                    <li data-i18n="legal_privacy_3">All submitted data is automatically deleted after 30 days</li>
-                    <li data-i18n="legal_privacy_4">Results are delivered via email within 12 hours (please contact support if no email was provided)</li>
-                </ul>
-                <h3>📋 <span data-i18n="legal_disclaimer_title">Disclaimer</span></h3>
-                <ul>
-                    <li data-i18n="legal_disclaimer_1">This service is for entertainment purposes only and does not constitute any commitment or guarantee</li>
-                    <li data-i18n="legal_disclaimer_2">Users should exercise independent judgment and bear corresponding risks</li>
-                    <li data-i18n="legal_disclaimer_3">We bear no responsibility for any decisions or actions taken based on this service</li>
-                </ul>
-                <h3>✉ <span data-i18n="legal_contact_title">Contact</span></h3>
-                <p data-i18n="legal_contact_body">For data deletion requests or inquiries: admin@temple-serenity.org</p>
-            </div>
-            <label class="legal-gate-checkbox">
-                <input type="checkbox" id="legalAgree">
-                <span class="checkbox-custom"></span>
-                <span data-i18n="legal_agree_text">I have read and agree to the above terms, and I am 18 years or older</span>
-            </label>
-            <button class="legal-gate-btn" id="legalGateBtn" disabled onclick="enterSite()">
-                <span data-i18n="legal_enter_btn">I Understand, Enter Site</span>
-            </button>
-        </div>
-    </div>
-
     <!-- Video Background -->
     <div class="video-background">
         <video autoplay muted loop playsinline id="bgVideo">
@@ -1370,34 +1328,9 @@
     document.addEventListener('DOMContentLoaded', () => {
         setLanguage(currentLang);
 
-        document.querySelectorAll('.lang-btn, .gate-lang-btn').forEach(btn => {
+        document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
         });
-    });
-
-    // ============================================================
-    // Legal Gate
-    // ============================================================
-    function enterSite() {
-        document.getElementById('legalGate').style.display = 'none';
-        localStorage.setItem('temple_legal_agreed', 'true');
-    }
-
-    (function checkLegalGate() {
-        if (localStorage.getItem('temple_legal_agreed') === 'true') {
-            const gate = document.getElementById('legalGate');
-            if (gate) gate.style.display = 'none';
-        }
-    })();
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const legalAgree = document.getElementById('legalAgree');
-        const legalGateBtn = document.getElementById('legalGateBtn');
-        if (legalAgree && legalGateBtn) {
-            legalAgree.addEventListener('change', function() {
-                legalGateBtn.disabled = !this.checked;
-            });
-        }
     });
 
     // ============================================================
