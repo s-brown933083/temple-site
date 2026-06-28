@@ -199,7 +199,15 @@ def index():
 
 @app.route('/health')
 def health():
-    return {'status': 'ok', 'service': 'temple-site'}
+    try:
+        conn = get_db()
+        c = conn.cursor()
+        c.execute('SELECT COUNT(*) as cnt FROM submissions')
+        count = c.fetchone()['cnt']
+        conn.close()
+        return {'status': 'ok', 'service': 'temple-site', 'submissions': count}
+    except Exception as e:
+        return {'status': 'ok', 'service': 'temple-site', 'error': str(e)}
 
 @app.route('/submit', methods=['POST'])
 @rate_limit(max_requests=5, window_seconds=3600)
@@ -280,14 +288,14 @@ def admin_api_stats():
     conn = get_db()
     c = conn.cursor()
     
-    c.execute('SELECT COUNT(*) FROM submissions')
-    total = c.fetchone()[0]
+    c.execute('SELECT COUNT(*) as cnt FROM submissions')
+    total = c.fetchone()['cnt']
     
-    c.execute('SELECT COUNT(*) FROM submissions WHERE photo_filename IS NOT NULL AND photo_filename != ""')
-    with_photo = c.fetchone()[0]
+    c.execute('SELECT COUNT(*) as cnt FROM submissions WHERE photo_filename IS NOT NULL AND photo_filename != ""')
+    with_photo = c.fetchone()['cnt']
     
-    c.execute('SELECT COUNT(*) FROM submissions WHERE submitted_at >= date("now", "start of day")')
-    today = c.fetchone()[0]
+    c.execute('SELECT COUNT(*) as cnt FROM submissions WHERE submitted_at >= date("now", "start of day")')
+    today = c.fetchone()['cnt']
     
     # Gender breakdown
     c.execute('SELECT gender, COUNT(*) as cnt FROM submissions GROUP BY gender')
@@ -297,8 +305,8 @@ def admin_api_stats():
     trend = []
     for i in range(6, -1, -1):
         day = (datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d')
-        c.execute("SELECT COUNT(*) FROM submissions WHERE date(submitted_at) = ?", (day,))
-        trend.append({'date': day, 'count': c.fetchone()[0]})
+        c.execute("SELECT COUNT(*) as cnt FROM submissions WHERE date(submitted_at) = ?", (day,))
+        trend.append({'date': day, 'count': c.fetchone()['cnt']})
     
     conn.close()
     
@@ -356,8 +364,8 @@ def admin_api_submissions():
     c = conn.cursor()
     
     # Count total
-    c.execute(f'SELECT COUNT(*) FROM submissions{where_clause}', params)
-    total = c.fetchone()[0]
+    c.execute(f'SELECT COUNT(*) as cnt FROM submissions{where_clause}', params)
+    total = c.fetchone()['cnt']
     total_pages = max(1, (total + per_page - 1) // per_page)
     page = min(page, total_pages)
     offset = (page - 1) * per_page
