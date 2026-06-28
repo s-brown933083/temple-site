@@ -197,6 +197,73 @@
             <div class="quote-dots"></div>
         </div>
 
+
+        <!-- Support Section -->
+        <div class="support-section">
+            <div class="support-container">
+                <div class="support-header">
+                    <h2 class="support-title" data-i18n="support_title">Support Our Work</h2>
+                    <p class="support-subtitle" data-i18n="support_subtitle">Your generosity helps us continue providing spiritual guidance</p>
+                </div>
+                <div class="support-amounts">
+                    <button class="support-btn" data-amount="5">$5</button>
+                    <button class="support-btn" data-amount="10">$10</button>
+                    <button class="support-btn popular" data-amount="20">$20 <span class="popular-tag">Popular</span></button>
+                    <button class="support-btn" data-amount="50">$50</button>
+                    <button class="support-btn" data-amount="100">$100</button>
+                    <button class="support-btn" data-amount="200">$200</button>
+                    <button class="support-btn" data-amount="custom"><span data-i18n="custom_amount">Custom</span></button>
+                </div>
+                <div class="custom-input-section" id="customInputSection" style="display:none;">
+                    <div class="input-group">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="customAmountInput" min="5" step="1" placeholder="Enter amount" class="custom-input">
+                    </div>
+                </div>
+                <div class="payment-options">
+                    <button class="payment-option active" data-method="crypto" title="Cryptocurrency">
+                        <svg class="payment-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+                        <span>Crypto</span>
+                    </button>
+                    <button class="payment-option" data-method="paypal" title="PayPal">
+                        <svg class="payment-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.77.77 0 0 1 .76-.65h6.523c2.165 0 3.9.534 5.029 1.544 1.174 1.051 1.597 2.586 1.22 4.438-.009.047-.02.094-.031.14-.537 2.47-2.201 4.13-4.95 4.65-.507.096-1.036.144-1.574.144H9.56a.77.77 0 0 0-.76.65l-.724 4.5z"/></svg>
+                        <span>PayPal</span>
+                    </button>
+                </div>
+                <button class="support-submit-btn" id="supportSubmitBtn" disabled>
+                    <span data-i18n="support_now">Support Now</span>
+                    <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+                <div class="payment-details" id="paymentDetails" style="display:none;">
+                    <div class="payment-qr">
+                        <div class="qr-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="7" height="7" rx="1"/>
+                                <rect x="14" y="3" width="7" height="7" rx="1"/>
+                                <rect x="3" y="14" width="7" height="7" rx="1"/>
+                                <rect x="14" y="14" width="3" height="3"/>
+                                <rect x="18" y="14" width="3" height="3"/>
+                                <rect x="14" y="18" width="3" height="3"/>
+                                <rect x="18" y="18" width="3" height="3"/>
+                            </svg>
+                            <p data-i18n="qr_available">QR Code Available Soon</p>
+                        </div>
+                    </div>
+                    <div class="payment-info-text">
+                        <p class="amount-display">$<span id="displayAmount">0</span></p>
+                        <p class="method-display" id="displayMethod">Cryptocurrency</p>
+                    </div>
+                </div>
+                <div class="trust-badges">
+                    <span class="badge">🔒 Secure</span>
+                    <span class="badge">✓ No fees</span>
+                    <span class="badge">💝 100% to mission</span>
+                </div>
+            </div>
+        </div>
+
         <!-- Main Form -->
         <main class="form-container">
             <div class="form-frame shimmer-border">
@@ -293,11 +360,11 @@
                             </div>
                             <div class="disclaimer-item">
                                 <h4 data-i18n="disc_2_title">• Privacy Protection</h4>
-                                <p data-i18n="disc_2_body">Your personal information is used only for this service and will never be leaked. All data is automatically deleted after 30 days.</p>
+                                <p data-i18n="disc_2_body">Your personal information is used only for this service and will never be leaked. All data is deleted immediately after your consultation.</p>
                             </div>
                             <div class="disclaimer-item">
                                 <h4 data-i18n="disc_3_title">• User Responsibility</h4>
-                                <p data-i18n="disc_3_body">By clicking "Submit", you confirm that you have read and agreed to the above terms. For data deletion: admin@temple-serenity.org</p>
+                                <p data-i18n="disc_3_body">By clicking "Submit", you confirm that you have read and agreed to the above terms. For data deletion: zx2628804@gmail.com</p>
                             </div>
                         </div>
                     </div>
@@ -362,7 +429,7 @@
                 <div class="why-card">
                     <div class="why-icon">🔒</div>
                     <h3 data-i18n="why_2_title">Your Privacy Matters</h3>
-                    <p data-i18n="why_2_body">Your information is used only for this reading. All data is deleted after 30 days. We never sell or share anything.</p>
+                    <p data-i18n="why_2_body">Your information is used only for this reading. All data is deleted immediately after your consultation. We never sell or share anything.</p>
                 </div>
                 <div class="why-card">
                     <div class="why-icon">🌍</div>
@@ -428,7 +495,7 @@
                         <span class="faq-arrow">▼</span>
                     </div>
                     <div class="faq-answer">
-                        <p data-i18n="faq_2_a">Absolutely. All your data — name, birthday, photo, message — is used only for your reading and is automatically deleted after 30 days. We never sell, share, or disclose your information. See our Legal Gate for full details.</p>
+                        <p data-i18n="faq_2_a">Absolutely. All your data — name, birthday, photo, message — is used only for your reading and is deleted immediately after your consultation. We never sell, share, or disclose your information. See our Legal Gate for full details.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -451,78 +518,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- Support Section -->
-        <div class="support-section">
-            <div class="support-container">
-                <div class="support-header">
-                    <h2 class="support-title" data-i18n="support_title">Support Our Work</h2>
-                    <p class="support-subtitle" data-i18n="support_subtitle">Your generosity helps us continue providing spiritual guidance</p>
-                </div>
-                <div class="support-amounts">
-                    <button class="support-btn" data-amount="5">$5</button>
-                    <button class="support-btn" data-amount="10">$10</button>
-                    <button class="support-btn popular" data-amount="20">$20 <span class="popular-tag">Popular</span></button>
-                    <button class="support-btn" data-amount="50">$50</button>
-                    <button class="support-btn" data-amount="100">$100</button>
-                    <button class="support-btn" data-amount="200">$200</button>
-                    <button class="support-btn" data-amount="custom"><span data-i18n="custom_amount">Custom</span></button>
-                </div>
-                <div class="custom-input-section" id="customInputSection" style="display:none;">
-                    <div class="input-group">
-                        <span class="input-prefix">$</span>
-                        <input type="number" id="customAmountInput" min="5" step="1" placeholder="Enter amount" class="custom-input">
-                    </div>
-                </div>
-                <div class="payment-options">
-                    <button class="payment-option active" data-method="crypto" title="Cryptocurrency">
-                        <svg class="payment-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
-                        <span>Crypto</span>
-                    </button>
-                    <button class="payment-option" data-method="paypal" title="PayPal">
-                        <svg class="payment-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.77.77 0 0 1 .76-.65h6.523c2.165 0 3.9.534 5.029 1.544 1.174 1.051 1.597 2.586 1.22 4.438-.009.047-.02.094-.031.14-.537 2.47-2.201 4.13-4.95 4.65-.507.096-1.036.144-1.574.144H9.56a.77.77 0 0 0-.76.65l-.724 4.5z"/></svg>
-                        <span>PayPal</span>
-                    </button>
-                    <button class="payment-option" data-method="wise" title="Wise">
-                        <svg class="payment-icon" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-                        <span>Wise</span>
-                    </button>
-                </div>
-                <button class="support-submit-btn" id="supportSubmitBtn" disabled>
-                    <span data-i18n="support_now">Support Now</span>
-                    <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </button>
-                <div class="payment-details" id="paymentDetails" style="display:none;">
-                    <div class="payment-qr">
-                        <div class="qr-placeholder">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <rect x="3" y="3" width="7" height="7" rx="1"/>
-                                <rect x="14" y="3" width="7" height="7" rx="1"/>
-                                <rect x="3" y="14" width="7" height="7" rx="1"/>
-                                <rect x="14" y="14" width="3" height="3"/>
-                                <rect x="18" y="14" width="3" height="3"/>
-                                <rect x="14" y="18" width="3" height="3"/>
-                                <rect x="18" y="18" width="3" height="3"/>
-                            </svg>
-                            <p data-i18n="qr_available">QR Code Available Soon</p>
-                        </div>
-                    </div>
-                    <div class="payment-info-text">
-                        <p class="amount-display">$<span id="displayAmount">0</span></p>
-                        <p class="method-display" id="displayMethod">Cryptocurrency</p>
-                    </div>
-                </div>
-                <div class="trust-badges">
-                    <span class="badge">🔒 Secure</span>
-                    <span class="badge">✓ No fees</span>
-                    <span class="badge">💝 100% to mission</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
+<!-- Footer -->
         <footer class="temple-footer">
             <div class="zen-pattern"></div>
             <p class="footer-text" data-i18n="footer">A pure mind creates a pure world · All things arise from the heart</p>
@@ -556,14 +552,14 @@
             legal_privacy_title: '隐私保护',
             legal_privacy_1: '您提交的照片、姓名、生日等信息仅用于本次咨询',
             legal_privacy_2: '我们承诺不会将您的信息出售、分享或披露给任何第三方',
-            legal_privacy_3: '所有数据将在30天后自动删除',
+            legal_privacy_3: '所有数据将在您本次咨询后立刻自动删除',
             legal_privacy_4: '结果将在12小时内发送至您的邮箱（如未填写邮箱，请在12小时内联系客服）',
             legal_disclaimer_title: '免责条款',
             legal_disclaimer_1: '本服务仅供娱乐，不构成任何形式的承诺或保证',
             legal_disclaimer_2: '用户应独立判断并承担相应风险',
             legal_disclaimer_3: '我们不承担任何基于本服务做出的决定或行为的责任',
             legal_contact_title: '联系方式',
-            legal_contact_body: '如需删除数据或有疑问，请联系：admin@temple-serenity.org',
+            legal_contact_body: '如需删除数据或有疑问，请联系：zx2628804@gmail.com',
             legal_agree_text: '我已阅读并同意以上条款，且已满18岁',
             legal_enter_btn: '我已理解，进入网站',
             mission_badge: '关于此服务',
@@ -620,9 +616,9 @@
             disc_1_title: '• 服务性质',
             disc_1_body: '本服务基于传统玄学文化，仅供娱乐和自我反思。请理性看待结果，不要仅凭此服务做出重大人生决定。',
             disc_2_title: '• 隐私保护',
-            disc_2_body: '您的个人信息仅用于本次服务，绝不外泄。所有数据将在30天后自动删除。',
+            disc_2_body: '您的个人信息仅用于本次服务，绝不外泄。所有数据将在您本次咨询后立刻自动删除。',
             disc_3_title: '• 用户责任',
-            disc_3_body: '点击"提交"即表示您已阅读并同意上述条款。如需删除数据，请联系：admin@temple-serenity.org',
+            disc_3_body: '点击"提交"即表示您已阅读并同意上述条款。如需删除数据，请联系：zx2628804@gmail.com',
             consent_text: '我已阅读并同意以上声明与隐私条款',
             submit_text: '提交祈愿',
             placeholder_email: '必填（用于接收结果通知）',
@@ -634,7 +630,7 @@
             why_1_title: '古老传承',
             why_1_body: '汲取数百年佛教与道家传统，融合现代心理学洞察，提供深思熟虑、有层次的解读。',
             why_2_title: '隐私保障',
-            why_2_body: '您的信息仅用于本次解读，30天后自动删除。我们从不出售或分享任何数据。',
+            why_2_body: '您的信息仅用于本次解读，本次咨询后立刻自动删除。我们从不出售或分享任何数据。',
             why_3_title: '全球社群',
             why_3_body: '以6种语言服务来自世界各地的求索者。每个视角在这里都受到欢迎。',
             why_4_title: '真诚指引',
@@ -649,7 +645,7 @@
             faq_1_q: '解读结果准确吗？',
             faq_1_a: '我们的解读基于传统命理体系，结合反思性的方法。它们不是预测——而是自我反思的镜子。许多人发现它们出乎意料地有洞察力，请以开放的心态和理性的期望来对待。',
             faq_2_q: '我的隐私安全吗？',
-            faq_2_a: '绝对安全。您所有的数据——姓名、生日、照片、留言——都仅用于您的解读，30天后自动删除。我们从不出售、分享或披露您的信息。详见法律声明门。',
+            faq_2_a: '绝对安全。您所有的数据——姓名、生日、照片、留言——都仅用于您的解读，本次咨询后立刻自动删除。我们从不出售、分享或披露您的信息。详见法律声明门。',
             faq_3_q: '如何提供支持？',
             faq_3_a: '提交后，会显示可选的二维码。您可以扫描它通过加密货币、PayPal或银行转账提供自愿支持。支持完全可选——您的解读从不以支付为条件。',
             faq_4_q: '多久能收到结果？',
@@ -677,14 +673,14 @@
             legal_privacy_title: 'Privacy Protection',
             legal_privacy_1: 'Your photo, name, birthday, and other information are used solely for this consultation',
             legal_privacy_2: 'We do not sell, share, or disclose your information to any third party',
-            legal_privacy_3: 'All submitted data is automatically deleted after 30 days',
+            legal_privacy_3: 'All submitted data is deleted immediately after your consultation',
             legal_privacy_4: 'Results are delivered via email within 12 hours (contact support if no email was provided)',
             legal_disclaimer_title: 'Disclaimer',
             legal_disclaimer_1: 'This service is for entertainment purposes only and does not constitute any commitment or guarantee',
             legal_disclaimer_2: 'Users should exercise independent judgment and bear corresponding risks',
             legal_disclaimer_3: 'We bear no responsibility for any decisions or actions taken based on this service',
             legal_contact_title: 'Contact',
-            legal_contact_body: 'For data deletion requests or inquiries: admin@temple-serenity.org',
+            legal_contact_body: 'For data deletion requests or inquiries: zx2628804@gmail.com',
             legal_agree_text: 'I have read and agree to the above terms, and I am 18 years or older',
             legal_enter_btn: 'I Understand, Enter Site',
             mission_badge: 'About This Service',
@@ -741,9 +737,9 @@
             disc_1_title: '• Service Nature',
             disc_1_body: 'This service is based on traditional metaphysics, for entertainment and self-reflection only. Please view results rationally and do not make major life decisions solely based on this service.',
             disc_2_title: '• Privacy Protection',
-            disc_2_body: 'Your personal information is used only for this service and will never be leaked. All data is automatically deleted after 30 days.',
+            disc_2_body: 'Your personal information is used only for this service and will never be leaked. All data is deleted immediately after your consultation.',
             disc_3_title: '• User Responsibility',
-            disc_3_body: 'By clicking "Submit", you confirm that you have read and agreed to the above terms. For data deletion: admin@temple-serenity.org',
+            disc_3_body: 'By clicking "Submit", you confirm that you have read and agreed to the above terms. For data deletion: zx2628804@gmail.com',
             consent_text: 'I have read and agree to the above disclaimer and privacy policy',
             submit_text: 'Submit',
             placeholder_email: 'Required (for receiving your reading)',
@@ -755,7 +751,7 @@
             why_1_title: 'Ancient Heritage',
             why_1_body: 'Drawing from centuries-old Buddhist and Daoist traditions, blended with modern psychological insight to offer thoughtful, layered readings.',
             why_2_title: 'Your Privacy Matters',
-            why_2_body: 'Your information is used only for this reading. All data is deleted after 30 days. We never sell or share anything.',
+            why_2_body: 'Your information is used only for this reading. All data is deleted immediately after your consultation. We never sell or share anything.',
             why_3_title: 'Global Community',
             why_3_body: 'Serving seekers from around the world in 6 languages. Every perspective is welcome here.',
             why_4_title: 'Sincere & Honest',
@@ -770,7 +766,7 @@
             faq_1_q: 'Are the readings accurate?',
             faq_1_a: 'Our readings are based on traditional divination systems combined with a reflective, compassionate approach. They are not predictions — they are mirrors for self-reflection. Many find them surprisingly insightful, but please approach them with an open mind and rational expectations.',
             faq_2_q: 'Is my privacy protected?',
-            faq_2_a: 'Absolutely. All your data — name, birthday, photo, message — is used only for your reading and is automatically deleted after 30 days. We never sell, share, or disclose your information. See our Legal Gate for full details.',
+            faq_2_a: 'Absolutely. All your data — name, birthday, photo, message — is used only for your reading and is deleted immediately after your consultation. We never sell, share, or disclose your information. See our Legal Gate for full details.',
             faq_3_q: 'How do I offer support?',
             faq_3_a: 'After submission, an optional QR code is shown. You may scan it to offer voluntary support via crypto, PayPal, or bank transfer. Support is entirely optional — your reading is never conditional on payment.',
             faq_4_q: 'When will I receive my reading?',
@@ -798,14 +794,14 @@
             legal_privacy_title: 'プライバシー保護',
             legal_privacy_1: '提出された写真、名前、誕生日などの情報は今回の鑑定のみに使用されます',
             legal_privacy_2: 'お客様の情報を第三者に販売、共有、または開示することは一切ありません',
-            legal_privacy_3: 'すべてのデータは30日後に自動的に削除されます',
+            legal_privacy_3: 'すべてのデータはご相談後すぐに自動的に削除されます',
             legal_privacy_4: '結果は12時間以内にメールで配信されます（メール未記入の場合は12時間以内にサポートへご連絡ください）',
             legal_disclaimer_title: '免責事項',
             legal_disclaimer_1: '本サービスは娯楽目的のみであり、いかなる約束や保証も構成しません',
             legal_disclaimer_2: 'ユーザーは独立して判断し、相应のリスクを負うものとします',
             legal_disclaimer_3: '本サービスに基づく決定や行動について責任を負いません',
             legal_contact_title: 'お問い合わせ',
-            legal_contact_body: 'データ削除やご質問：admin@temple-serenity.org',
+            legal_contact_body: 'データ削除やご質問：zx2628804@gmail.com',
             legal_agree_text: '上記の条項を読み、同意しました。18歳以上です',
             legal_enter_btn: '理解しました、网站へ',
             mission_badge: 'このサービスについて',
@@ -862,9 +858,9 @@
             disc_1_title: '• サービスの性質',
             disc_1_body: '本サービスは伝統的な形而上学に基づき、娯楽および自己省察のみを目的としています。結果は理性的にご覧になり、このサービスのみに依存して大きな人生の決定をしないでください。',
             disc_2_title: '• プライバシー保護',
-            disc_2_body: '個人情報はこのサービスのみに使用され、決して漏洩しません。すべてのデータは30日後に自動的に削除されます。',
+            disc_2_body: '個人情報はこのサービスのみに使用され、決して漏洩しません。すべてのデータはご相談後すぐに自動的に削除されます。',
             disc_3_title: '• ユーザーの責任',
-            disc_3_body: '「送信」をクリックすると、上記の条項を読み同意したことになります。データ削除：admin@temple-serenity.org',
+            disc_3_body: '「送信」をクリックすると、上記の条項を読み同意したことになります。データ削除：zx2628804@gmail.com',
             consent_text: '上記の免責事項とプライバシーポリシーを読み、同意しました',
             submit_text: '祈願を送信',
             placeholder_email: '必須（結果受信用）',
@@ -876,7 +872,7 @@
             why_1_title: '古来の伝統',
             why_1_body: '数百年ものの仏教と道教の伝統から引き出し、現代心理学の洞察とブレンドして、思慮深く階層的な解読を提供します。',
             why_2_title: 'プライバシーを保護',
-            why_2_body: 'あなたの情報はこの解読のみに使用され、30日後に削除されます。私たちは決して何も продадиまたは共有しません。',
+            why_2_body: 'あなたの情報はこの解読のみに使用され、ご相談後すぐに削除されます。私たちは決して何も продадиまたは共有しません。',
             why_3_title: 'グローバルコミュニティ',
             why_3_body: '6つの言語で世界中の探求者に奉仕します。すべての視点はここで歓迎されます。',
             why_4_title: '真実で正直',
@@ -891,7 +887,7 @@
             faq_1_q: '解読結果は正確ですか？',
             faq_1_a: '私たちの解読は伝統的な占術システムと反映的で慈悲深いアプローチを組み合わせたものです。それらは予測ではなく、自己反映の鏡です。多くは驚くほど洞察に満ちていると感じますが、開放的な心と合理的な期待を持って接してください。',
             faq_2_q: 'プライバシーは保護されていますか？',
-            faq_2_a: '絶対に保護されています。あなたのすべてのデータ—名前、誕生日、写真、メッセージ—は解読のみに使用され、30日後に自動的に削除されます。私たちは決して情報を販売、共有、または開示しません。法的入り口（Legal Gate）をご覧ください。',
+            faq_2_a: '絶対に保護されています。あなたのすべてのデータ—名前、誕生日、写真、メッセージ—は解読のみに使用され、ご相談後すぐに自動的に削除されます。私たちは決して情報を販売、共有、または開示しません。法的入り口（Legal Gate）をご覧ください。',
             faq_3_q: 'どのようにサポートを提供できますか？',
             faq_3_a: '提出後、オプションのQRコードが表示されます。暗号通貨、PayPal、または銀行送金を介して自主的なサポートを提供するためにスキャンできます。サポートは完全に任意です—あなたの解読は支払い条件で決して変わりません。',
             faq_4_q: 'いつ解読を受け取りませんか？',
@@ -926,7 +922,7 @@
             legal_disclaimer_2: '사용자는 독립적으로 판단하고 상응하는 위험을 부담해야 합니다',
             legal_disclaimer_3: '본 서비스에 기반한 결정이나 행위에 대해 어떠한 책임도 지지 않습니다',
             legal_contact_title: '연락처',
-            legal_contact_body: '데이터 삭제나 문의사항: admin@temple-serenity.org',
+            legal_contact_body: '데이터 삭제나 문의사항: zx2628804@gmail.com',
             legal_agree_text: '위 약관을 읽고 동의하며, 만 18세 이상입니다',
             legal_enter_btn: '이해했습니다, 사이트 입장',
             mission_badge: '이 서비스에 대하여',
@@ -985,7 +981,7 @@
             disc_2_title: '• 개인정보 보호',
             disc_2_body: '개인정보는 본 서비스에만 사용되며 절대 유출되지 않습니다. 모든 데이터는 30일 후 자동 삭제됩니다.',
             disc_3_title: '• 사용자 책임',
-            disc_3_body: '"제출"을 클릭하면 위 약관을 읽고 동의한 것으로 확인됩니다. 데이터 삭제: admin@temple-serenity.org',
+            disc_3_body: '"제출"을 클릭하면 위 약관을 읽고 동의한 것으로 확인됩니다. 데이터 삭제: zx2628804@gmail.com',
             consent_text: '위 면책 조항과 개인정보 보호정책을 읽고 동의합니다',
             submit_text: '기원 제출',
             placeholder_email: '필수 (결과 수신용)',
@@ -1040,14 +1036,14 @@
             legal_privacy_title: 'Protección de Privacidad',
             legal_privacy_1: 'Su foto, nombre, cumpleaños y otra información se utilizan únicamente para esta consulta',
             legal_privacy_2: 'No vendemos, compartimos ni revelamos su información a ningún tercero',
-            legal_privacy_3: 'Todos los datos enviados se eliminan automáticamente después de 30 días',
+            legal_privacy_3: 'Todos los datos enviados se eliminan inmediatamente después de su consulta',
             legal_privacy_4: 'Los resultados se envían por correo electrónico dentro de 12 horas (contacte al soporte si no proporcionó correo)',
             legal_disclaimer_title: 'Descargo de Responsabilidad',
             legal_disclaimer_1: 'Este servicio es solo para entretenimiento y no constituye ningún compromiso o garantía',
             legal_disclaimer_2: 'Los usuarios deben hacer juicios independientes y asumir los riesgos correspondientes',
             legal_disclaimer_3: 'No nos hacemos responsables de ninguna decisión o acción basada en este servicio',
             legal_contact_title: 'Contacto',
-            legal_contact_body: 'Para eliminación de datos o consultas: admin@temple-serenity.org',
+            legal_contact_body: 'Para eliminación de datos o consultas: zx2628804@gmail.com',
             legal_agree_text: 'He leído y acepto los términos anteriores, y soy mayor de 18 años',
             legal_enter_btn: 'Entiendo, Entrar al Sitio',
             mission_badge: 'Acerca de Este Servicio',
@@ -1104,9 +1100,9 @@
             disc_1_title: '• Naturaleza del Servicio',
             disc_1_body: 'Este servicio se basa en metafísica tradicional, solo para entretenimiento y autorreflexión. Por favor vea los resultados racionalmente y no tome decisiones de vida importantes basándose únicamente en este servicio.',
             disc_2_title: '• Protección de Privacidad',
-            disc_2_body: 'Su información personal se usa solo para este servicio y nunca se filtrará. Todos los datos se eliminan después de 30 días.',
+            disc_2_body: 'Su información personal se usa solo para este servicio y nunca se filtrará. Todos los datos se eliminan inmediatamente después de su consulta.',
             disc_3_title: '• Responsabilidad del Usuario',
-            disc_3_body: 'Al hacer clic en "Enviar", confirma que ha leído y aceptado los términos anteriores. Para eliminación de datos: admin@temple-serenity.org',
+            disc_3_body: 'Al hacer clic en "Enviar", confirma que ha leído y aceptado los términos anteriores. Para eliminación de datos: zx2628804@gmail.com',
             consent_text: 'He leído y acepto el descargo y la política de privacidad anteriores',
             submit_text: 'Enviar',
             placeholder_email: 'Obligatorio (para recibir su lectura)',
@@ -1118,7 +1114,7 @@
             why_1_title: 'Herencia Antigua',
             why_1_body: 'Extrayendo de tradiciones budistas y taoístas centenarios, mezclado con perspectivas psicológicas modernas para ofrecer lecturas reflexivas y profundas.',
             why_2_title: 'Su Privacidad Importa',
-            why_2_body: 'Su información se usa solo para esta lectura. Todos los datos se eliminan después de 30 días. Nunca vendemos ni compartimos nada.',
+            why_2_body: 'Su información se usa solo para esta lectura. Todos los datos se eliminan inmediatamente después de su consulta. Nunca vendemos ni compartimos nada.',
             why_3_title: 'Comunidad Global',
             why_3_body: 'Sirviendo a buscadores de todo el mundo en 6 idiomas. Toda perspectiva es bienvenida aquí.',
             why_4_title: 'Sincero y Honesto',
@@ -1133,7 +1129,7 @@
             faq_1_q: '¿Son precisas las lecturas?',
             faq_1_a: 'Nuestras lecturas se basan en sistemas tradicionales de adivinación combinados con un enfoque reflexivo y compasivo. No son predicciones — son espejos para la autorreflexión. Muchos las encuentran sorprendentemente perspicaces, pero por favor acérquese a ellas con mente abierta y expectativas racionales.',
             faq_2_q: '¿Está protegida mi privacidad?',
-            faq_2_a: 'Absolutamente. Todos sus datos —nombre, cumpleaños, foto, mensaje— se usan solo para su lectura y se eliminan automáticamente después de 30 días. Nunca vendemos, compartimos ni revelamos su información. Consulte nuestra Puerta Legal para detalles completos.',
+            faq_2_a: 'Absolutamente. Todos sus datos —nombre, cumpleaños, foto, mensaje— se usan solo para su lectura y se eliminan inmediatamente después de su consulta. Nunca vendemos, compartimos ni revelamos su información. Consulte nuestra Puerta Legal para detalles completos.',
             faq_3_q: '¿Cómo puedo ofrecer apoyo?',
             faq_3_a: 'Después del envío, se muestra un código QR opcional. Puede escanearlo para ofrecer apoyo voluntario a través de criptomonedas, PayPal o transferencia bancaria. El apoyo es completamente opcional — su lectura nunca está condicionada al pago.',
             faq_4_q: '¿Cuándo recibiré mi lectura?',
@@ -1161,14 +1157,14 @@
             legal_privacy_title: 'Proteção de Privacidade',
             legal_privacy_1: 'Sua foto, nome, aniversário e outras informações são usados apenas para esta consulta',
             legal_privacy_2: 'Não vendemos, compartilhamos nem divulgamos suas informações a terceiros',
-            legal_privacy_3: 'Todos os dados enviados são excluídos automaticamente após 30 dias',
+            legal_privacy_3: 'Todos os dados enviados são excluídos imediatamente após sua consulta',
             legal_privacy_4: 'Os resultados são enviados por e-mail dentro de 12 horas (contate o suporte se não forneceu e-mail)',
             legal_disclaimer_title: 'Isenção de Responsabilidade',
             legal_disclaimer_1: 'Este serviço é apenas para entretenimento e não constitui qualquer compromisso ou garantia',
             legal_disclaimer_2: 'Os usuários devem fazer julgamentos independentes e assumir os riscos correspondentes',
             legal_disclaimer_3: 'Não nos responsabilizamos por quaisquer decisões ou ações tomadas com base neste serviço',
             legal_contact_title: 'Contato',
-            legal_contact_body: 'Para exclusão de dados ou dúvidas: admin@temple-serenity.org',
+            legal_contact_body: 'Para exclusão de dados ou dúvidas: zx2628804@gmail.com',
             legal_agree_text: 'Li e concordo com os termos acima, e sou maior de 18 anos',
             legal_enter_btn: 'Entendi, Entrar no Site',
             mission_badge: 'Sobre Este Serviço',
@@ -1225,9 +1221,9 @@
             disc_1_title: '• Natureza do Serviço',
             disc_1_body: 'Este serviço é baseado em metafísica tradicional, apenas para entretenimento e autorreflexão. Por favor veja os resultados racionalmente e não tome decisões importantes de vida baseando-se solely neste serviço.',
             disc_2_title: '• Proteção de Privacidade',
-            disc_2_body: 'Suas informações pessoais são usadas apenas para este serviço e nunca serão vazadas. Todos os dados são excluídos após 30 dias.',
+            disc_2_body: 'Suas informações pessoais são usadas apenas para este serviço e nunca serão vazadas. Todos os dados são excluídos imediatamente após sua consulta.',
             disc_3_title: '• Responsabilidade do Usuário',
-            disc_3_body: 'Ao clicar em "Enviar", você confirma que leu e concordou com os termos acima. Para exclusão de dados: admin@temple-serenity.org',
+            disc_3_body: 'Ao clicar em "Enviar", você confirma que leu e concordou com os termos acima. Para exclusão de dados: zx2628804@gmail.com',
             consent_text: 'Li e concordo com a isenção e política de privacidade acima',
             submit_text: 'Enviar',
             placeholder_email: 'Obrigatório (para receber sua leitura)',
@@ -1239,7 +1235,7 @@
             why_1_title: 'Herança Antiga',
             why_1_body: 'Bebendo de tradições budistas e taoístas centenarios, misturado com perspectivas psicológicas modernas para oferecer leituras reflexivas e profundas.',
             why_2_title: 'Sua Privacidade Importa',
-            why_2_body: 'Sua informação é usada apenas para esta leitura. Todos os dados são excluídos após 30 dias. Nunca vendemos ou compartilhamos nada.',
+            why_2_body: 'Sua informação é usada apenas para esta leitura. Todos os dados são excluídos imediatamente após sua consulta. Nunca vendemos ou compartilhamos nada.',
             why_3_title: 'Comunidade Global',
             why_3_body: 'Servindo buscadoras de todo o mundo em 6 idiomas. Toda perspectiva é bem-vinda aqui.',
             why_4_title: 'Sincero e Honesto',
@@ -1254,7 +1250,7 @@
             faq_1_q: 'As leituras são precisas?',
             faq_1_a: 'Nossas leituras são baseadas em sistemas tradicionais de adivinhação combinados com uma abordagem reflexiva e compassiva. Não são previsões — são espelhos para autorreflexão. Muitos acham surpreendentemente perspicazes, mas por favor aproxime-se deles com mente aberta e expectativas racionais.',
             faq_2_q: 'Minha privacidade é protegida?',
-            faq_2_a: 'Absolutamente. Todos os seus dados —nome, aniversário, foto, mensagem— são usados apenas para sua leitura e excluídos automaticamente após 30 dias. Nunca vendemos, compartilhamos ou divulgamos suas informações. Veja nossa Portaria Legal para detalhes completos.',
+            faq_2_a: 'Absolutamente. Todos os seus dados —nome, aniversário, foto, mensagem— são usados apenas para sua leitura e excluídos imediatamente após sua consulta. Nunca vendemos, compartilhamos ou divulgamos suas informações. Veja nossa Portaria Legal para detalhes completos.',
             faq_3_q: 'Como posso oferecer apoio?',
             faq_3_a: 'Após a submissão, um código QR opcional é mostrado. Você pode escaneá-lo para oferecer apoio voluntário via criptomoeda, PayPal ou transferência bancária. O apoio é totalmente opcional — sua leitura nunca é condicional ao pagamento.',
             faq_4_q: 'Quando receberei minha leitura?',
@@ -1533,7 +1529,7 @@
                 document.querySelectorAll('.payment-option').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 selectedPayment = this.dataset.method;
-                const methodNames = { crypto: 'Cryptocurrency', paypal: 'PayPal', wise: 'Wise' };
+                const methodNames = { crypto: 'Cryptocurrency', paypal: 'PayPal' };
                 const displayMethod = document.getElementById('displayMethod');
                 if (displayMethod) displayMethod.textContent = methodNames[selectedPayment];
             });
