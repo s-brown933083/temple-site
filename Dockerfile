@@ -3,9 +3,12 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies for psycopg2 and image handling
+# Install system dependencies
+# gcc needed for psycopg2-binary compilation on slim image
+# libpq5 needed for PostgreSQL runtime
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libpq5 \
+    gcc \
+    libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
