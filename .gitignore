@@ -12,3 +12,8 @@ venv/
 .env
 .DS_Store
 _test.js
+test_output.html
+test_output2.html
+test_site.py
+temple-site-fix_20260628.md
+submissions.db

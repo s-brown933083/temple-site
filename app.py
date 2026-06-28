@@ -8,6 +8,8 @@ _dotenv_path = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '.env
 load_dotenv(_dotenv_path)
 
 import sqlite3
+import psycopg2
+import psycopg2.extras
 import os
 import csv
 import io
@@ -74,36 +76,106 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+# ─── Database: SQLite (dev) / PostgreSQL (production via DATABASE_URL) ─────
+_DB_TYPE = None
+
+def _detect_db_type():
+    """Detect database type: 'postgres' if DATABASE_URL is set, else 'sqlite'."""
+    global _DB_TYPE
+    if _DB_TYPE is None:
+        _DB_TYPE = 'postgres' if os.environ.get('DATABASE_URL') else 'sqlite'
+    return _DB_TYPE
+
+class _CursorWrapper:
+    """Wraps sqlite3/psycopg2 cursors so ? placeholders auto-convert to %s for PG."""
+    def __init__(self, cursor, is_pg):
+        self._c = cursor
+        self._pg = is_pg
+    def execute(self, sql, params=None):
+        if self._pg:
+            sql = sql.replace('?', '%s')
+            sql = sql.replace('date(submitted_at)', 'submitted_at::date')
+            sql = sql.replace('date("now", "start of day")', 'CURRENT_DATE')
+        if params:
+            self._c.execute(sql, params)
+        else:
+            self._c.execute(sql)
+    def fetchone(self):
+        return self._c.fetchone()
+    def fetchall(self):
+        return self._c.fetchall()
+    @property
+    def lastrowid(self):
+        return self._c.lastrowid
+    @property
+    def rowcount(self):
+        return self._c.rowcount
+
+class _DBWrapper:
+    """Wraps sqlite3/psycopg2 connections to provide a unified interface."""
+    def __init__(self, conn, is_pg):
+        self._conn = conn
+        self._pg = is_pg
+    def cursor(self):
+        return _CursorWrapper(self._conn.cursor(), self._pg)
+    def commit(self):
+        self._conn.commit()
+    def close(self):
+        self._conn.close()
+
 def get_db():
-    db_path = os.environ.get('DATABASE_PATH', os.path.join(os.path.dirname(__file__), 'submissions.db'))
-    conn = sqlite3.connect(db_path)
-    conn.row_factory = sqlite3.Row
-    return conn
+    """Return a database connection (SQLite for dev, PostgreSQL for production)."""
+    if _detect_db_type() == 'postgres':
+        conn = psycopg2.connect(os.environ['DATABASE_URL'])
+        conn.cursor_factory = psycopg2.extras.RealDictCursor
+        return _DBWrapper(conn, True)
+    else:
+        db_path = os.environ.get('DATABASE_PATH', os.path.join(os.path.dirname(__file__), 'submissions.db'))
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        return _DBWrapper(conn, False)
 
 def init_db():
-    conn = sqlite3.connect('submissions.db')
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS submissions
-                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                  name TEXT NOT NULL,
-                  birthday TEXT NOT NULL,
-                  gender TEXT NOT NULL,
-                  photo_filename TEXT,
-                  email TEXT,
-                  message TEXT,
-                  submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
-    # Add email column if missing (for existing DB)
-    try:
-        c.execute('ALTER TABLE submissions ADD COLUMN email TEXT')
-    except sqlite3.OperationalError:
-        pass
-    # Add message column if missing
-    try:
-        c.execute('ALTER TABLE submissions ADD COLUMN message TEXT')
-    except sqlite3.OperationalError:
-        pass
-    conn.commit()
-    conn.close()
+    """Create tables if not exist — works for both SQLite and PostgreSQL."""
+    if _detect_db_type() == 'postgres':
+        conn = psycopg2.connect(os.environ['DATABASE_URL'])
+        conn.autocommit = True
+        c = conn.cursor()
+        c.execute('''CREATE TABLE IF NOT EXISTS submissions
+                     (id SERIAL PRIMARY KEY,
+                      name TEXT NOT NULL,
+                      birthday TEXT NOT NULL,
+                      gender TEXT NOT NULL,
+                      photo_filename TEXT,
+                      email TEXT,
+                      message TEXT,
+                      submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
+        conn.commit()
+        conn.close()
+    else:
+        conn = sqlite3.connect('submissions.db')
+        c = conn.cursor()
+        c.execute('''CREATE TABLE IF NOT EXISTS submissions
+                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      name TEXT NOT NULL,
+                      birthday TEXT NOT NULL,
+                      gender TEXT NOT NULL,
+                      photo_filename TEXT,
+                      email TEXT,
+                      message TEXT,
+                      submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
+        # Add email column if missing (for existing DB)
+        try:
+            c.execute('ALTER TABLE submissions ADD COLUMN email TEXT')
+        except sqlite3.OperationalError:
+            pass
+        # Add message column if missing
+        try:
+            c.execute('ALTER TABLE submissions ADD COLUMN message TEXT')
+        except sqlite3.OperationalError:
+            pass
+        conn.commit()
+        conn.close()
 
 init_db()
 
