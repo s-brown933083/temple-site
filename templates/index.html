@@ -238,17 +238,9 @@
                 </button>
                 <div class="payment-details" id="paymentDetails" style="display:none;">
                     <div class="payment-qr">
-                        <div class="qr-placeholder">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <rect x="3" y="3" width="7" height="7" rx="1"/>
-                                <rect x="14" y="3" width="7" height="7" rx="1"/>
-                                <rect x="3" y="14" width="7" height="7" rx="1"/>
-                                <rect x="14" y="14" width="3" height="3"/>
-                                <rect x="18" y="14" width="3" height="3"/>
-                                <rect x="14" y="18" width="3" height="3"/>
-                                <rect x="18" y="18" width="3" height="3"/>
-                            </svg>
-                            <p data-i18n="qr_available">QR Code Available Soon</p>
+                        <div class="qr-container" id="qrContainer">
+                            <img src="{{ url_for('static', filename='images/qrcode_paypal.jpg') }}" alt="PayPal QR" class="qr-image" id="qrImage" />
+                            <p class="qr-hint" id="qrHint" data-i18n="qr_paypal_hint">Scan with PayPal app to complete payment</p>
                         </div>
                     </div>
                     <div class="payment-info-text">
@@ -401,7 +393,7 @@
                         <p class="donation-title" data-i18n="donation_title">Offer Support · Merit</p>
                         <p class="donation-desc" data-i18n="donation_desc">Your generosity supports our work · Give freely as you feel moved</p>
                         <div class="qr-container">
-                            <img src="{{ url_for('static', filename='images/qrcode.jpg') }}" alt="QR Code" class="qr-image" id="qrImage" />
+                            <img src="{{ url_for('static', filename='images/qrcode_paypal.jpg') }}" alt="PayPal QR" class="qr-image" id="donationQrImage" />
                             <p class="qr-hint" data-i18n="qr_hint">Long press to save · Transfer your support</p>
                         </div>
                     </div>
@@ -625,6 +617,8 @@
             donation_title: '随喜供灯 · 功德自在',
             donation_desc: '您的善念是最好的供养 · 随心随力 · 量力而行',
             qr_hint: '长按识别 · 保存图片 · 转账随喜',
+            qr_paypal_hint: '使用 PayPal APP 扫码完成支付',
+            qr_crypto_hint: '使用加密钱包扫码（支持 USDT TRC20/ERC20）',
             why_choose_title: '为何选择禅意净土',
             why_choose_sub: '千年智慧 · 现代解读 · 真诚指引',
             why_1_title: '古老传承',
@@ -746,6 +740,8 @@
             donation_title: 'Offer Support · Merit',
             donation_desc: 'Your generosity supports our work · Give freely as you feel moved',
             qr_hint: 'Long press to save · Transfer your support',
+            qr_paypal_hint: 'Scan with PayPal app to complete payment',
+            qr_crypto_hint: 'Scan with your crypto wallet (USDT TRC20/ERC20 supported)',
             why_choose_title: 'Why Temple of Serenity',
             why_choose_sub: 'Rooted in tradition · Guided by sincerity',
             why_1_title: 'Ancient Heritage',
@@ -867,6 +863,8 @@
             donation_title: 'お布施 · 功德',
             donation_desc: '善き心が最良の供养です · 無理のない範囲で',
             qr_hint: '長押しで保存 · サポートを送金',
+            qr_paypal_hint: 'PayPalアプリでスキャンして支払いを完了',
+            qr_crypto_hint: '暗号通貨ウォレットでスキャン（USDT TRC20/ERC20対応）',
             why_choose_title: 'なぜ禅意浄土を選ぶのか',
             why_choose_sub: '伝統に根ざす · 真剣さに導かれる',
             why_1_title: '古来の伝統',
@@ -988,6 +986,8 @@
             donation_title: '시주 · 공덕',
             donation_desc: '선한 마음이 최고의 공양입니다 · 능력에 맞게 자유롭게',
             qr_hint: '길게 눌러 저장 · 지원금 이체',
+            qr_paypal_hint: 'PayPal 앱으로 스캔하여 결제 완료',
+            qr_crypto_hint: '암호화폐 지갑으로 스캔 (USDT TRC20/ERC20 지원)',
             why_choose_title: '왜 선의 정토를 선택하는가',
             why_choose_sub: '전통에 뿌리를 두고 · 성실함에 의해 안내됨',
             why_1_title: '고대의 유산',
@@ -1109,6 +1109,8 @@
             donation_title: 'Ofrenda · Mérito',
             donation_desc: 'Su buena intención es la mejor ofrenda · Dé libremente según se sienta movido',
             qr_hint: 'Mantenga presionado para guardar · Transfiera su apoyo',
+            qr_paypal_hint: 'Escanee con la app de PayPal para completar el pago',
+            qr_crypto_hint: 'Escanee con su billetera cripto (USDT TRC20/ERC20)',
             why_choose_title: 'Por qué Templo de la Serenidad',
             why_choose_sub: 'Arraigado en tradición · Guiado por sinceridad',
             why_1_title: 'Herencia Antigua',
@@ -1230,6 +1232,8 @@
             donation_title: 'Oferta · Mérito',
             donation_desc: 'Sua boa intenção é a melhor oferta · Dê livremente conforme se sentir movido',
             qr_hint: 'Pressione longamente para salvar · Transfira seu apoio',
+            qr_paypal_hint: 'Escaneie com o app PayPal para concluir o pagamento',
+            qr_crypto_hint: 'Escaneie com sua carteira cripto (USDT TRC20/ERC20)',
             why_choose_title: 'Por que Templo da Serenidade',
             why_choose_sub: 'Enraizado em tradição · Guiado por sinceridade',
             why_1_title: 'Herança Antiga',
@@ -1532,6 +1536,27 @@
                 const methodNames = { crypto: 'Cryptocurrency', paypal: 'PayPal' };
                 const displayMethod = document.getElementById('displayMethod');
                 if (displayMethod) displayMethod.textContent = methodNames[selectedPayment];
+
+                // 切换二维码图片和提示
+                const qrImage = document.getElementById('qrImage');
+                const qrHint = document.getElementById('qrHint');
+                if (qrImage) {
+                    if (selectedPayment === 'paypal') {
+                        qrImage.src = "{{ url_for('static', filename='images/qrcode_paypal.jpg') }}";
+                        qrImage.alt = 'PayPal QR Code';
+                        if (qrHint) {
+                            qrHint.setAttribute('data-i18n', 'qr_paypal_hint');
+                            qrHint.textContent = 'Scan with PayPal app to complete payment';
+                        }
+                    } else {
+                        qrImage.src = "{{ url_for('static', filename='images/qrcode_crypto.jpg') }}";
+                        qrImage.alt = 'Cryptocurrency QR Code (USDT TRC20 / ERC20)';
+                        if (qrHint) {
+                            qrHint.setAttribute('data-i18n', 'qr_crypto_hint');
+                            qrHint.textContent = 'Scan with your crypto wallet (USDT TRC20/ERC20 supported)';
+                        }
+                    }
+                }
             });
         });
 
